@@ -18,11 +18,16 @@ OBJECTS = $(patsubst %.cpp,%,$(SOURCES))
 
 all: $(EXE)
 
-$(EXE): main.o
-	$(CXX) $< $(LDFLAGS) -o $@
+$(EXE): build $(OBJECTS)
+	$(CXX) build/*.o -o $@ $(LDFLAGS)
+#	$(CXX) $< $(LDFLAGS) -o $@ $< -L./build
 
-main.o: src/main.cpp
-	$(CXX) $(CXXFLAGS) $< -o $@
+$(OBJECTS):
+	$(CXX) $(CXXFLAGS) -c src/$@.cpp -o build/$@.o 
+
+dev: build
+	$(CXX) $(CXXFLAGS) $(wildcard src/*.cpp) \
+	-o $(EXE) $(LDFLAGS)
 
 #dev:
 #	$(CXX) $(CXXFLAGS) $(wildcard src/*.cpp) $< -o $(EXE) $(LDFLAGS)
@@ -31,7 +36,8 @@ build:
 	@mkdir build
 
 clean:
-	rm *.o && rm $(EXE)
+	rm -f $(TARGET)
+	rm -f build/*
 
 
 
