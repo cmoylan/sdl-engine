@@ -18,8 +18,10 @@ void Game::teardown()
 
 void Game::init()
 {
+    player = new Player();
+
     
-    
+    // ----- INIT SDL ------ //
     //Start up SDL and make sure it went ok
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
         logSDLError(std::cout, "SDL_Init");
@@ -33,7 +35,6 @@ void Game::init()
         logSDLError(std::cout, "CreateWindow");
         SDL_Quit();
         throw 1;
-        //return 1;
     }
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == nullptr){
@@ -61,10 +62,8 @@ void Game::render()
 
 void Game::run()
 {
-//iW and iH are the clip width and height
+    //iW and iH are the clip width and height
     //We'll be drawing only clips so get a center position for the w/h of a clip
-    int charX = SCREEN_WIDTH - 100;
-    int charY = SCREEN_HEIGHT - 100;
     int iW = 100, iH = 100;
     int x = SCREEN_WIDTH / 2 - iW / 2;
     int y = SCREEN_HEIGHT / 2 - iH / 2;
@@ -116,27 +115,29 @@ void Game::run()
                 break;
                 
             case SDLK_w:
-                charY += 10;
+                player->move(0, 10);
                 break;
             case SDLK_a:
-                charX -= 10;
+                player->move(-10, 0);
                 break;
             case SDLK_s:
-                charY -= 10;
+                player->move(0, -10);
                 break;
             case SDLK_d:
-                charX += 10;
+                player->move(10, 0);
                 break;
             default:
                 break;
             }
+            
+            // update
         }
         
         //Rendering
         SDL_RenderClear(renderer);
         //Draw the image
         renderTexture(image, renderer, x, y, &clips[useClip]);
-        renderTexture(image, renderer, charX, charY, &clips[useClip]);
+        renderTexture(image, renderer, player->xPos(), player->yPos(), &clips[useClip]);
         //Update the screen
         SDL_RenderPresent(renderer);
         }
