@@ -6,7 +6,7 @@
 #include <SDL2/SDL_image.h>
 
 
-/*
+/**
  * Log an SDL error with some error message to the output stream of our choice
  * @param os The output stream to write the message too
  * @param msg The error message to write, format will be msg error: SDL_GetError()
@@ -16,7 +16,7 @@ inline void logSDLError(std::ostream &os, const std::string &msg){
 }
 
 
-/*
+/**
  * Loads an image into a texture on the rendering device
  * @param file The image file to load
  * @param ren The renderer to load the texture onto
@@ -31,7 +31,7 @@ inline SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren){
 }
 
 
-/*
+/**
  * Draw an SDL_Texture to an SDL_Renderer at some destination rect
  * taking a clip of the texture if desired
  * @param tex The source texture we want to draw
@@ -45,7 +45,7 @@ inline void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst, SDL
 }
 
 
-/*
+/**
  * Draw an SDL_Texture to an SDL_Renderer at position x, y, preserving
  * the texture's width and height and taking a clip of the texture if desired
  * If a clip is passed, the clip's width and height will be used instead of the texture's

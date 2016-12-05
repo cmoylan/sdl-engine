@@ -1,20 +1,24 @@
+#include <iostream>
 #include "Game.h"
 
+// TODO:
+// - replace instances of printf with std::cout
+//
 
 int main(int, char**)
 {
     Game *game = new Game();
-    
+
     try {
         game->init();
-    } 
+    }
     catch(int e) {
-        printf("Error initializing game!: %d\n", e);
+        std::cout << "Error initializing game!: " << e << std::endl;
         return 1;
     }
-    
+
     game->run();
     game->teardown();
- 
+
     return 0;
 }

@@ -6,6 +6,7 @@ Player::Player()
     _y = SCREEN_HEIGHT - 100;
 }
 
+
 Player::~Player()
 {
 

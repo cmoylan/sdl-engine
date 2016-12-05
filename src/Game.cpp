@@ -2,7 +2,7 @@
 
 Game::Game()
 {
-   
+
 
 }
 
@@ -20,7 +20,7 @@ void Game::init()
 {
     player = new Player();
 
-    
+
     // ----- INIT SDL ------ //
     //Start up SDL and make sure it went ok
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
@@ -36,7 +36,8 @@ void Game::init()
         SDL_Quit();
         throw 1;
     }
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    //renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    renderer = SDL_CreateRenderer(window, -1, 0);
     if (renderer == nullptr){
         logSDLError(std::cout, "CreateRenderer");
         cleanup(window);
@@ -77,11 +78,11 @@ void Game::run()
         clips[i].y = i % 2 * iH;
         clips[i].w = iW;
         clips[i].h = iH;//Start up SDL and make sure it went ok
-    
+
     }
     //Specify a default clip to start with
     int useClip = 0;
-    
+
     // handle event
     SDL_Event e;
     bool quit = false;
@@ -113,7 +114,7 @@ void Game::run()
             case SDLK_ESCAPE:
                 quit = true;
                 break;
-                
+
             case SDLK_w:
                 player->move(0, 10);
                 break;
@@ -129,10 +130,10 @@ void Game::run()
             default:
                 break;
             }
-            
+
             // update
         }
-        
+
         //Rendering
         SDL_RenderClear(renderer);
         //Draw the image
