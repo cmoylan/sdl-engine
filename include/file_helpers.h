@@ -1,10 +1,11 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <fstream>
 #include <sstream>
-#include <string>
 
+using namespace std;
 
 namespace FileHelpers {
 
@@ -13,21 +14,22 @@ namespace FileHelpers {
      * @param filename The file to load
      * @return a string composed of the contents of the file
      */
-    inline std::string loadStringFromFile(const std::string& filename)
+    inline string loadStringFromFile(const auto& filename)
     {
-        std::stringstream sstr;
-        std::ifstream file;
-
-        file.open(filename.c_str(), std::ifstream::in);
-
+        cout << "hey";
+        stringstream sstr;
+        ifstream file;
+cout << "uhhh";
+        file.open(filename.c_str());
+cout << "what" ;
         if (file.is_open()) {
             sstr << file.rdbuf();
             return sstr.str();
         }
         else {
-            std::cout << "ERROR: unable to open file: " << filename << std::endl;
+            cout << "ERROR: unable to open file: " << filename << endl;
             return "";
         }
-    };
+    }
 
 }

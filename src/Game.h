@@ -12,6 +12,7 @@
 
 class Game {
 
+    Level *level;
     Player *player;
 
     SDL_Window *window;

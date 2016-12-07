@@ -7,6 +7,7 @@
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 #include "file_helpers.h"
+#include "res_path.h"
 
 struct Layer {
     int tileCount;
@@ -35,6 +36,6 @@ public:
 
 private:
 
-    bool loadLayer(const std::string& layerName, const rapidjson::Value& data, int width, int height);
+    bool loadLayer(const std::string& layerName, const rapidjson::Value& data);
 
 };

@@ -13,13 +13,16 @@ Level::~Level()
 
 
 bool
-Level::loadFromJson(const std::string& filename)
+Level::loadFromJson(const std::string& folder)
 {
     using namespace rapidjson;
 
     SizeType i;
     Document document;
     std::string layerName;
+    std::string filename = getResourcePath(folder).append("level.json");
+    std::cout << filename << std::endl;
+
 
     std::string jsonString = FileHelpers::loadStringFromFile(filename);
 
@@ -35,8 +38,7 @@ Level::loadFromJson(const std::string& filename)
     const Value& layers = document["layers"];
     for (i = 0; i < layers.Size(); i++) {
         layerName = layers[i]["name"].GetString();
-        if (!loadLayer(layerName, layers[i]["data"], layers[i]["width"].GetInt(),
-                       layers[i]["height"].GetInt())) {
+        if (!loadLayer(layerName, layers[i]["data"])) {
             return false;
         }
     }
@@ -54,8 +56,7 @@ Level::loadFromJson(const std::string& filename)
 
 //
 bool
-Level::loadLayer(const std::string& layerName, const rapidjson::Value& data,
-                 int width, int height)
+Level::loadLayer(const std::string& layerName, const rapidjson::Value& data)
 {
     int count = 0;
     Layer layer;

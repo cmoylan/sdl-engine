@@ -2,7 +2,7 @@
 #include "Game.h"
 
 // TODO:
-// - replace instances of printf with std::cout
+// - load a TMX level from json
 //
 
 int main(int, char**)
