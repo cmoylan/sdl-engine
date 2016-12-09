@@ -21,12 +21,11 @@ Level::loadFromJson(const std::string& folder)
     Document document;
     std::string layerName;
     std::string filename = getResourcePath(folder).append("level.json");
-    std::cout << filename << std::endl;
-
-
     std::string jsonString = FileHelpers::loadStringFromFile(filename);
 
     document.Parse(jsonString.c_str());
+    assert(document.IsObject());
+    assert(document.HasMember("width"));
 
     mapWidth = document["width"].GetInt();
     mapHeight = document["height"].GetInt();

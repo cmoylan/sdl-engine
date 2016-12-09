@@ -18,11 +18,13 @@ void Game::teardown()
 
 void Game::init()
 {
+    // ----- INIT GAME STUFF ----- //
     player = new Player();
-    std::string levelPath = getResourcePath("Test Level").append("tet-level.json");
-
-    level->loadFromJson("Test Level");
-
+    level = new Level();
+    if (level->loadFromJson("Test Level") == false) {
+        throw 2;
+    }
+    // ----- END INIT GAME STUFF ----- //
 
     // ----- INIT SDL ------ //
     //Start up SDL and make sure it went ok
