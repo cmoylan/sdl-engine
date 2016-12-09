@@ -37,6 +37,8 @@ public:
     // TODO: make this a class method that can construct a level object
     bool loadFromJson(const std::string& filename);
 
+    void printPlatforms();
+
 private:
 
     bool loadLayer(const std::string& layerName, const rapidjson::Value& data);

@@ -24,6 +24,7 @@ void Game::init()
     if (level->loadFromJson("Test Level") == false) {
         throw 2;
     }
+    level->printPlatforms();
     // ----- END INIT GAME STUFF ----- //
 
     // ----- INIT SDL ------ //

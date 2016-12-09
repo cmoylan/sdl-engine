@@ -76,3 +76,26 @@ Level::loadLayer(const std::string& layerName, const rapidjson::Value& data)
     // TODO: actually check that something was loaded
     return true;
 }
+
+
+// FIXME: use IOSTREAM
+void
+Level::printPlatforms()
+{
+    // ----- print out the level ----- //
+    Layer& layer = layers.find("platforms")->second;
+    std::vector<int>::iterator p;
+    int i, row;
+    row = 0;
+
+    printf("\n[%d]:  ", row);
+    for (p = layer.tiles.begin(), i = 1; p != layer.tiles.end(); ++p, ++i) {
+        printf("%d | ", *p);
+        if ((i % mapWidth == 0) && (row < (mapHeight - 1))) {
+            ++row;
+            printf("\n[%d]:  ", row);
+        }
+    }
+    printf("\n");
+    printf("tile count is: %d\n", layer.tileCount);
+}
