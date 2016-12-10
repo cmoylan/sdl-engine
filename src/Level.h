@@ -10,6 +10,8 @@
 
 #include "file_helpers.h"
 #include "res_path.h"
+#include "sdl_helpers.h"
+
 
 struct Layer {
     int tileCount;
@@ -26,6 +28,12 @@ class Level {
     int mapHeight;
     int tileWidth;
     int tileHeight;
+    
+    std::string levelFileName;
+    std::string resPath;
+    
+    SDL_Texture *sprite;
+    //SDL_Renderer *renderer;
 
 public:
 
@@ -34,10 +42,14 @@ public:
     Level();
     ~Level();
 
+    bool init();
+    
     // TODO: make this a class method that can construct a level object
     bool loadFromJson(const std::string& filename);
 
     void printPlatforms();
+    
+    void render();
 
 private:
 

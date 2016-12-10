@@ -12,11 +12,24 @@ Level::~Level()
 }
 
 
+bool Level::init()
+{
+    this->resPath = getResourcePath(this->levelFileName);
+    // TODO: do this for each sprite
+    //const std::string resPath = getResourcePath("Lesson5");
+    //sprite = loadTexture(resPath + "sprite.png", this->game->renderer);
+    if (sprite == nullptr){
+        throw 1;
+    }
+}
+
+
 bool
 Level::loadFromJson(const std::string& folder)
 {
     using namespace rapidjson;
 
+    this->levelFileName = folder;
     SizeType i;
     Document document;
     std::string layerName;
@@ -82,6 +95,8 @@ Level::loadLayer(const std::string& layerName, const rapidjson::Value& data)
 void
 Level::printPlatforms()
 {
+    using namespace std;
+    cout << "this work?" << endl;
     // ----- print out the level ----- //
     Layer& layer = layers.find("platforms")->second;
     std::vector<int>::iterator p;
@@ -98,4 +113,10 @@ Level::printPlatforms()
     }
     printf("\n");
     printf("tile count is: %d\n", layer.tileCount);
+}
+
+
+void Level::render()
+{
+    
 }

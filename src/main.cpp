@@ -2,12 +2,14 @@
 #include "Game.h"
 
 // TODO:
-// - load a TMX level from json
+// - draw a level
 //
 
 int main(int, char**)
 {
-    Game *game = new Game();
+    Options opts = {
+    };
+    Game *game = new Game(opts);
 
     try {
         game->init();

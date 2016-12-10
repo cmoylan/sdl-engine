@@ -1,8 +1,8 @@
 #include "Game.h"
 
-Game::Game()
+Game::Game(Options options)
 {
-
+    this->options = options;
 
 }
 
@@ -19,12 +19,19 @@ void Game::teardown()
 void Game::init()
 {
     // ----- INIT GAME STUFF ----- //
-    player = new Player();
-    level = new Level();
-    if (level->loadFromJson("Test Level") == false) {
+    if (level.loadFromJson("Test Level") == false) {
         throw 2;
     }
-    level->printPlatforms();
+    level.printPlatforms();
+    try {
+        //level->init();
+    } catch(int e) {
+        std::cout << "Error initing level" << std::endl;
+        cleanup(image, renderer, window);
+        IMG_Quit();
+        SDL_Quit();
+        throw 1;
+    }
     // ----- END INIT GAME STUFF ----- //
 
     // ----- INIT SDL ------ //
@@ -50,20 +57,20 @@ void Game::init()
         SDL_Quit();
         throw 1;
     }
-    const std::string resPath = getResourcePath("Lesson5");
-    image = loadTexture(resPath + "image.png", renderer);
-    if (image == nullptr){
-        cleanup(image, renderer, window);
-        IMG_Quit();
-        SDL_Quit();
-        throw 1;
-    }
+//     const std::string resPath = getResourcePath("Lesson5");
+//     image = loadTexture(resPath + "image.png", renderer);
+//     if (image == nullptr){
+//         cleanup(image, renderer, window);
+//         IMG_Quit();
+//         SDL_Quit();
+//         throw 1;
+//     }
 }
 
 
 void Game::render()
 {
-
+    level.render();
 }
 
 
@@ -122,16 +129,16 @@ void Game::run()
                 break;
 
             case SDLK_w:
-                player->move(0, 10);
+                player.move(0, 10);
                 break;
             case SDLK_a:
-                player->move(-10, 0);
+                player.move(-10, 0);
                 break;
             case SDLK_s:
-                player->move(0, -10);
+                player.move(0, -10);
                 break;
             case SDLK_d:
-                player->move(10, 0);
+                player.move(10, 0);
                 break;
             default:
                 break;
@@ -143,8 +150,10 @@ void Game::run()
         //Rendering
         SDL_RenderClear(renderer);
         //Draw the image
+        this->render();
+                
         renderTexture(image, renderer, x, y, &clips[useClip]);
-        renderTexture(image, renderer, player->xPos(), player->yPos(), &clips[useClip]);
+        renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
         //Update the screen
         SDL_RenderPresent(renderer);
         }
