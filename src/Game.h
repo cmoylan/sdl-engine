@@ -31,10 +31,10 @@ class Game {
 public:
     SDL_Renderer *renderer;
 
-    Game(Options opts);
-
+    Game();
     ~Game();
 
+    void load(Options options);
     void teardown();
     void init();
     void render();

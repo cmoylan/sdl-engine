@@ -1,8 +1,13 @@
 #include "Game.h"
 
-Game::Game(Options options)
+Game::Game()
 {
-    this->options = options;
+
+}
+
+
+Game::~Game()
+{
 
 }
 
@@ -65,6 +70,12 @@ void Game::init()
 //         SDL_Quit();
 //         throw 1;
 //     }
+}
+
+
+void Game::load(Options options)
+{
+    this->options = options;
 }
 
 

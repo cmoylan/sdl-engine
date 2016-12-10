@@ -7,20 +7,22 @@
 
 int main(int, char**)
 {
+    Game game;
+    
     Options opts = {
     };
-    Game *game = new Game(opts);
+    game.load(opts);
 
     try {
-        game->init();
+        game.init();
     }
     catch(int e) {
         std::cout << "Error initializing game!: " << e << std::endl;
         return 1;
     }
 
-    game->run();
-    game->teardown();
+    game.run();
+    game.teardown();
 
     return 0;
 }
