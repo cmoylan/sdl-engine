@@ -1,0 +1,76 @@
+#include "Renderer.h"
+
+Renderer::Renderer()
+{
+
+}
+
+Renderer::~Renderer()
+{
+
+}
+
+
+void Renderer::init(Game game)
+{
+    this->game = game;
+    this->initSDL();
+
+
+}
+
+
+void Renderer::initSDL()
+{
+    //Start up SDL and make sure it went ok
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        logSDLError(std::cout, "SDL_Init");
+        throw 1;
+    }
+
+    //Setup our window and renderer
+    window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED,
+                              SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    if (window == nullptr) {
+        logSDLError(std::cout, "CreateWindow");
+        SDL_Quit();
+        throw 1;
+    }
+    //renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    renderer = SDL_CreateRenderer(window, -1, 0);
+    if (renderer == nullptr) {
+        logSDLError(std::cout, "CreateRenderer");
+        cleanup(window);
+        SDL_Quit();
+        throw 1;
+    }
+}
+
+
+void Renderer::run()
+{
+    while (this->game.running()) {
+        this->game.handleInput();
+        // handle events
+        // update
+        // draw
+    }
+
+    SDL_RenderClear(renderer);
+
+
+    // TODO: dp tjos for all visible entities
+    //renderTexture(image, renderer, x, y, &clips[useClip]);
+    //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
+    //Update the screen
+    SDL_RenderPresent(renderer);
+}
+
+
+void Renderer::teardown()
+{
+    //Clean up
+    cleanup(image, renderer, window);
+    IMG_Quit();
+    SDL_Quit();
+}

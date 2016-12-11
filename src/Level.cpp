@@ -18,9 +18,10 @@ bool Level::init()
     // TODO: do this for each sprite
     //const std::string resPath = getResourcePath("Lesson5");
     //sprite = loadTexture(resPath + "sprite.png", this->game->renderer);
-    if (sprite == nullptr){
+    if (sprite == nullptr) {
         throw 1;
     }
+    return false;
 }
 
 
@@ -56,12 +57,12 @@ Level::loadFromJson(const std::string& folder)
     }
 
     // load sprites into textured
-/*    const Value& tilesets = document["tilesets"];
-    for (i = 0; i < tilesets.Size(); i++) {
-        if (!loadTileset(tilesets[i])) {
-            return false;
-        }
-    }   */
+    /*    const Value& tilesets = document["tilesets"];
+        for (i = 0; i < tilesets.Size(); i++) {
+            if (!loadTileset(tilesets[i])) {
+                return false;
+            }
+        }   */
 
     return true;
 }
@@ -113,10 +114,4 @@ Level::printPlatforms()
     }
     printf("\n");
     printf("tile count is: %d\n", layer.tileCount);
-}
-
-
-void Level::render()
-{
-    
 }

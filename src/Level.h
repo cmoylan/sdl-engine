@@ -28,10 +28,10 @@ class Level {
     int mapHeight;
     int tileWidth;
     int tileHeight;
-    
+
     std::string levelFileName;
     std::string resPath;
-    
+
     SDL_Texture *sprite;
     //SDL_Renderer *renderer;
 
@@ -43,12 +43,12 @@ public:
     ~Level();
 
     bool init();
-    
+
     // TODO: make this a class method that can construct a level object
     bool loadFromJson(const std::string& filename);
 
     void printPlatforms();
-    
+
     void render();
 
 private:

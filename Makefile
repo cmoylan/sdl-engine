@@ -39,6 +39,10 @@ clean:
 	rm -f $(TARGET)
 	rm -f build/*
 
+# http://astyle.sourceforge.net/astyle.html
+style:
+	@astyle --options=.astylerc \
+	`ls src/*.h src/*.cpp`
 
 
 

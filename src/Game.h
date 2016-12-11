@@ -1,11 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-
 #include "res_path.h"
-#include "sdl_helpers.h"
-#include "cleanup.h"
 
 #include "constants.h"
 #include "Level.h"
@@ -24,12 +19,15 @@ class Game {
     Options options;
     Player player;
     Level level;
-    
-    SDL_Window *window;
-    SDL_Texture *image;
+
+    bool _running = true;
 
 public:
-    SDL_Renderer *renderer;
+    // Getters
+    bool running() const
+    {
+        return _running;
+    }
 
     Game();
     ~Game();
@@ -37,6 +35,6 @@ public:
     void load(Options options);
     void teardown();
     void init();
-    void render();
     void run();
+    void handleInput();
 };

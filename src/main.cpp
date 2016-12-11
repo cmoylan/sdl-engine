@@ -1,28 +1,32 @@
 #include <iostream>
+
 #include "Game.h"
+#include "Renderer.h"
 
 // TODO:
 // - draw a level
+// - better exceptions
 //
 
 int main(int, char**)
 {
+    Renderer renderer;
+
     Game game;
-    
-    Options opts = {
-    };
+
+    Options opts = {};
     game.load(opts);
 
     try {
-        game.init();
+        renderer.init(game);
     }
-    catch(int e) {
+    catch (int e) {
         std::cout << "Error initializing game!: " << e << std::endl;
         return 1;
     }
 
-    game.run();
-    game.teardown();
+    renderer.run();
+    renderer.teardown();
 
     return 0;
 }
