@@ -15,8 +15,8 @@ void Renderer::init(Game game)
 {
     this->game = game;
     this->initSDL();
-
-
+    
+    // load renderables
 }
 
 
@@ -47,30 +47,49 @@ void Renderer::initSDL()
 }
 
 
+bool Renderer::registerAsset(Asset options)
+{
+    // load the asset into video memory
+    SDL_Texture* image = loadTexture(this->game.resPath + options.spriteFilename, renderer);
+    if (image == nullptr){
+        cleanup(image, renderer, window);
+        IMG_Quit();
+        SDL_Quit();
+        return false;
+    }
+    options.sprite = image;
+    this->assets.push_back(options);
+    
+    return true;
+}
+
+
 void Renderer::run()
 {
     while (this->game.running()) {
         this->game.handleInput();
-        // handle events
-        // update
+        this->game.update();
+        
         // draw
+        SDL_RenderClear(renderer);
+        // foreach renderable in renderables:
+        // draw
+
+        //renderTexture(image, renderer, x, y, &clips[useClip]);
+        //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
+        //Update the screen
+        SDL_RenderPresent(renderer);
     }
 
-    SDL_RenderClear(renderer);
-
-
-    // TODO: dp tjos for all visible entities
-    //renderTexture(image, renderer, x, y, &clips[useClip]);
-    //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
-    //Update the screen
-    SDL_RenderPresent(renderer);
+    
 }
 
 
 void Renderer::teardown()
 {
     //Clean up
-    cleanup(image, renderer, window);
+    // TODO: do this for all renderables
+    cleanup(renderer, window);
     IMG_Quit();
     SDL_Quit();
 }

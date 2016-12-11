@@ -21,6 +21,7 @@ void Game::teardown()
 void Game::handleInput()
 {
     // FIXME: this doesn't belong here, should more into it's own thing
+    // FIXME: need to allow keys to be remapped
     SDL_Event e;
 
     //Event Polling
@@ -81,10 +82,6 @@ void Game::init()
         //level->init();
     }
     catch (int e) {
-//         std::cout << "Error initing level" << std::endl;
-//         cleanup(image, renderer, window);
-//         IMG_Quit();
-//         SDL_Quit();
         throw 1;
     }
 }
@@ -93,28 +90,11 @@ void Game::init()
 void Game::load(Options options)
 {
     this->options = options;
+    this->resPath = getResourcePath(options.levelPath);
 }
 
 
-void Game::run()
+void Game::update()
 {
-    //iW and iH are the clip width and height
-    //We'll be drawing only clips so get a center position for the w/h of a clip
-    int iW = 100, iH = 100;
-    int x = SCREEN_WIDTH / 2 - iW / 2;
-    int y = SCREEN_HEIGHT / 2 - iH / 2;
 
-    //Setup the clips for our image
-    SDL_Rect clips[4];
-    //Since our clips our uniform in size we can generate a list of their
-    //positions using some math (the specifics of this are covered in the lesson)
-    for (int i = 0; i < 4; ++i) {
-        clips[i].x = i / 2 * iW;
-        clips[i].y = i % 2 * iH;
-        clips[i].w = iW;
-        clips[i].h = iH;//Start up SDL and make sure it went ok
-
-    }
-    //Specify a default clip to start with
-    int useClip = 0;
 }

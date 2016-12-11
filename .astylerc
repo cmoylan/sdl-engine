@@ -38,3 +38,7 @@ align-reference=type
 # http://astyle.sourceforge.net/astyle.html#_max-code-length
 max-code-length=80
 break-after-logical
+
+# Allow one line brackets
+# http://astyle.sourceforge.net/astyle.html#_add-one-line-brackets
+add-one-line-brackets

@@ -21,13 +21,12 @@ class Game {
     Level level;
 
     bool _running = true;
-
+    
 public:
+    std::string resPath;
+
     // Getters
-    bool running() const
-    {
-        return _running;
-    }
+    bool running() const { return _running; }
 
     Game();
     ~Game();
@@ -35,6 +34,6 @@ public:
     void load(Options options);
     void teardown();
     void init();
-    void run();
+    void update();
     void handleInput();
 };

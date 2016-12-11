@@ -9,14 +9,8 @@ class Player {
 
 public:
     // Getters
-    int xPos() const
-    {
-        return _x;
-    }
-    int yPos() const
-    {
-        return _y;
-    }
+    int xPos() const { return _x; }
+    int yPos() const { return _y; }
 
     Player();
     ~Player();
