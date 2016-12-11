@@ -12,16 +12,22 @@ Level::~Level()
 }
 
 
+AssetList Level::getAssets()
+{
+
+}
+
+
 bool Level::init()
 {
     this->resPath = getResourcePath(this->levelFileName);
     // TODO: do this for each sprite
     //const std::string resPath = getResourcePath("Lesson5");
     //sprite = loadTexture(resPath + "sprite.png", this->game->renderer);
-    if (sprite == nullptr) {
-        throw 1;
-    }
-    return false;
+    //if (sprite == nullptr) {
+    //    throw 1;
+    //}
+    return true;
 }
 
 
@@ -30,11 +36,11 @@ Level::loadFromJson(const std::string& folder)
 {
     using namespace rapidjson;
 
-    this->levelFileName = folder;
     SizeType i;
     Document document;
     std::string layerName;
-    std::string filename = getResourcePath(folder).append("level.json");
+    this->resPath = getResourcePath(folder);
+    std::string filename = this->resPath + "level.json";
     std::string jsonString = FileHelpers::loadStringFromFile(filename);
 
     document.Parse(jsonString.c_str());

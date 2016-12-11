@@ -18,6 +18,14 @@ void Game::teardown()
 }
 
 
+AssetList Game::getAssets()
+{
+    // TODO: make this dynamic
+    //level.getAssets();
+    return player.getAssets();
+}
+
+
 void Game::handleInput()
 {
     // FIXME: this doesn't belong here, should more into it's own thing
@@ -90,7 +98,6 @@ void Game::init()
 void Game::load(Options options)
 {
     this->options = options;
-    this->resPath = getResourcePath(options.levelPath);
 }
 
 

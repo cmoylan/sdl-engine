@@ -13,6 +13,23 @@ Player::~Player()
 }
 
 
+AssetList Player::getAssets()
+{
+    // return a vector of Assets
+    Asset player = {
+        "sprite.png", // filename
+        nullptr, // texture
+        _x, // coords
+        _y,
+        0, // clips
+        0
+    };
+    AssetList assets;
+    assets.push_back(player);
+    return  assets;
+}
+
+
 Vector2D Player::getPos()
 {
     Vector2D pos = {_x, _y};

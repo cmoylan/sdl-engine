@@ -1,6 +1,8 @@
 #pragma once
 
 #include "constants.h"
+#include "Asset.h"
+
 
 class Player {
 
@@ -18,4 +20,6 @@ public:
     void move(int x, int y);
     void move(Vector2D direction);
     Vector2D getPos();
+    
+    AssetList getAssets();
 };

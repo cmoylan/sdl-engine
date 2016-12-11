@@ -15,8 +15,13 @@ void Renderer::init(Game game)
 {
     this->game = game;
     this->initSDL();
+    this->game.init();
     
-    // load renderables
+    // load assets
+    for (Asset asset : game.getAssets()) {
+        cout << "trying to register: " << asset.spriteFilename << endl;
+        this->registerAsset(asset);
+    }
 }
 
 
@@ -50,7 +55,10 @@ void Renderer::initSDL()
 bool Renderer::registerAsset(Asset options)
 {
     // load the asset into video memory
-    SDL_Texture* image = loadTexture(this->game.resPath + options.spriteFilename, renderer);
+    cout << "what?" << endl;
+    //respath is not being set...why
+    cout << this->game.resPath() << endl;
+    SDL_Texture* image = loadTexture(this->game.resPath() + options.spriteFilename, renderer);
     if (image == nullptr){
         cleanup(image, renderer, window);
         IMG_Quit();
@@ -74,7 +82,10 @@ void Renderer::run()
         SDL_RenderClear(renderer);
         // foreach renderable in renderables:
         // draw
-
+        for (Asset asset : assets) {
+            renderTexture(asset.sprite, renderer,
+                          asset.x, asset.y);
+        }
         //renderTexture(image, renderer, x, y, &clips[useClip]);
         //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
         //Update the screen

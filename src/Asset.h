@@ -1,6 +1,7 @@
 # pragma once
 
 #include <string>
+#include <vector>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -14,3 +15,5 @@ struct Asset {
     int clipX;
     int clipY;
 };
+
+typedef std::vector<Asset> AssetList;

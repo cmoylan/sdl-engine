@@ -1,8 +1,7 @@
 #pragma once
 
-#include "res_path.h"
+#include <vector>
 
-#include "constants.h"
 #include "Level.h"
 #include "Player.h"
 
@@ -10,7 +9,7 @@
 struct Options {
     int levelNumber;
     int score;
-    std::string levelPath;
+    std::string levelFolder;
 };
 
 
@@ -23,9 +22,9 @@ class Game {
     bool _running = true;
     
 public:
-    std::string resPath;
-
+    
     // Getters
+    std::string resPath() const { return level.resPath ;}
     bool running() const { return _running; }
 
     Game();
@@ -36,4 +35,6 @@ public:
     void init();
     void update();
     void handleInput();
+    
+    AssetList getAssets();
 };

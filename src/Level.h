@@ -12,6 +12,8 @@
 #include "res_path.h"
 #include "sdl_helpers.h"
 
+#include "Asset.h"
+
 
 struct Layer {
     int tileCount;
@@ -30,13 +32,12 @@ class Level {
     int tileHeight;
 
     std::string levelFileName;
-    std::string resPath;
-
-    SDL_Texture *sprite;
-    //SDL_Renderer *renderer;
-
+    //std::string levelFolder = "Test Level";
+    
 public:
-
+    
+    // FIXME: what sets this?
+    std::string resPath;
     LayerList layers;
 
     Level();
@@ -50,6 +51,8 @@ public:
     void printPlatforms();
 
     void render();
+    
+    AssetList getAssets();
 
 private:
 

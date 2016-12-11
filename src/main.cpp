@@ -14,7 +14,8 @@ int main(int, char**)
 
     Game game;
 
-    Options opts = {};
+    // level number, score, level folder
+    Options opts = { 1, 0, "Test Level" };
     game.load(opts);
 
     try {
