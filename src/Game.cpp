@@ -85,7 +85,7 @@ void Game::init()
     if (level.loadFromJson("Test Level") == false) {
         throw 2;
     }
-    level.printPlatforms();
+    //level.printPlatforms();
     try {
         //level->init();
     }
@@ -98,6 +98,7 @@ void Game::init()
 void Game::load(Options options)
 {
     this->options = options;
+    // maybe call Game::init here
 }
 
 

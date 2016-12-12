@@ -32,7 +32,6 @@ class Level {
     int tileHeight;
 
     std::string levelFileName;
-    //std::string levelFolder = "Test Level";
     
 public:
     
@@ -42,8 +41,6 @@ public:
 
     Level();
     ~Level();
-
-    bool init();
 
     // TODO: make this a class method that can construct a level object
     bool loadFromJson(const std::string& filename);

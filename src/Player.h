@@ -1,25 +1,31 @@
 #pragma once
 
+#include <iostream>
+
 #include "constants.h"
+#include "Drawable.h"
 #include "Asset.h"
 
 
-class Player {
+class Player : public Drawable {
 
-    int _x;
-    int _y;
+    //int _x;
+    //int _y;
+    
+    Asset *asset;
 
 public:
     // Getters
-    int xPos() const { return _x; }
-    int yPos() const { return _y; }
+    //int xPos() const { return _x; }
+    //int yPos() const { return _y; }
 
     Player();
     ~Player();
 
     void move(int x, int y);
     void move(Vector2D direction);
-    Vector2D getPos();
+    //virtual Vector2D getPos();
     
     AssetList getAssets();
+
 };

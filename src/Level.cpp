@@ -18,18 +18,6 @@ AssetList Level::getAssets()
 }
 
 
-bool Level::init()
-{
-    this->resPath = getResourcePath(this->levelFileName);
-    // TODO: do this for each sprite
-    //const std::string resPath = getResourcePath("Lesson5");
-    //sprite = loadTexture(resPath + "sprite.png", this->game->renderer);
-    //if (sprite == nullptr) {
-    //    throw 1;
-    //}
-    return true;
-}
-
 
 bool
 Level::loadFromJson(const std::string& folder)

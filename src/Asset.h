@@ -6,14 +6,20 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include "Drawable.h"
+
 
 struct Asset {
     std::string spriteFilename;
     SDL_Texture *sprite;
+    int width;
+    int height;
     int x;
     int y;
-    int clipX;
-    int clipY;
+    /*int x() {
+        (
+    }*/;
+    Drawable *parent;
 };
 
-typedef std::vector<Asset> AssetList;
+typedef std::vector<Asset*> AssetList;

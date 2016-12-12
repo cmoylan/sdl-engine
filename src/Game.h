@@ -30,9 +30,10 @@ public:
     Game();
     ~Game();
 
+    // lifecycle methods
     void load(Options options);
-    void teardown();
     void init();
+    void teardown();
     void update();
     void handleInput();
     
