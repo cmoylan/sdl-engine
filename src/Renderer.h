@@ -7,7 +7,6 @@
 #include "sdl_helpers.h"
 #include "cleanup.h"
 
-#include "Asset.h"
 #include "Game.h"
 
 
@@ -18,7 +17,8 @@ class Renderer {
     SDL_Renderer *renderer;
     SDL_Window *window;
     
-    std::vector<Asset> assets;
+    //std::vector<Asset> assets;
+    DrawList gameObjects;
 
 public:
     Renderer();
@@ -29,7 +29,7 @@ public:
     void teardown();
     
     // Renderable methods
-    bool registerAsset(Asset options);
+    //bool registerAsset(Asset options);
 
 private:
     void initSDL();

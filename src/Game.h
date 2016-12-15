@@ -36,6 +36,5 @@ public:
     void teardown();
     void update();
     void handleInput();
-    
-    AssetList getAssets();
+
 };

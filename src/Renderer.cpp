@@ -18,9 +18,9 @@ void Renderer::init(Game game)
     this->game.init();
     
     // load assets
-    for (Asset* asset : game.getAssets()) {
-        this->registerAsset(*asset);
-    }
+//     for (Asset* asset : game.getAssets()) {
+//         this->registerAsset(*asset);
+//     }
 }
 
 
@@ -51,21 +51,21 @@ void Renderer::initSDL()
 }
 
 
-bool Renderer::registerAsset(Asset options)
-{
-    // load the asset into video memory
-    SDL_Texture* image = loadTexture(this->game.resPath() + options.spriteFilename, renderer);
-    if (image == nullptr){
-        cleanup(image, renderer, window);
-        IMG_Quit();
-        SDL_Quit();
-        return false;
-    }
-    options.sprite = image;
-    this->assets.push_back(options);
-    
-    return true;
-}
+// bool Renderer::registerAsset(Asset options)
+// {
+//     // load the asset into video memory
+//     SDL_Texture* image = loadTexture(this->game.resPath() + options.spriteFilename, renderer);
+//     if (image == nullptr){
+//         cleanup(image, renderer, window);
+//         IMG_Quit();
+//         SDL_Quit();
+//         return false;
+//     }
+//     options.sprite = image;
+//     this->assets.push_back(options);
+//     
+//     return true;
+// }
 
 
 void Renderer::run()
@@ -78,11 +78,14 @@ void Renderer::run()
         SDL_RenderClear(renderer);
         // foreach renderable in renderables:
         // draw
-        for (Asset asset : assets) {
-            asset.parent->what();
-            renderTexture(asset.sprite, renderer,
-                          asset.parent->x(), asset.parent->y());
+//         for (Asset asset : assets) {
+//             asset.parent->what();
+//             renderTexture(asset.sprite, renderer,
+//                           asset.parent->x(), asset.parent->y());
+//         }
+        for (Drawable object : gameObjects) {
         }
+        
         //renderTexture(image, renderer, x, y, &clips[useClip]);
         //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
         //Update the screen

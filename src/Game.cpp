@@ -18,12 +18,12 @@ void Game::teardown()
 }
 
 
-AssetList Game::getAssets()
-{
-    // TODO: make this dynamic
-    //level.getAssets();
-    return player.getAssets();
-}
+// AssetList Game::getAssets()
+// {
+//     // TODO: make this dynamic
+//     //level.getAssets();
+//     //return player.getAssets();
+// }
 
 
 void Game::handleInput()
