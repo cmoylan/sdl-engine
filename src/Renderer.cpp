@@ -18,9 +18,9 @@ void Renderer::init(Game game)
     this->game.init();
     
     // load assets
-//     for (Asset* asset : game.getAssets()) {
-//         this->registerAsset(*asset);
-//     }
+    for (Drawable object : game.getGameObjects()) {
+       this->registerAsset(object.asset);
+    }
 }
 
 
@@ -51,21 +51,22 @@ void Renderer::initSDL()
 }
 
 
-// bool Renderer::registerAsset(Asset options)
-// {
-//     // load the asset into video memory
-//     SDL_Texture* image = loadTexture(this->game.resPath() + options.spriteFilename, renderer);
-//     if (image == nullptr){
-//         cleanup(image, renderer, window);
-//         IMG_Quit();
-//         SDL_Quit();
-//         return false;
-//     }
-//     options.sprite = image;
-//     this->assets.push_back(options);
-//     
-//     return true;
-// }
+bool Renderer::registerAsset(Asset& asset)
+{
+    cout << "registering: " << asset.spriteFilename << endl;
+    
+    // load the asset into video memory
+    SDL_Texture* image = loadTexture(this->game.resPath() + asset.spriteFilename, renderer);
+    if (image == nullptr){
+        cleanup(image, renderer, window);
+        IMG_Quit();
+        SDL_Quit();
+        return false;
+    }
+    asset.sprite = image;
+    
+    return true;
+ }
 
 
 void Renderer::run()
@@ -77,13 +78,9 @@ void Renderer::run()
         // draw
         SDL_RenderClear(renderer);
         // foreach renderable in renderables:
-        // draw
-//         for (Asset asset : assets) {
-//             asset.parent->what();
-//             renderTexture(asset.sprite, renderer,
-//                           asset.parent->x(), asset.parent->y());
-//         }
-        for (Drawable object : gameObjects) {
+        for (Drawable object : game.getGameObjects()) {
+            renderTexture(object.asset.sprite, renderer, 
+                          object.x(), object.y());
         }
         
         //renderTexture(image, renderer, x, y, &clips[useClip]);

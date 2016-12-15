@@ -14,7 +14,8 @@ Level::~Level()
 
 AssetList Level::getAssets()
 {
-
+    AssetList assets;
+    return assets;
 }
 
 

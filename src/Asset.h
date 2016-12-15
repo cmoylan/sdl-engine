@@ -14,4 +14,4 @@ struct Asset {
     int height;
 };
 
-typedef std::vector<Asset*> AssetList;
+typedef std::vector<Asset> AssetList;

@@ -16,9 +16,6 @@ class Renderer {
 
     SDL_Renderer *renderer;
     SDL_Window *window;
-    
-    //std::vector<Asset> assets;
-    DrawList gameObjects;
 
 public:
     Renderer();
@@ -29,7 +26,7 @@ public:
     void teardown();
     
     // Renderable methods
-    //bool registerAsset(Asset options);
+    bool registerAsset(Asset& asset);
 
 private:
     void initSDL();

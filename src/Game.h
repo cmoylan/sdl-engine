@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "Drawable.h"
 #include "Level.h"
 #include "Player.h"
 
@@ -21,6 +22,8 @@ class Game {
 
     bool _running = true;
     
+    DrawList gameObjects;
+    
 public:
     
     // Getters
@@ -37,4 +40,5 @@ public:
     void update();
     void handleInput();
 
+    DrawList getGameObjects();
 };

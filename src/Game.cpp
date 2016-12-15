@@ -2,7 +2,7 @@
 
 Game::Game()
 {
-
+    
 }
 
 
@@ -12,9 +12,9 @@ Game::~Game()
 }
 
 
-void Game::teardown()
+DrawList Game::getGameObjects()
 {
-
+    return this->gameObjects;
 }
 
 
@@ -82,10 +82,11 @@ void Game::handleInput()
 
 void Game::init()
 {
-    if (level.loadFromJson("Test Level") == false) {
+    if (level.loadFromJson(this->options.levelFolder) == false) {
         throw 2;
     }
     //level.printPlatforms();
+    this->gameObjects.push_back(player);
     try {
         //level->init();
     }
@@ -98,7 +99,13 @@ void Game::init()
 void Game::load(Options options)
 {
     this->options = options;
-    // maybe call Game::init here
+    this->init();
+}
+
+
+void Game::teardown()
+{
+
 }
 
 
