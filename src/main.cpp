@@ -7,6 +7,7 @@
  * - draw a level
  *  - register level assets
  *      - load them from level.json
+ *          - fix TMX tileset paths, make them relative to respath
  * - better exceptions
  * - smoother scrolling, input handling
  */ 

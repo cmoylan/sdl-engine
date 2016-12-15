@@ -8,6 +8,7 @@
 #include "Asset.h"
 
 
+// TODO: this should know which asset it needs
 class Drawable {
     
 public:

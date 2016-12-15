@@ -61,7 +61,8 @@ void Renderer::initSDL()
 
 bool Renderer::registerAsset(Asset& asset)
 {
-    cout << "registering: " << asset.spriteFilename << endl;
+    cout << "registering: " << asset.name <<
+        "  from " << asset.spriteFilename << endl;
     
     // load the asset into video memory
     SDL_Texture* image = loadTexture(this->game.resPath() + asset.spriteFilename, renderer);
@@ -72,8 +73,12 @@ bool Renderer::registerAsset(Asset& asset)
         return false;
     }
     
-    asset.sprite = image;   
-    assets[asset.name] = asset;
+    // the naming kind of sucks here
+    Sprite renderObj = {};
+    renderObj.sprite = image;
+    renderObj.asset = asset;
+    
+    sprites[asset.name] = renderObj;
     
     return true;
  }
@@ -88,7 +93,8 @@ void Renderer::run()
         // draw
         SDL_RenderClear(renderer);
         for (Drawable* object : game.getGameObjects()) {
-                auto asset = this->assets["player"];               
+                auto asset = this->sprites["player"];
+                //auto asset = this->assets["ts_grass-tiles-2-small.png"];
                 renderTexture(asset.sprite, renderer, 
                           object->x(), object->y());
         }
@@ -98,16 +104,14 @@ void Renderer::run()
         //Update the screen
         SDL_RenderPresent(renderer);
     }
-
-    
 }
 
 
 void Renderer::teardown()
 {
     //Clean up
-    for (auto asset: assets) {
-        cleanup(asset.second.sprite);
+    for (auto obj: sprites) {
+        cleanup(obj.second.sprite);
     }
     cleanup(renderer, window);
     IMG_Quit();

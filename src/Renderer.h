@@ -8,12 +8,13 @@
 #include "cleanup.h"
 
 #include "Game.h"
+#include "Sprite.h"
 
 
 class Renderer {
 
     Game game;
-    AssetMap assets;
+    SpriteMap sprites;
 
     SDL_Renderer *renderer;
     SDL_Window *window;
