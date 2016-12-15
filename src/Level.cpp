@@ -12,7 +12,7 @@ Level::~Level()
 }
 
 
-AssetList Level::getAssets()
+AssetList Level::assetData()
 {
     AssetList assets;
     return assets;

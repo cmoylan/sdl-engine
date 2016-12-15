@@ -3,10 +3,12 @@
 #include "Game.h"
 #include "Renderer.h"
 
-// TODO:
-// - draw a level
-// - better exceptions
-//
+/* TODO:
+ * - draw a level
+ *  - register level assets
+ *      - load them from level.json
+ * - better exceptionsss 
+ */ 
 
 int main(int, char**)
 {

@@ -82,7 +82,6 @@ void Renderer::run()
         
         // draw
         SDL_RenderClear(renderer);
-        // foreach renderable in renderables:
         for (Drawable* object : game.getGameObjects()) {
                 auto asset = this->assets["player"];               
                 renderTexture(asset.sprite, renderer, 
@@ -102,7 +101,9 @@ void Renderer::run()
 void Renderer::teardown()
 {
     //Clean up
-    // TODO: do this for all renderables
+    for (auto asset: assets) {
+        cleanup(asset.second.sprite);
+    }
     cleanup(renderer, window);
     IMG_Quit();
     SDL_Quit();

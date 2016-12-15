@@ -13,7 +13,7 @@
 #include "sdl_helpers.h"
 
 #include "Asset.h"
-
+#include "Drawable.h"
 
 struct Layer {
     int tileCount;
@@ -24,7 +24,7 @@ struct Layer {
 
 typedef std::map<std::string, Layer> LayerList;
 
-class Level {
+class Level : private Drawable {
 
     int mapWidth;
     int mapHeight;
@@ -49,7 +49,7 @@ public:
 
     void render();
     
-    AssetList getAssets();
+    virtual AssetList assetData();
 
 private:
 
