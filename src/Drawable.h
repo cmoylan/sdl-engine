@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 #include <vector>
 
 #include "constants.h"
@@ -10,9 +11,7 @@
 class Drawable {
     
 public:
-    
-    Asset asset;
-    
+
     int _x = 0;
     int _y = 0;
     
@@ -25,8 +24,15 @@ public:
     // this should return a list of assets and their associated
     // metadata
     // --- currently not used
-    void renderData();
+    //void renderData();
+    
+    /* returns either enough data to create an asset,
+     * or an asset without any SDL stuff
+     * 
+     */
+    virtual AssetList assetData() =0;
 };
 
-// TODO: rename
-typedef std::vector<Drawable> DrawList;
+// TODO: use the safe pointer
+//typedef std::vector<std::unique_ptr<Drawable>> DrawList;
+typedef std::vector<Drawable*> DrawList;

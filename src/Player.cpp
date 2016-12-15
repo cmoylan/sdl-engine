@@ -5,14 +5,25 @@ Player::Player()
     _x = SCREEN_WIDTH - 100;
     _y = SCREEN_HEIGHT - 100;
     std::cout << "making a player" << std::endl;
-    
-    asset.spriteFilename = "sprite.png";
 }
 
 
 Player::~Player()
 {
     
+}
+
+
+AssetList Player::assetData()
+{
+    AssetList assets;
+    
+    Asset asset;
+    asset.spriteFilename = "sprite.png";
+    asset.name = "player";
+    assets.push_back(asset);
+    
+    return assets;
 }
 
 

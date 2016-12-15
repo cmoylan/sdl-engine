@@ -86,7 +86,7 @@ void Game::init()
         throw 2;
     }
     //level.printPlatforms();
-    this->gameObjects.push_back(player);
+    this->gameObjects.push_back(&player);
     try {
         //level->init();
     }

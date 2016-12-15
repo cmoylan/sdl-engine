@@ -16,10 +16,13 @@ void Renderer::init(Game game)
     this->game = game;
     this->initSDL();
     this->game.init();
-    
+       
     // load assets
-    for (Drawable object : game.getGameObjects()) {
-       this->registerAsset(object.asset);
+    for (Drawable* object : this->game.getGameObjects()) {
+        for (Asset& asset : object->assetData() ) {
+            // TODO: do something bad if any return false
+            this->registerAsset(asset);
+        }
     }
 }
 
@@ -63,7 +66,9 @@ bool Renderer::registerAsset(Asset& asset)
         SDL_Quit();
         return false;
     }
-    asset.sprite = image;
+    
+    asset.sprite = image;   
+    assets[asset.name] = asset;
     
     return true;
  }
@@ -78,9 +83,10 @@ void Renderer::run()
         // draw
         SDL_RenderClear(renderer);
         // foreach renderable in renderables:
-        for (Drawable object : game.getGameObjects()) {
-            renderTexture(object.asset.sprite, renderer, 
-                          object.x(), object.y());
+        for (Drawable* object : game.getGameObjects()) {
+                auto asset = this->assets["player"];               
+                renderTexture(asset.sprite, renderer, 
+                          object->x(), object->y());
         }
         
         //renderTexture(image, renderer, x, y, &clips[useClip]);

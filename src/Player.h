@@ -16,4 +16,5 @@ public:
     void move(int x, int y);
     void move(Vector2D direction);
 
+    AssetList assetData();
 };

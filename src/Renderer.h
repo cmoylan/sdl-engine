@@ -13,6 +13,7 @@
 class Renderer {
 
     Game game;
+    AssetMap assets;
 
     SDL_Renderer *renderer;
     SDL_Window *window;
@@ -26,6 +27,9 @@ public:
     void teardown();
     
     // Renderable methods
+    /* copy the asset into an asset list
+     * 
+     */
     bool registerAsset(Asset& asset);
 
 private:
