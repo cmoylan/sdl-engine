@@ -22,7 +22,32 @@ struct Layer {
     int height;
 };
 
-typedef std::map<std::string, Layer> LayerList;
+typedef std::map<std::string, Layer> LayerMap;
+
+
+struct Tileset {
+    // assume filename is relative to level respath
+    std::string filename;
+    int firstGid;
+    int lastGid;
+    int width;
+    int height;
+    int tileWidth;
+    int tileHeight;
+    int numRows;
+    int numCols;
+    //float scaleFactorX;
+    //float scaleFactorY;
+    void setCalculatedFields() {
+        lastGid = firstGid + (
+            (width / tileWidth) * (height / tileHeight)) - 1;
+        numRows = height / tileHeight;
+        numCols = width / tileWidth;
+    };
+};
+
+typedef std::map<std::string, Tileset> TilesetMap;
+
 
 class Level : private Drawable {
 
@@ -33,11 +58,14 @@ class Level : private Drawable {
 
     std::string levelFileName;
     
+    LayerMap layers; 
+    TilesetMap tilesets;
+    
 public:
     
     // FIXME: what sets this?
     std::string resPath;
-    LayerList layers;
+
 
     Level();
     ~Level();
@@ -54,5 +82,6 @@ public:
 private:
 
     bool loadLayer(const std::string& layerName, const rapidjson::Value& data);
+    bool loadTileset(const rapidjson::Value& data);
 
 };

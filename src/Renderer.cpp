@@ -16,7 +16,12 @@ void Renderer::init(Game game)
     this->game = game;
     this->initSDL();
     this->game.init();
-       
+    
+    // load level
+    for (Asset tileset : this->game.level.assetData()) {
+        this->registerAsset(tileset);
+    }
+    
     // load assets
     for (Drawable* object : this->game.getGameObjects()) {
         for (Asset& asset : object->assetData() ) {

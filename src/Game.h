@@ -18,13 +18,14 @@ class Game {
 
     Options options;
     Player player;
-    Level level;
 
     bool _running = true;
     
     DrawList gameObjects;
     
 public:
+    
+    Level level;
     
     // Getters
     std::string resPath() const { return level.resPath ;}
@@ -41,4 +42,5 @@ public:
     void handleInput();
 
     DrawList getGameObjects();
+    
 };

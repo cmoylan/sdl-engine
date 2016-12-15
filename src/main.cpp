@@ -7,7 +7,8 @@
  * - draw a level
  *  - register level assets
  *      - load them from level.json
- * - better exceptionsss 
+ * - better exceptions
+ * - smoother scrolling, input handling
  */ 
 
 int main(int, char**)
