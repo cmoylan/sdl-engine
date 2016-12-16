@@ -1,11 +1,16 @@
 #include "Renderer.h"
 
-Renderer::Renderer()
+void Renderer::drawGameObjects()
 {
-
+    for (Drawable* object : game.getGameObjects()) {
+        auto sprite = this->sprites[object->assetName];
+        renderTexture(sprite.texture, renderer, 
+            object->x(), object->y());
+    }
 }
 
-Renderer::~Renderer()
+
+void Renderer::drawLevel()
 {
 
 }
@@ -75,7 +80,7 @@ bool Renderer::registerAsset(Asset& asset)
     
     // the naming kind of sucks here
     Sprite renderObj = {};
-    renderObj.sprite = image;
+    renderObj.texture = image;
     renderObj.asset = asset;
     
     sprites[asset.name] = renderObj;
@@ -89,16 +94,12 @@ void Renderer::run()
     while (this->game.running()) {
         this->game.handleInput();
         this->game.update();
-        
+                
         // draw
         SDL_RenderClear(renderer);
-        for (Drawable* object : game.getGameObjects()) {
-                auto asset = this->sprites["player"];
-                //auto asset = this->assets["ts_grass-tiles-2-small.png"];
-                renderTexture(asset.sprite, renderer, 
-                          object->x(), object->y());
-        }
-        
+        // draw level first
+        drawLevel();
+        drawGameObjects();
         //renderTexture(image, renderer, x, y, &clips[useClip]);
         //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
         //Update the screen
@@ -111,7 +112,7 @@ void Renderer::teardown()
 {
     //Clean up
     for (auto obj: sprites) {
-        cleanup(obj.second.sprite);
+        cleanup(obj.second.texture);
     }
     cleanup(renderer, window);
     IMG_Quit();

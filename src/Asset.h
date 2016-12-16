@@ -8,7 +8,6 @@
 struct Asset {
     std::string name;
     std::string spriteFilename;
-    //SDL_Texture *sprite;
     int width;
     int height;
 };

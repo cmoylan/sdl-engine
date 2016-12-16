@@ -1,7 +1,7 @@
 #pragma once
 
+#include <forward_list>
 #include <map>
-#include <vector>
 #include <string>
 
 #include "rapidjson/document.h"
@@ -15,13 +15,13 @@
 #include "Asset.h"
 #include "Drawable.h"
 
+
 struct Layer {
     int tileCount;
     std::vector<int> tiles;
     int width;
     int height;
 };
-
 typedef std::map<std::string, Layer> LayerMap;
 
 
@@ -45,11 +45,23 @@ struct Tileset {
         numCols = width / tileWidth;
     };
 };
-
 typedef std::map<std::string, Tileset> TilesetMap;
 
 
-class Level : private Drawable {
+// FIXME: this name is not descriptive
+// it's the information to render one rectangle on screen
+struct Rectangle {
+    int x;
+    int y;
+    int clipX;
+    int clipY;
+};
+typedef std::forward_list<Rectangle> RectangleList;
+// string is the asset name, rect list is where to draw them
+typedef std::map<std::string, RectangleList> RenderMap;
+
+
+class Level :private Drawable {
 
     int mapWidth;
     int mapHeight;
@@ -63,22 +75,27 @@ class Level : private Drawable {
     
 public:
     
-    // FIXME: what sets this?
-    std::string resPath;
+    std::string resPath;  // FIXME: what sets this?
 
+    Level() {};
+    ~Level() {};
 
-    Level();
-    ~Level();
-
-    // TODO: make this a class method that can construct a level object
+    // TODO: make a class method that can construct a level object
     bool loadFromJson(const std::string& filename);
 
     void printPlatforms();
 
-    void render();
-    
     virtual AssetList assetData();
-
+    
+    /**
+     * Return a bunch of render data
+     * needs to return:
+     * - x, y coords
+     * - x, y clips
+     * - for each tile on the screen
+     */
+    RenderMap renderData();
+    
 private:
 
     bool loadLayer(const std::string& layerName, const rapidjson::Value& data);

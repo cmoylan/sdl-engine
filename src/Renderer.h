@@ -20,18 +20,21 @@ class Renderer {
     SDL_Window *window;
 
 public:
-    Renderer();
-    ~Renderer();
+    Renderer() {};
+    ~Renderer() {};
 
     void init(Game game);
     void run();
     void teardown();
     
     // Renderable methods
-    /* copy the asset into an asset list
-     * 
+    /* create a sprite based on the asset
+     * and copy it into the spritemap
      */
     bool registerAsset(Asset& asset);
+    
+    void drawLevel();
+    void drawGameObjects();
 
 private:
     void initSDL();

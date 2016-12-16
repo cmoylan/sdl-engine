@@ -1,5 +1,6 @@
 #include "Level.h"
 
+
 bool
 Level::loadFromJson(const std::string& folder)
 {

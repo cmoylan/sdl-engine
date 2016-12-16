@@ -1,17 +1,5 @@
 #include "Level.h"
 
-Level::Level()
-{
-
-}
-
-
-Level::~Level()
-{
-
-}
-
-
 AssetList Level::assetData()
 {
     AssetList assets;
@@ -24,7 +12,7 @@ AssetList Level::assetData()
         asset.spriteFilename = tileset.filename;
         asset.width = tileset.width;
         asset.height = tileset.height;
-        asset.name = "ts_" + tileset.filename;
+        asset.name = tileset.filename;
         
         assets.push_back(asset);
     };
@@ -33,10 +21,10 @@ AssetList Level::assetData()
 }
 
 
-// FIXME: use IOSTREAM
 void
 Level::printPlatforms()
 {
+    // FIXME: use IOSTREAM
     using namespace std;
     cout << "this work?" << endl;
     // ----- print out the level ----- //
@@ -55,4 +43,23 @@ Level::printPlatforms()
     }
     printf("\n");
     printf("tile count is: %d\n", layer.tileCount);
+}
+
+
+RenderMap 
+Level::renderData()
+{
+    RenderMap map;
+    // for each asset
+    // for each square to render
+    // assume 1:1 LayerMap to Tileset
+    
+    for (auto& layerPair : layers) {
+        // only do platforms for now...remove this later
+        if (layerPair.first == "platforms") {
+            layerPair.second;
+        }
+    };
+    
+    return map;
 }

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include <memory>
+//#include <memory>
+#include <string>
 #include <vector>
 
 #include "constants.h"
@@ -13,6 +14,8 @@ class Drawable {
     
 public:
 
+    std::string assetName;
+    
     int _x = 0;
     int _y = 0;
     

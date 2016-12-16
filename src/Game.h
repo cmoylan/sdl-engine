@@ -25,7 +25,7 @@ class Game {
     
 public:
     
-    Level level;
+    Level level; // acces to this should be readonly
     
     // Getters
     std::string resPath() const { return level.resPath ;}
