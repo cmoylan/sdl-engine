@@ -4,7 +4,7 @@ AssetList Level::assetData()
 {
     AssetList assets;
     // load assets from tilesets
-    for (auto tilesetPair : this->tilesets) {
+    for (auto& tilesetPair : this->tilesets) {
         // load into an asset, append to asset list
         Tileset& tileset = tilesetPair.second;
 
@@ -21,20 +21,26 @@ AssetList Level::assetData()
 }
 
 
-void
-Level::printPlatforms()
+bool Level::isEndOfRow(size_t index)
+{
+    return (index % (mapWidth - 1) == 0)
+           && index != 0;
+}
+
+
+void Level::printPlatforms()
 {
     // ----- print out the level ----- //
     using namespace std;
 
-    Layer& layer = layers.find("platforms")->second;
-    int i, row;
-    row = 0;
+    const Layer& layer = layers.find("platforms")->second;
+    size_t i = 0;
+    int row = 0;
 
     cout << endl << "[" << row << "]: ";
-    for (auto& tile : layer.tiles) {
+    for (const auto& tile : layer.tiles) {
         cout << tile << " | ";
-        if ((i % mapWidth == 0) && (row < (mapHeight - 1))) {
+        if (this->isEndOfRow(i)) {
             ++row;
             cout << endl << "[" << row << "]:";
         }
@@ -44,10 +50,13 @@ Level::printPlatforms()
 }
 
 
-RenderMap
-Level::renderData()
+RenderMap Level::renderData()
 {
     RenderMap map;
+    // TODO: abstract
+    int tileWidth = SCREEN_WIDTH / 20;
+    int tileHeight = SCREEN_HEIGHT / 20;
+
     // for each asset
     // for each square to render
     // assume 1:1 LayerMap to Tileset
@@ -55,24 +64,42 @@ Level::renderData()
     // should start with the top layer, keep track of the positions on the screen that are filled
     // and skip them in the lower layers if they are filled by top layers
 
-    for (auto& layerPair : layers) {
+    // generate the clips first, rect is just the x,y and a clip id...or a gid
+
+    for (const auto& layerPair : layers) {
         // only do platforms for now...remove this later
         if (layerPair.first == "platforms") {
             // assume only one asset for now
-            auto& layer = layerPair.second;
+
+            // keep track of which gids have clips generated, so you don't keep generating them
+
+            const auto& layer = layerPair.second;
+            RectangleList rectangles;
+
             size_t i = 0; // TODO: better way to do this?
-            for (auto tile : layer.tiles) {
+            int col = 0;
+            int row = 0;
+            for (const auto& tile : layer.tiles) {
                 // make a rect for each of these
                 // then use the GID to use the right sprite
-                Rectangle rect = {};
-                rect.x = i % layer.width;
-                rect.y = i % layer.height;
-                //rect.clipX;
-                //rect.clipY;
+
+                if (tile != 0) {
+                    Rectangle rect = {};
+                    rect.x = col * tileWidth;
+                    rect.y = row * tileHeight;
+                    rectangles.push_front(rect);
+                }
+
+                col++;
+                if (this->isEndOfRow(i)) {
+                    row++;
+                    col = 0; // TODO: can do this better
+                }
+
                 i++;
             }
+            map[layerPair.first] = rectangles;
         }
     };
-
     return map;
 }

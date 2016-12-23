@@ -34,7 +34,7 @@ public:
      * or an asset without any SDL stuff
      *
      */
-    virtual AssetList assetData() = 0;
+    virtual AssetList assetData() =0; // *NOPAD*
 };
 
 // TODO: use the safe pointer

@@ -56,6 +56,7 @@ struct Rectangle {
     int y;
     int clipX;
     int clipY;
+    int gid;
 };
 typedef std::forward_list<Rectangle> RectangleList;
 // string is the asset name, rect list is where to draw them
@@ -102,4 +103,8 @@ private:
     bool loadLayer(const std::string& layerName, const rapidjson::Value& data);
     bool loadTileset(const rapidjson::Value& data);
 
+    /**
+     * Determine if a tile index is the end of the level row
+     */
+    bool isEndOfRow(size_t index);
 };

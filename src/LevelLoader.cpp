@@ -8,7 +8,7 @@ Level::loadFromJson(const std::string& folder)
 
     SizeType i;
     Document document;
-    std::string layerName;
+
     this->resPath = getResourcePath(folder);
     std::string filename = this->resPath + "level.json";
     std::string jsonString = FileHelpers::loadStringFromFile(filename);
@@ -26,7 +26,7 @@ Level::loadFromJson(const std::string& folder)
     // FIXME: these should raise exceptions, or give a more helpful error
     const Value& layers = document["layers"];
     for (i = 0; i < layers.Size(); i++) {
-        layerName = layers[i]["name"].GetString();
+        std::string layerName = layers[i]["name"].GetString();
         if (!loadLayer(layerName, layers[i]["data"])) {
             return false;
         }
@@ -40,7 +40,6 @@ Level::loadFromJson(const std::string& folder)
         }
     }
 
-    this->printPlatforms();
     return true;
 }
 

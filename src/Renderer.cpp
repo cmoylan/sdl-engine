@@ -4,15 +4,37 @@ void Renderer::drawGameObjects()
 {
     for (Drawable* object : game.getGameObjects()) {
         auto sprite = this->sprites[object->assetName];
+        SDL_Rect clip = {};
+        clip.x = 0;
+        clip.y = 0;
+        clip.w = 100;
+        clip.h = 100;
         renderTexture(sprite.texture, renderer,
-                      object->x(), object->y());
+                      object->x(), object->y(), &clip);
     }
 }
 
 
 void Renderer::drawLevel()
 {
+    auto sprite = this->sprites["grass-tiles-2-small.png"];
 
+    SDL_Rect clip = {};
+    clip.x = 0;
+    clip.y = 0;
+    clip.w = SCREEN_WIDTH / 20;
+    clip.h = SCREEN_HEIGHT / 20;
+
+    // ------- LEFT OFF HERE ------ //
+    // fix the coordinates and clips
+    for (const auto& renderPair : game.level.renderData()) {
+        // renderPair.first; // will be the sprite name
+        for (const auto& rect : renderPair.second) {
+            renderTexture(sprite.texture, renderer,
+                          rect.x, rect.y, &clip);
+
+        }
+    }
 }
 
 

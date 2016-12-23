@@ -15,6 +15,8 @@ int main(int, char**)
     Renderer renderer;
 
     Game game;
+    std::cout << SCREEN_WIDTH << " - " << SCREEN_HEIGHT << ": ";
+    std::cout << SCREEN_WIDTH / 20 << " - " << SCREEN_HEIGHT / 20 << std::endl;
 
     // level number, score, level folder
     Options opts = { 1, 0, "Test Level" };

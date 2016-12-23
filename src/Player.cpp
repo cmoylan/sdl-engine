@@ -4,7 +4,6 @@ Player::Player()
 {
     _x = SCREEN_WIDTH - 100;
     _y = SCREEN_HEIGHT - 100;
-    std::cout << "making a player" << std::endl;
 }
 
 

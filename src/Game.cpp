@@ -85,21 +85,20 @@ void Game::init()
     if (level.loadFromJson(this->options.levelFolder) == false) {
         throw 2;
     }
-    //level.printPlatforms();
     this->gameObjects.push_back(&player);
-    try {
-        //level->init();
-    }
-    catch (int e) {
-        throw 1;
-    }
+    level.renderData();
+    //try {
+    //    level->init();
+    //}
+    //catch (int e) {
+    //    throw 1;
+    //}
 }
 
 
 void Game::load(Options options)
 {
     this->options = options;
-    this->init();
 }
 
 
