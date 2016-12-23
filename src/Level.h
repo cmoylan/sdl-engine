@@ -38,9 +38,10 @@ struct Tileset {
     int numCols;
     //float scaleFactorX;
     //float scaleFactorY;
-    void setCalculatedFields() {
+    void setCalculatedFields()
+    {
         lastGid = firstGid + (
-            (width / tileWidth) * (height / tileHeight)) - 1;
+                      (width / tileWidth) * (height / tileHeight)) - 1;
         numRows = height / tileHeight;
         numCols = width / tileWidth;
     };
@@ -61,7 +62,7 @@ typedef std::forward_list<Rectangle> RectangleList;
 typedef std::map<std::string, RectangleList> RenderMap;
 
 
-class Level :private Drawable {
+class Level : private Drawable {
 
     int mapWidth;
     int mapHeight;
@@ -69,12 +70,12 @@ class Level :private Drawable {
     int tileHeight;
 
     std::string levelFileName;
-    
-    LayerMap layers; 
+
+    LayerMap layers;
     TilesetMap tilesets;
-    
+
 public:
-    
+
     std::string resPath;  // FIXME: what sets this?
 
     Level() {};
@@ -86,7 +87,7 @@ public:
     void printPlatforms();
 
     virtual AssetList assetData();
-    
+
     /**
      * Return a bunch of render data
      * needs to return:
@@ -95,7 +96,7 @@ public:
      * - for each tile on the screen
      */
     RenderMap renderData();
-    
+
 private:
 
     bool loadLayer(const std::string& layerName, const rapidjson::Value& data);

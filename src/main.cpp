@@ -8,7 +8,7 @@
  *   - actually draw it
  * - better exceptions
  * - smoother scrolling, input handling
- */ 
+ */
 
 int main(int, char**)
 {

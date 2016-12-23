@@ -10,20 +10,20 @@ Player::Player()
 
 Player::~Player()
 {
-    
+
 }
 
 
 AssetList Player::assetData()
 {
     AssetList assets;
-    
+
     Asset asset;
     asset.spriteFilename = "sprite.png";
     asset.name = "player";
     assets.push_back(asset);
     this->assetName = "player";
-    
+
     return assets;
 }
 

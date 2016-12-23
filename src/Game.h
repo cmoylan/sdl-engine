@@ -20,13 +20,13 @@ class Game {
     Player player;
 
     bool _running = true;
-    
+
     DrawList gameObjects;
-    
+
 public:
-    
+
     Level level; // acces to this should be readonly
-    
+
     // Getters
     std::string resPath() const { return level.resPath ;}
     bool running() const { return _running; }
@@ -42,5 +42,5 @@ public:
     void handleInput();
 
     DrawList getGameObjects();
-    
+
 };

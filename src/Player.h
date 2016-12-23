@@ -6,7 +6,7 @@
 #include "Drawable.h"
 
 
-class Player : public Drawable {  
+class Player : public Drawable {
 
 public:
 

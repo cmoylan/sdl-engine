@@ -40,6 +40,7 @@ Level::loadFromJson(const std::string& folder)
         }
     }
 
+    this->printPlatforms();
     return true;
 }
 
@@ -67,16 +68,16 @@ Level::loadLayer(const std::string& layerName, const rapidjson::Value& data)
 }
 
 
-bool    
-Level::loadTileset(const rapidjson::Value& data) 
+bool
+Level::loadTileset(const rapidjson::Value& data)
 {
     using namespace rapidjson;
 
     std::string filename = data["image"].GetString();
     std::string layername = data["name"].GetString();
     if (filename.empty() || layername.empty()) {
-      return false;
-    } 
+        return false;
+    }
 
     Tileset tileset = {};
     tileset.filename = filename;
@@ -86,7 +87,7 @@ Level::loadTileset(const rapidjson::Value& data)
     tileset.tileWidth = data["tilewidth"].GetInt();
     tileset.tileHeight = data["tileheight"].GetInt();
     tileset.setCalculatedFields();
-    
+
     tilesets[layername] = tileset;
 
     return true; // TODO: actually check something was loaded

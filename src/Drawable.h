@@ -11,14 +11,14 @@
 
 // TODO: this should know which asset it needs
 class Drawable {
-    
+
 public:
 
     std::string assetName;
-    
+
     int _x = 0;
     int _y = 0;
-    
+
     int x() { return _x; }
     int y() { return _y; }
     //Vector2D getPos();
@@ -29,12 +29,12 @@ public:
     // metadata
     // --- currently not used
     //void renderData();
-    
+
     /* returns either enough data to create an asset,
      * or an asset without any SDL stuff
-     * 
+     *
      */
-    virtual AssetList assetData() =0;
+    virtual AssetList assetData() = 0;
 };
 
 // TODO: use the safe pointer

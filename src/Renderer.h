@@ -26,13 +26,13 @@ public:
     void init(Game game);
     void run();
     void teardown();
-    
+
     // Renderable methods
     /* create a sprite based on the asset
      * and copy it into the spritemap
      */
     bool registerAsset(Asset& asset);
-    
+
     void drawLevel();
     void drawGameObjects();
 

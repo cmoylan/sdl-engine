@@ -4,8 +4,8 @@ void Renderer::drawGameObjects()
 {
     for (Drawable* object : game.getGameObjects()) {
         auto sprite = this->sprites[object->assetName];
-        renderTexture(sprite.texture, renderer, 
-            object->x(), object->y());
+        renderTexture(sprite.texture, renderer,
+                      object->x(), object->y());
     }
 }
 
@@ -21,15 +21,15 @@ void Renderer::init(Game game)
     this->game = game;
     this->initSDL();
     this->game.init();
-    
+
     // load level
     for (Asset tileset : this->game.level.assetData()) {
         this->registerAsset(tileset);
     }
-    
+
     // load assets
     for (Drawable* object : this->game.getGameObjects()) {
-        for (Asset& asset : object->assetData() ) {
+        for (Asset& asset : object->assetData()) {
             // TODO: do something bad if any return false
             this->registerAsset(asset);
         }
@@ -67,26 +67,27 @@ void Renderer::initSDL()
 bool Renderer::registerAsset(Asset& asset)
 {
     cout << "registering: " << asset.name <<
-        "  from " << asset.spriteFilename << endl;
-    
+         "  from " << asset.spriteFilename << endl;
+
     // load the asset into video memory
-    SDL_Texture* image = loadTexture(this->game.resPath() + asset.spriteFilename, renderer);
-    if (image == nullptr){
+    SDL_Texture* image = loadTexture(this->game.resPath() + asset.spriteFilename,
+                                     renderer);
+    if (image == nullptr) {
         cleanup(image, renderer, window);
         IMG_Quit();
         SDL_Quit();
         return false;
     }
-    
+
     // the naming kind of sucks here
     Sprite renderObj = {};
     renderObj.texture = image;
     renderObj.asset = asset;
-    
+
     sprites[asset.name] = renderObj;
-    
+
     return true;
- }
+}
 
 
 void Renderer::run()
@@ -94,7 +95,7 @@ void Renderer::run()
     while (this->game.running()) {
         this->game.handleInput();
         this->game.update();
-                
+
         // draw
         SDL_RenderClear(renderer);
         // draw level first
@@ -111,7 +112,7 @@ void Renderer::run()
 void Renderer::teardown()
 {
     //Clean up
-    for (auto obj: sprites) {
+    for (auto obj : sprites) {
         cleanup(obj.second.texture);
     }
     cleanup(renderer, window);

@@ -32,13 +32,13 @@ Level::printPlatforms()
     row = 0;
 
     cout << endl << "[" << row << "]: ";
-    for (auto tile : layer.tiles) {
+    for (auto& tile : layer.tiles) {
         cout << tile << " | ";
         if ((i % mapWidth == 0) && (row < (mapHeight - 1))) {
             ++row;
-	    cout << endl << "[" << row << "]:";
+            cout << endl << "[" << row << "]:";
         }
-	i++;
+        i++;
     }
     cout << endl << "tile count is: " << layer.tileCount << endl;
 }
@@ -52,6 +52,9 @@ Level::renderData()
     // for each square to render
     // assume 1:1 LayerMap to Tileset
 
+    // should start with the top layer, keep track of the positions on the screen that are filled
+    // and skip them in the lower layers if they are filled by top layers
+
     for (auto& layerPair : layers) {
         // only do platforms for now...remove this later
         if (layerPair.first == "platforms") {
@@ -59,14 +62,14 @@ Level::renderData()
             auto& layer = layerPair.second;
             size_t i = 0; // TODO: better way to do this?
             for (auto tile : layer.tiles) {
-              // make a rect for each of these
-              // then use the GID to use the right sprite
-              Rectangle rect = {};
-              rect.x = i % layer.width;
-              rect.y = i % layer.height;
-              //rect.clipX;
-              //rect.clipY;
-              i++;
+                // make a rect for each of these
+                // then use the GID to use the right sprite
+                Rectangle rect = {};
+                rect.x = i % layer.width;
+                rect.y = i % layer.height;
+                //rect.clipX;
+                //rect.clipY;
+                i++;
             }
         }
     };
