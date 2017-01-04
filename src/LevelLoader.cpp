@@ -70,6 +70,7 @@ Level::loadLayer(const std::string& layerName, const rapidjson::Value& data)
 bool
 Level::loadTileset(const rapidjson::Value& data)
 {
+    // TODO: assume the filename is in the working directory, cut off the first part of the path
     using namespace rapidjson;
 
     std::string filename = data["image"].GetString();
@@ -77,6 +78,7 @@ Level::loadTileset(const rapidjson::Value& data)
     if (filename.empty() || layername.empty()) {
         return false;
     }
+    filename = FileHelpers::filenameFromPath(filename);
 
     Tileset tileset = {};
     tileset.filename = filename;

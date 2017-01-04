@@ -16,7 +16,8 @@ int main(int, char**)
 
     Game game;
     std::cout << "screen w/h: " << SCREEN_WIDTH << " - " << SCREEN_HEIGHT << ": ";
-    std::cout << "tile w/h: " << SCREEN_WIDTH / 20 << " - " << SCREEN_HEIGHT / 20 << std::endl;
+    std::cout << "tile w/h: " << SCREEN_WIDTH / 20 << " - " << SCREEN_HEIGHT / 20 <<
+              std::endl;
 
     // level number, score, level folder
     Options opts = { 1, 0, "Test Level 2" };

@@ -23,7 +23,7 @@ AssetList Level::assetData()
 
 bool Level::isEndOfRow(size_t index)
 {
-  return ((index + 1) % mapWidth == 0)
+    return ((index + 1) % mapWidth == 0)
            && index != 0;
 }
 
@@ -47,6 +47,21 @@ void Level::printPlatforms()
         i++;
     }
     cout << endl << "tile count is: " << layer.tileCount << endl;
+}
+
+
+void printRenderData(RenderMap data)
+{
+    using namespace std;
+    for (const auto& mapPair : data) {
+        // mapPair.second - rectangles
+        size_t i = 0;
+        for (const auto& rectangle : mapPair.second) {
+            cout << i << ": ";
+            cout << "[" << rectangle.x << ", " << rectangle.y << "] " << endl;
+            i++;
+        }
+    }
 }
 
 
@@ -90,26 +105,14 @@ RenderMap Level::renderData()
                     rectangles.push_front(rect);
                 }
 
-
+                col++;
                 if (this->isEndOfRow(i)) {
-		  //cout << "end of row: " << i << ", tile is: " << tile << endl;
                     row++;
-                    col = 0; // TODO: can do this better
-                } else {
-		    col++;
-		  }
-
+                    col = 0;
+                }
                 i++;
             }
             map[layerPair.first] = rectangles;
-
-	    // TODO: abstract into a function?
-	    //i = 0;
-	    //for (auto rect : rectangles) {
-	    //  cout << i << ": ";
-	    //  cout << "[" << rect.x << ", " << rect.y << "] " << endl;
-	    //  i++;
-	    //}
         }
     };
     return map;

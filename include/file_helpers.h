@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iostream>
 
+
 using namespace std;
 
 namespace FileHelpers {
@@ -30,4 +31,15 @@ namespace FileHelpers {
          }
      }
 
+
+  /**
+   * Given a file path, return just the filename and extension
+   * @param path The full or relative path to a file
+   * @return a string that is the filename and extension
+   */
+  inline string filenameFromPath(const string& path) {
+    // FIXME: this is not portable
+    unsigned found = path.find_last_of("/\\");
+    return path.substr(found+1);
+  }
 }

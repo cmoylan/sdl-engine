@@ -22,7 +22,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"grass-tiles-2-small.png",
+         "image":"..\/..\/workfiles\/grass-tiles-2-small.png",
          "imageheight":192,
          "imagewidth":384,
          "margin":0,
