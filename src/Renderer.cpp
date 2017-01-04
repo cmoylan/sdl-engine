@@ -114,7 +114,7 @@ bool Renderer::registerAsset(Asset& asset)
 
 void Renderer::run()
 {
-    while (this->game.running()) {
+  while (this->game.running()) {
         this->game.handleInput();
         this->game.update();
 
@@ -127,7 +127,7 @@ void Renderer::run()
         //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
         //Update the screen
         SDL_RenderPresent(renderer);
-    }
+	}
 }
 
 

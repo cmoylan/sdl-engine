@@ -23,7 +23,7 @@ AssetList Level::assetData()
 
 bool Level::isEndOfRow(size_t index)
 {
-    return (index % (mapWidth - 1) == 0)
+  return ((index + 1) % mapWidth == 0)
            && index != 0;
 }
 
@@ -90,15 +90,26 @@ RenderMap Level::renderData()
                     rectangles.push_front(rect);
                 }
 
-                col++;
+
                 if (this->isEndOfRow(i)) {
+		  //cout << "end of row: " << i << ", tile is: " << tile << endl;
                     row++;
                     col = 0; // TODO: can do this better
-                }
+                } else {
+		    col++;
+		  }
 
                 i++;
             }
             map[layerPair.first] = rectangles;
+
+	    // TODO: abstract into a function?
+	    //i = 0;
+	    //for (auto rect : rectangles) {
+	    //  cout << i << ": ";
+	    //  cout << "[" << rect.x << ", " << rect.y << "] " << endl;
+	    //  i++;
+	    //}
         }
     };
     return map;
