@@ -95,6 +95,9 @@ public:
      * - x, y coords
      * - x, y clips
      * - for each tile on the screen
+     *  [sprite1 => [
+     *  { rect 1 }, { rect 2 }],
+     *   sprite2 => [ ...etc... ]] 
      */
     RenderMap renderData();
 
