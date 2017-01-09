@@ -71,7 +71,7 @@ class Level : private Drawable {
     int mapHeight;
     int textureTileWidth;
     int textureTileHeight;
-    
+
 
 
     std::string levelFileName;
@@ -92,7 +92,7 @@ public:
     int pixelsPerTileX;
     // take height of screen, divide by tilesOnScreenY
     int pixelsPerTileY;
-    
+
     Level();
     ~Level() {};
 
@@ -101,14 +101,14 @@ public:
 
     // FIXME: this blows up if run before `loadFromJson`
     void printPlatforms();
-    
+
     /**
      * Scroll by a pixel amount
      * @param pixelsX the amount to move left-right
      * @param pixelsY the amount to move up-down
      */
     void scrollBy(int pixelsX, int pixelsY);
-    
+
     /**
      * Get the indices of the tiles currently on screen
      * @return a list of indices whose tiles should be rendered
@@ -125,7 +125,7 @@ public:
      * - for each tile on the screen
      *  [sprite1 => [
      *  { rect 1 }, { rect 2 }],
-     *   sprite2 => [ ...etc... ]] 
+     *   sprite2 => [ ...etc... ]]
      * @return a RenderMap with an entry for each layer
      */
     RenderMap renderData();

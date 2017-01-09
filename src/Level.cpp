@@ -1,7 +1,7 @@
 #include "Level.h"
 
 
-Level::Level() 
+Level::Level()
 {
     offsetX = 0;
     offsetY = 0;
@@ -132,7 +132,8 @@ RenderMap Level::renderData()
 }
 
 
-void Level::scrollBy(int x, int y) {
+void Level::scrollBy(int x, int y)
+{
     this->offsetX += x;
     this->offsetY += y;
 }
@@ -149,10 +150,10 @@ void Level::updatePixelsPerTile()
 std::list<int> Level::tilesOnScreen()
 {
     int prefetch = 1; // TODO: constantize, come from options
-    
+
     int index = (offsetX / pixelsPerTileX) + ((offsetY / pixelsPerTileY) * 20);
     std::list<int> indices;
-    
+
     for (int y = 0; y <= tilesOnScreenY; y++) {
         // for each row, do this
         for (int x = 0; x <= tilesOnScreenX; x++) {

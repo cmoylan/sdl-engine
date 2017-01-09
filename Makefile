@@ -44,7 +44,7 @@ clean:
 # http://astyle.sourceforge.net/astyle.html
 style:
 	@astyle --options=.astylerc \
-	`ls src/*.h src/*.cpp`
+	`ls src/*.h src/*.cpp test/*.cpp`
 
 TEST_CXXFLAGS = -std=c++14 $(SDL_INCLUDE) -I./src
 dev:

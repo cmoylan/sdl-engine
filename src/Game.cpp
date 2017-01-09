@@ -73,7 +73,7 @@ void Game::handleInput()
             case SDLK_d:
                 player.move(10, 0);
                 break;
-                
+
             // scroll testing
             case SDLK_UP:
                 level.offsetY += 1;
@@ -87,7 +87,7 @@ void Game::handleInput()
             case SDLK_RIGHT:
                 level.offsetX += 1;
                 break;
-                
+
             default:
                 break;
             }
