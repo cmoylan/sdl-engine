@@ -21,6 +21,7 @@ all: $(EXE)
 
 $(EXE): build $(OBJECTS)
 	$(CXX) build/*.o -o $@ $(LDFLAGS)
+	./$(EXE)
 #	$(CXX) $< $(LDFLAGS) -o $@ $< -L./build
 
 $(OBJECTS):

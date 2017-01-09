@@ -7,8 +7,8 @@ Level::Level()
     offsetY = 0;
     // TODO: comes from constants or something
     // TODO: call updatePixelsPerTile whenever these change...setter??
-    tilesOnScreenX = 10;
-    tilesOnScreenY = 10;
+    tilesOnScreenX = 20;
+    tilesOnScreenY = 20;
     this->updatePixelsPerTile();
 }
 
@@ -107,7 +107,12 @@ RenderMap Level::renderData()
             size_t i = 0; // TODO: better way to do this?
             int col = 0;
             int row = 0;
-            for (const auto& tile : layer.tiles) {
+
+            //for (const auto& tile : layer.tiles) {
+	    cout << "rendering: ";
+	    for (auto index : this->layerIndicesOnScreen()) {
+	      cout << index << ", ";
+	        const auto& tile = layer.tiles[index];
                 // make a rect for each of these
                 // then use the GID to use the right sprite
 
@@ -125,6 +130,7 @@ RenderMap Level::renderData()
                 }
                 i++;
             }
+	    cout << endl;
             map[layerPair.first] = rectangles;
         }
     };
@@ -147,6 +153,7 @@ void Level::updatePixelsPerTile()
 }
 
 
+// TODO: cache this if it hasn't changed
 std::list<int> Level::layerIndicesOnScreen()
 {
     int prefetch = 1; // TODO: constantize, come from options
