@@ -144,20 +144,23 @@ std::list<int> Level::tilesOnScreen()
     pixelsPerTileY = SCREEN_HEIGHT / tilesOnScreenY;
     cout << "pixels per tile: " << pixelsPerTileX;
     cout << ", " << pixelsPerTileY << endl;
-    int y = offsetY / pixelsPerTileY;
-    int x = offsetX / pixelsPerTileX;
-    cout << "x and y: [" << x << ", " << y << "]" << endl;
+    //int y = offsetY / pixelsPerTileY;
+    //int initialX = offsetX / pixelsPerTileX;
+
+    int index = offsetX / pixelsPerTileX;
+    //cout << "x and y: [" << x << ", " << y << "]" << endl;
     std::list<int> indices;
     
-    for (int offset = x; y <= tilesOnScreenY; y++) {
+    for (int y = 0; y <= tilesOnScreenY; y++) {
+        //cout << "y is: " << y << endl;
         // for each row, do this
-        for (; x <= tilesOnScreenX; x++) {
+        for (int x = 0; x <= tilesOnScreenX; x++) {
+	    //cout << "x is: " << x << endl;
             // for each col
-            indices.push_back(offset);
-            offset += 1;
+            indices.push_back(index);
+            index += 1;
         }
-        
-        offset += (mapWidth - (tilesOnScreenX + prefetch)); 
+        index += (mapWidth - (tilesOnScreenX + prefetch));
     }
     Utilities::printCollection(indices);
     return indices;

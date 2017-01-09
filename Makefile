@@ -48,6 +48,7 @@ style:
 
 TEST_CXXFLAGS = -std=c++14 $(SDL_INCLUDE) -I./src
 dev:
-	$(CXX) $(TEST_CXXFLAGS) test/level_test.cpp build/Level.o build/LevelLoader.o -o run_tests $(LDFLAGS)
+	$(CXX) $(TEST_CXXFLAGS) test/simple_test.cpp build/Level.o build/LevelLoader.o -o run_tests $(LDFLAGS)
+	#$(CXX) $(TEST_CXXFLAGS) test/level_test.cpp build/Level.o build/LevelLoader.o -o run_tests $(LDFLAGS)
 	./run_tests
 
