@@ -10,14 +10,6 @@ class Level;
 
 using namespace std;
 
-//TEST_CASE( "Factorials are computed", "[factorial]" ) {
-//  SECTION("doing stuff") {
-//      REQUIRE( Factorial(1) == 1 );
-//      REQUIRE( Factorial(2) == 2 );
-//      REQUIRE( Factorial(3) == 6 );
-//      REQUIRE( Factorial(10) == 3628800 );
-//  }
-//}
 
 void compareCollections(list<int> expected, list<int> actual)
 {
@@ -30,8 +22,8 @@ void compareCollections(list<int> expected, list<int> actual)
 
 TEST_CASE("#tilesOnScreen", "[level]")
 {
-    Level level;
-    level.loadFromJson("Test Level 2");
+    Level level = Level::constructFromJson("Test Level 2");
+    //level.loadFromJson("Test Level 2");
     level.tilesOnScreenX = 2;
     level.tilesOnScreenY = 2;
 

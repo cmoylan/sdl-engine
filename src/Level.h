@@ -98,6 +98,7 @@ public:
 
     // TODO: make a class method that can construct a level object
     bool loadFromJson(const std::string& filename);
+    static Level constructFromJson(const std::string& filename);
 
     // FIXME: this blows up if run before `loadFromJson`
     void printPlatforms();

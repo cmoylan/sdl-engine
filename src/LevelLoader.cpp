@@ -44,6 +44,14 @@ Level::loadFromJson(const std::string& folder)
 }
 
 
+Level Level::constructFromJson(const std::string& filename)
+{
+  Level newLevel;
+  newLevel.loadFromJson(filename);
+  return newLevel;
+}
+
+
 bool
 Level::loadLayer(const std::string& layerName, const rapidjson::Value& data)
 {
