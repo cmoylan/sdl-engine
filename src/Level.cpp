@@ -6,8 +6,10 @@ Level::Level()
     offsetX = 0;
     offsetY = 0;
     // TODO: comes from constants or something
+    // TODO: call updatePixelsPerTile whenever these change...setter??
     tilesOnScreenX = 20;
     tilesOnScreenY = 20;
+    this->updatePixelsPerTile();
 }
 
 
@@ -136,32 +138,30 @@ void Level::scrollBy(int x, int y) {
 }
 
 
+void Level::updatePixelsPerTile()
+{
+    this->pixelsPerTileX = SCREEN_WIDTH / this->tilesOnScreenX;
+    this->pixelsPerTileY = SCREEN_HEIGHT / this->tilesOnScreenY;
+
+}
+
+
 std::list<int> Level::tilesOnScreen()
 {
     int prefetch = 1; // TODO: constantize, come from options
     
-    pixelsPerTileX = SCREEN_WIDTH / tilesOnScreenX;
-    pixelsPerTileY = SCREEN_HEIGHT / tilesOnScreenY;
-    cout << "pixels per tile: " << pixelsPerTileX;
-    cout << ", " << pixelsPerTileY << endl;
-    //int y = offsetY / pixelsPerTileY;
-    //int initialX = offsetX / pixelsPerTileX;
-
-    int index = offsetX / pixelsPerTileX;
-    //cout << "x and y: [" << x << ", " << y << "]" << endl;
+    int index = (offsetX / pixelsPerTileX) + ((offsetY / pixelsPerTileY) * 20);
     std::list<int> indices;
     
     for (int y = 0; y <= tilesOnScreenY; y++) {
-        //cout << "y is: " << y << endl;
         // for each row, do this
         for (int x = 0; x <= tilesOnScreenX; x++) {
-	    //cout << "x is: " << x << endl;
             // for each col
             indices.push_back(index);
             index += 1;
         }
         index += (mapWidth - (tilesOnScreenX + prefetch));
     }
-    Utilities::printCollection(indices);
+    //Utilities::printCollection(indices);
     return indices;
 }

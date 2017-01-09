@@ -139,4 +139,6 @@ private:
      * Determine if a tile index is the end of the level row
      */
     bool isEndOfRow(size_t index);
+
+    void updatePixelsPerTile();
 };
