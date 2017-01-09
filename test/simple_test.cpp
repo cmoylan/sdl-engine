@@ -20,10 +20,9 @@ void compareCollections(list<int> expected, list<int> actual)
     }
 }
 
-TEST_CASE("#tilesOnScreen", "[level]")
+TEST_CASE("#layerIndicesOnScreen", "[level]")
 {
     Level level = Level::constructFromJson("Test Level 2");
-    //level.loadFromJson("Test Level 2");
     level.tilesOnScreenX = 2;
     level.tilesOnScreenY = 2;
 
@@ -32,7 +31,7 @@ TEST_CASE("#tilesOnScreen", "[level]")
                                20, 21, 22,
                                40, 41, 42
                              };
-        auto result = level.tilesOnScreen();
+        auto result = level.layerIndicesOnScreen();
         compareCollections(expected, result);
     }
 
@@ -43,7 +42,7 @@ TEST_CASE("#tilesOnScreen", "[level]")
                              };
         level.offsetX = level.pixelsPerTileX - 1;
         level.offsetY = 9;
-        auto result = level.tilesOnScreen();
+	auto result = level.layerIndicesOnScreen();
         compareCollections(expected, result);
     }
 
@@ -51,14 +50,14 @@ TEST_CASE("#tilesOnScreen", "[level]")
         list<int> expected = { 21, 22, 23, 41, 42, 43, 61, 62, 63 };
         level.offsetX = level.pixelsPerTileX + 1;
         level.offsetY = level.pixelsPerTileY;
-        auto result = level.tilesOnScreen();
+	auto result = level.layerIndicesOnScreen();
         compareCollections(expected, result);
     }
 
     SECTION("with just an x offset") {
         level.offsetX = (2 * level.pixelsPerTileX) + 1;
         list<int> expected = { 2, 3, 4, 22, 23, 24, 42, 43, 44} ;
-        auto result = level.tilesOnScreen();
+	auto result = level.layerIndicesOnScreen();
         compareCollections(expected, result);
     };
 
@@ -66,7 +65,7 @@ TEST_CASE("#tilesOnScreen", "[level]")
         list<int> expected = { 40, 41, 42, 60, 61, 62, 80, 81, 82 };
         level.offsetX = 0;
         level.offsetY = (2 * level.pixelsPerTileY) + 1;
-        auto result = level.tilesOnScreen();
+	auto result = level.layerIndicesOnScreen();
         compareCollections(expected, result);
     }
 }

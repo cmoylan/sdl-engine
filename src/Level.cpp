@@ -7,8 +7,8 @@ Level::Level()
     offsetY = 0;
     // TODO: comes from constants or something
     // TODO: call updatePixelsPerTile whenever these change...setter??
-    tilesOnScreenX = 20;
-    tilesOnScreenY = 20;
+    tilesOnScreenX = 10;
+    tilesOnScreenY = 10;
     this->updatePixelsPerTile();
 }
 
@@ -147,7 +147,7 @@ void Level::updatePixelsPerTile()
 }
 
 
-std::list<int> Level::tilesOnScreen()
+std::list<int> Level::layerIndicesOnScreen()
 {
     int prefetch = 1; // TODO: constantize, come from options
 

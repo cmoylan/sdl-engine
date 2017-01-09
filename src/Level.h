@@ -64,6 +64,8 @@ typedef std::forward_list<Rectangle> RectangleList;
 // string is the asset name, rect list is where to draw them
 typedef std::map<std::string, RectangleList> RenderMap;
 
+// typedef std::list<int> IndexList;
+
 
 class Level : private Drawable {
 
@@ -114,7 +116,8 @@ public:
      * Get the indices of the tiles currently on screen
      * @return a list of indices whose tiles should be rendered
      */
-    std::list<int> tilesOnScreen();
+    std::list<int> layerIndicesOnScreen();
+    //std::list<int> tilesOnScreen();
 
     virtual AssetList assetData();
 
