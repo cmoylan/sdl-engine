@@ -19,8 +19,8 @@ Level::loadFromJson(const std::string& folder)
 
     mapWidth = document["width"].GetInt();
     mapHeight = document["height"].GetInt();
-    tileWidth = document["tilewidth"].GetInt();
-    tileHeight = document["tileheight"].GetInt();
+    textureTileWidth = document["tilewidth"].GetInt();
+    textureTileHeight = document["tileheight"].GetInt();
 
     // TODO: possibly abstract
     // FIXME: these should raise exceptions, or give a more helpful error

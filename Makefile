@@ -26,9 +26,9 @@ $(EXE): build $(OBJECTS)
 $(OBJECTS):
 	$(CXX) $(CXXFLAGS) -c src/$@.cpp -o build/$@.o
 
-dev: build
-	$(CXX) $(CXXFLAGS) $(wildcard src/*.cpp) \
-	-o $(EXE) $(LDFLAGS)
+#dev: build
+#	$(CXX) $(CXXFLAGS) $(wildcard src/*.cpp) \
+#	-o $(EXE) $(LDFLAGS)
 
 #dev:
 #	$(CXX) $(CXXFLAGS) $(wildcard src/*.cpp) $< -o $(EXE) $(LDFLAGS)
@@ -46,6 +46,8 @@ style:
 	@astyle --options=.astylerc \
 	`ls src/*.h src/*.cpp`
 
-
-
+TEST_CXXFLAGS = -std=c++14 $(SDL_INCLUDE) -I./src
+dev:
+	$(CXX) $(TEST_CXXFLAGS) test/level_test.cpp build/Level.o build/LevelLoader.o -o run_tests $(LDFLAGS)
+	./run_tests
 

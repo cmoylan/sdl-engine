@@ -1,6 +1,7 @@
 #pragma once
 
 #include <forward_list>
+#include <list>
 #include <map>
 #include <string>
 
@@ -11,6 +12,7 @@
 #include "file_helpers.h"
 #include "res_path.h"
 #include "sdl_helpers.h"
+#include "utilities.h"
 
 #include "Asset.h"
 #include "Drawable.h"
@@ -67,8 +69,10 @@ class Level : private Drawable {
 
     int mapWidth;
     int mapHeight;
-    int tileWidth;
-    int tileHeight;
+    int textureTileWidth;
+    int textureTileHeight;
+    
+
 
     std::string levelFileName;
 
@@ -79,13 +83,37 @@ public:
 
     std::string resPath;  // FIXME: what sets this?
 
-    Level() {};
+    // TODO: could be a vector2d
+    int offsetX;
+    int offsetY;
+    int tilesOnScreenX;
+    int tilesOnScreenY;
+    // take length of screen, divide by tilesOnScreenX
+    int pixelsPerTileX;
+    // take height of screen, divide by tilesOnScreenY
+    int pixelsPerTileY;
+    
+    Level();
     ~Level() {};
 
     // TODO: make a class method that can construct a level object
     bool loadFromJson(const std::string& filename);
 
+    // FIXME: this blows up if run before `loadFromJson`
     void printPlatforms();
+    
+    /**
+     * Scroll by a pixel amount
+     * @param pixelsX the amount to move left-right
+     * @param pixelsY the amount to move up-down
+     */
+    void scrollBy(int pixelsX, int pixelsY);
+    
+    /**
+     * Get the indices of the tiles currently on screen
+     * @return a list of indices whose tiles should be rendered
+     */
+    std::list<int> tilesOnScreen();
 
     virtual AssetList assetData();
 
@@ -98,6 +126,7 @@ public:
      *  [sprite1 => [
      *  { rect 1 }, { rect 2 }],
      *   sprite2 => [ ...etc... ]] 
+     * @return a RenderMap with an entry for each layer
      */
     RenderMap renderData();
 

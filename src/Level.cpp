@@ -1,5 +1,16 @@
 #include "Level.h"
 
+
+Level::Level() 
+{
+    offsetX = 0;
+    offsetY = 0;
+    // TODO: comes from constants or something
+    tilesOnScreenX = 20;
+    tilesOnScreenY = 20;
+}
+
+
 AssetList Level::assetData()
 {
     AssetList assets;
@@ -69,8 +80,8 @@ RenderMap Level::renderData()
 {
     RenderMap map;
     // TODO: abstract
-    int tileWidth = SCREEN_WIDTH / 20;
-    int tileHeight = SCREEN_HEIGHT / 20;
+    int tileWidth = SCREEN_WIDTH / this->tilesOnScreenX;
+    int tileHeight = SCREEN_HEIGHT / this->tilesOnScreenY;
 
     // for each asset
     // for each square to render
@@ -100,8 +111,8 @@ RenderMap Level::renderData()
 
                 if (tile != 0) {
                     Rectangle rect = {};
-                    rect.x = col * tileWidth;
-                    rect.y = row * tileHeight;
+                    rect.x = (col * tileWidth) + offsetX;
+                    rect.y = (row * tileHeight) + offsetY;
                     rectangles.push_front(rect);
                 }
 
@@ -116,4 +127,38 @@ RenderMap Level::renderData()
         }
     };
     return map;
+}
+
+
+void Level::scrollBy(int x, int y) {
+    this->offsetX += x;
+    this->offsetY += y;
+}
+
+
+std::list<int> Level::tilesOnScreen()
+{
+    int prefetch = 1; // TODO: constantize, come from options
+    
+    pixelsPerTileX = SCREEN_WIDTH / tilesOnScreenX;
+    pixelsPerTileY = SCREEN_HEIGHT / tilesOnScreenY;
+    cout << "pixels per tile: " << pixelsPerTileX;
+    cout << ", " << pixelsPerTileY << endl;
+    int y = offsetY / pixelsPerTileY;
+    int x = offsetX / pixelsPerTileX;
+    cout << "x and y: [" << x << ", " << y << "]" << endl;
+    std::list<int> indices;
+    
+    for (int offset = x; y <= tilesOnScreenY; y++) {
+        // for each row, do this
+        for (; x <= tilesOnScreenX; x++) {
+            // for each col
+            indices.push_back(offset);
+            offset += 1;
+        }
+        
+        offset += (mapWidth - (tilesOnScreenX + prefetch)); 
+    }
+    Utilities::printCollection(indices);
+    return indices;
 }
