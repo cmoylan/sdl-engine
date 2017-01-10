@@ -1,3 +1,10 @@
 .kdev4/
 sdl-engine.kdev4
 engine
+build/
+.DS_Store
+engine.dSYM/
+run_tests
+
+*.swp
+*~
