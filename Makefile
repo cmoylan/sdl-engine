@@ -21,18 +21,13 @@ all: $(EXE)
 
 $(EXE): build $(OBJECTS)
 	$(CXX) build/*.o -o $@ $(LDFLAGS)
-	./$(EXE)
 #	$(CXX) $< $(LDFLAGS) -o $@ $< -L./build
 
 $(OBJECTS):
 	$(CXX) $(CXXFLAGS) -c src/$@.cpp -o build/$@.o
 
-#dev: build
-#	$(CXX) $(CXXFLAGS) $(wildcard src/*.cpp) \
-#	-o $(EXE) $(LDFLAGS)
-
-#dev:
-#	$(CXX) $(CXXFLAGS) $(wildcard src/*.cpp) $< -o $(EXE) $(LDFLAGS)
+dev: all
+	./$(EXE)
 
 build:
 	@mkdir build
@@ -47,8 +42,9 @@ style:
 	@astyle --options=.astylerc \
 	`ls src/*.h src/*.cpp test/*.cpp`
 
+.PHONY: test
 TEST_CXXFLAGS = -std=c++14 $(SDL_INCLUDE) -I./src
-dev:
+test:
 	$(CXX) $(TEST_CXXFLAGS) test/simple_test.cpp build/Level.o build/LevelLoader.o -o run_tests $(LDFLAGS)
 	#$(CXX) $(TEST_CXXFLAGS) test/level_test.cpp build/Level.o build/LevelLoader.o -o run_tests $(LDFLAGS)
 	./run_tests
