@@ -64,7 +64,15 @@ typedef std::forward_list<Rectangle> RectangleList;
 // string is the asset name, rect list is where to draw them
 typedef std::map<std::string, RectangleList> RenderMap;
 
-// typedef std::list<int> IndexList;
+inline std::ostream& operator<<(std::ostream& os, const Rectangle& rect)
+{
+      os << "[x: " << rect.x;
+      os << ", y: " << rect.y;
+      os << ", clipX: " << rect.clipX;
+      os << ", clipY: " << rect.clipY;
+      os << ", gid: " << rect.gid << "]";
+      return os;
+}
 
 
 class Level : private Drawable {
@@ -90,6 +98,7 @@ public:
     int offsetY;
     int tilesOnScreenX;
     int tilesOnScreenY;
+    int tilePrefetch = 1;
     // take length of screen, divide by tilesOnScreenX
     int pixelsPerTileX;
     // take height of screen, divide by tilesOnScreenY
@@ -142,7 +151,7 @@ private:
     /**
      * Determine if a tile index is the end of the level row
      */
-    bool isEndOfRow(size_t index);
+    bool isEndOfRow(size_t index, int sectorWidth = 0);
 
     void updatePixelsPerTile();
 };

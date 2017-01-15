@@ -46,9 +46,9 @@ Level::loadFromJson(const std::string& folder)
 
 Level Level::constructFromJson(const std::string& filename)
 {
-  Level newLevel;
-  newLevel.loadFromJson(filename);
-  return newLevel;
+    Level newLevel;
+    newLevel.loadFromJson(filename);
+    return newLevel;
 }
 
 

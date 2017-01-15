@@ -22,14 +22,15 @@ void Renderer::drawLevel()
     SDL_Rect clip = {};
     clip.x = 0;
     clip.y = 0;
-    clip.w = SCREEN_WIDTH / 20;
-    clip.h = SCREEN_HEIGHT / 20;
+    clip.w = SCREEN_WIDTH / game.level.tilesOnScreenX;
+    clip.h = SCREEN_HEIGHT / game.level.tilesOnScreenY;
 
     // ------- LEFT OFF HERE ------ //
     // fix the coordinates and clips
     for (const auto& renderPair : game.level.renderData()) {
         // renderPair.first; // will be the sprite name
         for (const auto& rect : renderPair.second) {
+            //cout << rect << endl;
             renderTexture(sprite.texture, renderer,
                           rect.x, rect.y, &clip);
 
@@ -114,7 +115,7 @@ bool Renderer::registerAsset(Asset& asset)
 
 void Renderer::run()
 {
-  //while (this->game.running()) {
+    while (this->game.running()) {
         this->game.handleInput();
         this->game.update();
 
@@ -127,7 +128,7 @@ void Renderer::run()
         //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
         //Update the screen
         SDL_RenderPresent(renderer);
-	//}
+    }
 }
 
 

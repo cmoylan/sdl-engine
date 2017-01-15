@@ -7,8 +7,8 @@ Level::Level()
     offsetY = 0;
     // TODO: comes from constants or something
     // TODO: call updatePixelsPerTile whenever these change...setter??
-    tilesOnScreenX = 20;
-    tilesOnScreenY = 20;
+    tilesOnScreenX = 6;
+    tilesOnScreenY = 6;
     this->updatePixelsPerTile();
 }
 
@@ -34,9 +34,14 @@ AssetList Level::assetData()
 }
 
 
-bool Level::isEndOfRow(size_t index)
+// FIXME: not sure how to pass this->mapWidth automatically, so assume if
+//        sectorWidth is 0, we want mapWidth
+bool Level::isEndOfRow(size_t index, int sectorWidth)
 {
-    return ((index + 1) % mapWidth == 0)
+    if (sectorWidth == 0) {
+        sectorWidth = mapWidth;
+    }
+    return ((index + 1) % sectorWidth == 0)
            && index != 0;
 }
 
@@ -78,6 +83,8 @@ void printRenderData(RenderMap data)
 }
 
 
+// ----- Rendering methods ----- //
+
 RenderMap Level::renderData()
 {
     RenderMap map;
@@ -109,10 +116,8 @@ RenderMap Level::renderData()
             int row = 0;
 
             //for (const auto& tile : layer.tiles) {
-	    cout << "rendering: ";
-	    for (auto index : this->layerIndicesOnScreen()) {
-	      cout << index << ", ";
-	        const auto& tile = layer.tiles[index];
+            for (auto index : this->layerIndicesOnScreen()) {
+                const auto& tile = layer.tiles[index];
                 // make a rect for each of these
                 // then use the GID to use the right sprite
 
@@ -124,18 +129,21 @@ RenderMap Level::renderData()
                 }
 
                 col++;
-                if (this->isEndOfRow(i)) {
+                // it's never the end of row
+                // TODO: abstract into a descriptive method
+                if (this->isEndOfRow(i, tilesOnScreenX + tilePrefetch)) {
                     row++;
                     col = 0;
                 }
                 i++;
             }
-	    cout << endl;
             map[layerPair.first] = rectangles;
         }
     };
     return map;
 }
+
+// ----- END Rendering methods ----- //
 
 
 void Level::scrollBy(int x, int y)
@@ -156,8 +164,7 @@ void Level::updatePixelsPerTile()
 // TODO: cache this if it hasn't changed
 std::list<int> Level::layerIndicesOnScreen()
 {
-    int prefetch = 1; // TODO: constantize, come from options
-
+    // FIXME: where does 20 come from?
     int index = (offsetX / pixelsPerTileX) + ((offsetY / pixelsPerTileY) * 20);
     std::list<int> indices;
 
@@ -168,7 +175,7 @@ std::list<int> Level::layerIndicesOnScreen()
             indices.push_back(index);
             index += 1;
         }
-        index += (mapWidth - (tilesOnScreenX + prefetch));
+        index += (mapWidth - (tilesOnScreenX + tilePrefetch));
     }
     //Utilities::printCollection(indices);
     return indices;
