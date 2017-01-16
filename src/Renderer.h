@@ -3,6 +3,7 @@
 #include <vector>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "sdl_helpers.h"
 #include "cleanup.h"
@@ -35,6 +36,7 @@ public:
 
     void drawLevel();
     void drawGameObjects();
+    void displayDebugInfo();
 
 private:
     void initSDL();

@@ -1,5 +1,31 @@
 #include "Renderer.h"
 
+// FIXME: font object should be stored, rather than reopened every draw cycle
+void Renderer::displayDebugInfo()
+{
+    const std::string resPath = getResourcePath("fonts");
+    //We'll render the string "TTF fonts are cool!" in white
+    //Color is in RGBA format
+    SDL_Color color = { 255, 255, 255, 255 };
+    SDL_Texture *image = renderText("TTF fonts are cool!", resPath + "sample.ttf",
+				    color, 64, renderer);
+    if (image == nullptr){
+	cleanup(renderer, window);
+	TTF_Quit();
+	SDL_Quit();
+	// FIXME: do something bad here
+	//return 1;
+    }
+    //Get the texture w/h so we can center it in the screen
+    int iW, iH;
+    SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
+    int x = SCREEN_WIDTH / 2 - iW / 2;
+    int y = SCREEN_HEIGHT / 2 - iH / 2;
+
+    renderTexture(image, renderer, x, y);
+}
+
+
 void Renderer::drawGameObjects()
 {
     for (Drawable* object : game.getGameObjects()) {
@@ -68,6 +94,12 @@ void Renderer::initSDL()
         throw 1;
     }
 
+    if (TTF_Init() != 0){
+	logSDLError(std::cout, "TTF_Init");
+	SDL_Quit();
+	throw 1;
+    }
+
     //Setup our window and renderer
     window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED,
                               SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
@@ -124,6 +156,7 @@ void Renderer::run()
         // draw level first
         drawLevel();
         drawGameObjects();
+	displayDebugInfo();
         //renderTexture(image, renderer, x, y, &clips[useClip]);
         //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
         //Update the screen

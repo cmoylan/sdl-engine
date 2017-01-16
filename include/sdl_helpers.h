@@ -4,6 +4,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 
 /**
@@ -28,6 +29,43 @@ inline SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren){
         logSDLError(std::cout, "LoadTexture");
     }
     return texture;
+}
+
+
+/**
+* Render the message we want to display to a texture for drawing
+* @param message The message we want to display
+* @param fontFile The font we want to use to render the text
+* @param color The color we want the text to be
+* @param fontSize The size we want the font to be
+* @param renderer The renderer to load the texture in
+* @return An SDL_Texture containing the rendered message, or nullptr if something went wrong
+*/
+inline SDL_Texture* renderText(const std::string &message, const std::string &fontFile,
+	SDL_Color color, int fontSize, SDL_Renderer *renderer)
+{
+	//Open the font
+	TTF_Font *font = TTF_OpenFont(fontFile.c_str(), fontSize);
+	if (font == nullptr){
+		logSDLError(std::cout, "TTF_OpenFont");
+		return nullptr;
+	}
+	//We need to first render to a surface as that's what TTF_RenderText
+	//returns, then load that surface into a texture
+	SDL_Surface *surf = TTF_RenderText_Blended(font, message.c_str(), color);
+	if (surf == nullptr){
+		TTF_CloseFont(font);
+		logSDLError(std::cout, "TTF_RenderText");
+		return nullptr;
+	}
+	SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
+	if (texture == nullptr){
+		logSDLError(std::cout, "CreateTexture");
+	}
+	//Clean up the surface and font
+	SDL_FreeSurface(surf);
+	TTF_CloseFont(font);
+	return texture;
 }
 
 
