@@ -4,11 +4,10 @@
 void Renderer::displayDebugInfo()
 {
     const std::string resPath = getResourcePath("fonts");
-    //We'll render the string "TTF fonts are cool!" in white
     //Color is in RGBA format
     SDL_Color color = { 255, 255, 255, 255 };
     SDL_Texture *image = renderText("TTF fonts are cool!", resPath + "sample.ttf",
-				    color, 64, renderer);
+				    color, 16, renderer);
     if (image == nullptr){
 	cleanup(renderer, window);
 	TTF_Quit();
@@ -17,10 +16,12 @@ void Renderer::displayDebugInfo()
 	//return 1;
     }
     //Get the texture w/h so we can center it in the screen
-    int iW, iH;
-    SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
-    int x = SCREEN_WIDTH / 2 - iW / 2;
-    int y = SCREEN_HEIGHT / 2 - iH / 2;
+    //int iW, iH;
+    //SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
+    //int x = SCREEN_WIDTH / 2 - iW / 2;
+    //int y = SCREEN_HEIGHT / 2 - iH / 2;
+    int x = 10;
+    int y = 10;
 
     renderTexture(image, renderer, x, y);
 }
