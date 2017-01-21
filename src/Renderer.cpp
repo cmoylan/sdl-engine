@@ -6,6 +6,7 @@ void Renderer::displayDebugInfo()
     const std::string resPath = getResourcePath("fonts");
     //Color is in RGBA format
     SDL_Color color = { 255, 255, 255, 255 };
+
     SDL_Texture *image = renderText("TTF fonts are cool!", resPath + "sample.ttf",
 				    color, 16, renderer);
     if (image == nullptr){
@@ -47,13 +48,14 @@ void Renderer::drawLevel()
     auto sprite = this->sprites["grass-tiles-2-small.png"];
 
     SDL_Rect clip = {};
-    clip.x = 0;
+    clip.x = 300;
     clip.y = 0;
     clip.w = SCREEN_WIDTH / game.level.tilesOnScreenX;
     clip.h = SCREEN_HEIGHT / game.level.tilesOnScreenY;
 
     // ------- LEFT OFF HERE ------ //
     // fix the coordinates and clips
+    // make a sprite that is a colored grid, so we can figure this math out
     for (const auto& renderPair : game.level.renderData()) {
         // renderPair.first; // will be the sprite name
         for (const auto& rect : renderPair.second) {
@@ -157,7 +159,7 @@ void Renderer::run()
         // draw level first
         drawLevel();
         drawGameObjects();
-	displayDebugInfo();
+	//displayDebugInfo();
         //renderTexture(image, renderer, x, y, &clips[useClip]);
         //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
         //Update the screen

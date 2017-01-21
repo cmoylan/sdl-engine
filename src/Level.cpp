@@ -125,6 +125,8 @@ RenderMap Level::renderData()
                     Rectangle rect = {};
                     rect.x = (col * tileWidth) + offsetX;
                     rect.y = (row * tileHeight) + offsetY;
+		    rect.clipX = 0;
+		    rect.clipY = 0;
                     rectangles.push_front(rect);
                 }
 
