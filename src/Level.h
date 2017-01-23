@@ -98,7 +98,7 @@ public:
     int offsetY;
     int tilesOnScreenX;
     int tilesOnScreenY;
-    int tilePrefetch = 1;
+    int tilePrefetch = 1; // can come from a config somewhere
     // take length of screen, divide by tilesOnScreenX
     int pixelsPerTileX;
     // take height of screen, divide by tilesOnScreenY

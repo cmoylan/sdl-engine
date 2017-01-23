@@ -6,11 +6,12 @@
 /* TODO:
  * - draw a level
  *   - actually draw it
- * - user Catch to do some unit testing around calculations
  * - automate or fix anything that annoys you
  *   - fix struct debugger by telling a struct how to print itself
  * - better exceptions
  * - smoother scrolling, input handling
+ * - scrolling
+ *   - test offset
  */
 
 int main(int, char**)
