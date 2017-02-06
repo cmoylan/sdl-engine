@@ -162,8 +162,8 @@ void Level::updatePixelsPerTile()
 // TODO: cache this if it hasn't changed
 std::list<int> Level::layerIndicesOnScreen()
 {
-    // FIXME: where does 20 come from? - level size?
-    int index = (offsetX / pixelsPerTileX)  + ((offsetY / pixelsPerTileY) * 20);
+    // FIXME: abstract (tilesOnScreenX + tilePrefetch)
+    int index = (offsetX / pixelsPerTileX) + ((offsetY / pixelsPerTileY) * (tilesOnScreenX + tilePrefetch));
     std::list<int> indices;
 
     for (int y = 0; y <= tilesOnScreenY; y++) {
