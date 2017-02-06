@@ -45,26 +45,61 @@ void Renderer::drawGameObjects()
 
 void Renderer::drawLevel()
 {
-    auto sprite = this->sprites["grass-tiles-2-small.png"];
+    auto sprite = this->sprites["test-pattern-tileset.png"];
+    //grass-tiles-2-small.png
 
     SDL_Rect clip = {};
-    clip.x = 300;
+    clip.x = 0;
     clip.y = 0;
-    clip.w = SCREEN_WIDTH / game.level.tilesOnScreenX;
-    clip.h = SCREEN_HEIGHT / game.level.tilesOnScreenY;
+    clip.w = 32; //SCREEN_WIDTH / game.level.tilesOnScreenX;
+    clip.h = 32; //SCREEN_HEIGHT / game.level.tilesOnScreenY;
+
+    SDL_Rect dstn = {};
+    dstn.w = game.level.pixelsPerTileX;
+    dstn.h = game.level.pixelsPerTileY;
+
+    int color = 255;
 
     // ------- LEFT OFF HERE ------ //
-    // fix the coordinates and clips
-    // make a sprite that is a colored grid, so we can figure this math out
-    for (const auto& renderPair : game.level.renderData()) {
-        // renderPair.first; // will be the sprite name
-        for (const auto& rect : renderPair.second) {
-            //cout << rect << endl;
-            renderTexture(sprite.texture, renderer,
-                          rect.x, rect.y, &clip);
+    // for 1 - 6
+    // draw rectangles in the right place
+    SDL_Rect target = {};
+    target.w = SCREEN_WIDTH / 3;
+    target.h = SCREEN_HEIGHT / 2;
+    //target.x = 0;
+    //target.y = 0;
+    //renderColoredRect(renderer, &target, 255, 0, 0, 0);
+    //
+    //target.x = SCREEN_WIDTH / 3;
+    //target.y = SCREEN_HEIGHT / 2;
+    //renderColoredRect(renderer, &target, 0, 255, 0, 0);
 
+    // works properly
+    for (int i = 0; i < 6; i++) {
+        target.x = (SCREEN_WIDTH / 3) * (i % 3);
+        if (i < 3) {
+            target.y = 0;
+        } else {
+            target.y = SCREEN_HEIGHT / 2;
         }
+        renderColoredRect(renderer, &target, color, 0, 0, 0);
+        color -= 25;
     }
+
+
+
+    //for (const auto& renderPair : game.level.renderData()) {
+    //    // renderPair.first; // will be the sprite name
+    //    for (const auto& rect : renderPair.second) {
+    //        dstn.x = rect.x;
+    //        dstn.y = rect.y;
+    //        renderColoredRect(renderer, &dstn, color, 0, 0, 0);
+    //        color -= 25;
+    //        //renderTexture(sprite.texture, renderer,
+    //        //              rect.x, rect.y, &clip);
+    //
+    //    }
+    //}
 }
 
 
@@ -164,6 +199,7 @@ void Renderer::run()
         //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
         //Update the screen
         SDL_RenderPresent(renderer);
+        //this->game.quit();
     }
 }
 

@@ -80,6 +80,8 @@ inline SDL_Texture* renderText(const std::string &message, const std::string &fo
  */
 inline void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst, SDL_Rect *clip = nullptr){
     SDL_RenderCopy(ren, tex, clip, &dst);
+    //SDL_RendererFlip flip;
+    //SDL_RenderCopyEx(ren, tex, clip, &dst, 0, NULL, flip);
 }
 
 
@@ -106,4 +108,13 @@ inline void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, SDL
         SDL_QueryTexture(tex, NULL, NULL, &dst.w, &dst.h);
     }
     renderTexture(tex, ren, dst, clip);
+}
+
+
+inline void renderColoredRect(SDL_Renderer *ren, SDL_Rect *rectangle, int r, int g, int b, int a)
+{
+    SDL_SetRenderDrawColor(ren, r, g, b, a);
+    SDL_RenderFillRect(ren, rectangle);
+    SDL_SetRenderDrawColor(ren, 0,0,0,0); // TODO: better way to clear color?
+
 }

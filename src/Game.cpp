@@ -118,6 +118,12 @@ void Game::load(Options options)
 }
 
 
+void Game::quit()
+{
+    this->_running = false;
+}
+
+
 void Game::teardown()
 {
 

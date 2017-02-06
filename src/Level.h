@@ -16,6 +16,7 @@
 
 #include "Asset.h"
 #include "Drawable.h"
+#include "Rectangle.h"
 
 
 struct Layer {
@@ -51,38 +52,12 @@ struct Tileset {
 typedef std::map<std::string, Tileset> TilesetMap;
 
 
-// FIXME: this name is not descriptive
-// it's the information to render one rectangle on screen
-struct Rectangle {
-    int x;
-    int y;
-    int clipX;
-    int clipY;
-    int gid;
-};
-typedef std::forward_list<Rectangle> RectangleList;
-// string is the asset name, rect list is where to draw them
-typedef std::map<std::string, RectangleList> RenderMap;
-
-inline std::ostream& operator<<(std::ostream& os, const Rectangle& rect)
-{
-      os << "[x: " << rect.x;
-      os << ", y: " << rect.y;
-      os << ", clipX: " << rect.clipX;
-      os << ", clipY: " << rect.clipY;
-      os << ", gid: " << rect.gid << "]";
-      return os;
-}
-
-
 class Level : private Drawable {
 
     int mapWidth;
     int mapHeight;
     int textureTileWidth;
     int textureTileHeight;
-
-
 
     std::string levelFileName;
 
@@ -99,6 +74,7 @@ public:
     int tilesOnScreenX;
     int tilesOnScreenY;
     int tilePrefetch = 1;
+    // TODO: this might belong above level, in the render code
     // take length of screen, divide by tilesOnScreenX
     int pixelsPerTileX;
     // take height of screen, divide by tilesOnScreenY

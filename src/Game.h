@@ -40,6 +40,7 @@ public:
     void teardown();
     void update();
     void handleInput();
+    void quit();
 
     DrawList getGameObjects();
 

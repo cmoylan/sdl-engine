@@ -88,9 +88,6 @@ void printRenderData(RenderMap data)
 RenderMap Level::renderData()
 {
     RenderMap map;
-    // TODO: abstract
-    int tileWidth = SCREEN_WIDTH / this->tilesOnScreenX;
-    int tileHeight = SCREEN_HEIGHT / this->tilesOnScreenY;
 
     // for each asset
     // for each square to render
@@ -123,10 +120,10 @@ RenderMap Level::renderData()
 
                 if (tile != 0) {
                     Rectangle rect = {};
-                    rect.x = (col * tileWidth) + offsetX;
-                    rect.y = (row * tileHeight) + offsetY;
-		    rect.clipX = 0;
-		    rect.clipY = 0;
+                    rect.x = (col * this->pixelsPerTileX) + offsetX;
+                    rect.y = (row * this->pixelsPerTileY) + offsetY;
+                    //rect.clipX = tileWidth;
+                    //rect.clipY = tileHeight;
                     rectangles.push_front(rect);
                 }
 
@@ -159,7 +156,6 @@ void Level::updatePixelsPerTile()
 {
     this->pixelsPerTileX = SCREEN_WIDTH / this->tilesOnScreenX;
     this->pixelsPerTileY = SCREEN_HEIGHT / this->tilesOnScreenY;
-
 }
 
 
