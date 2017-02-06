@@ -51,6 +51,8 @@ struct Tileset {
 };
 typedef std::map<std::string, Tileset> TilesetMap;
 
+// temp
+void printRenderData(RenderMap data);
 
 class Level : private Drawable {
 
@@ -65,6 +67,9 @@ class Level : private Drawable {
     TilesetMap tilesets;
 
 public:
+
+
+
 
     std::string resPath;  // FIXME: what sets this?
 

@@ -63,32 +63,26 @@ void Renderer::drawLevel()
     // ------- LEFT OFF HERE ------ //
     // for 1 - 6
     // draw rectangles in the right place
+    // compare to the code spitting out the render data
     SDL_Rect target = {};
     target.w = SCREEN_WIDTH / 3;
     target.h = SCREEN_HEIGHT / 2;
-    //target.x = 0;
-    //target.y = 0;
-    //renderColoredRect(renderer, &target, 255, 0, 0, 0);
-    //
-    //target.x = SCREEN_WIDTH / 3;
-    //target.y = SCREEN_HEIGHT / 2;
-    //renderColoredRect(renderer, &target, 0, 255, 0, 0);
 
     // works properly
     for (int i = 0; i < 6; i++) {
         target.x = (SCREEN_WIDTH / 3) * (i % 3);
-        if (i < 3) {
-            target.y = 0;
-        } else {
-            target.y = SCREEN_HEIGHT / 2;
-        }
+        target.y = (SCREEN_HEIGHT / 2) * (i % 2);
         renderColoredRect(renderer, &target, color, 0, 0, 0);
         color -= 25;
     }
 
 
 
-    //for (const auto& renderPair : game.level.renderData()) {
+    for (const auto& renderPair : game.level.renderData()) {
+        if (!RENDER_DATA_PRINTED) {
+            printRenderData(game.level.renderData());
+            RENDER_DATA_PRINTED = true;
+        }
     //    // renderPair.first; // will be the sprite name
     //    for (const auto& rect : renderPair.second) {
     //        dstn.x = rect.x;
@@ -99,7 +93,7 @@ void Renderer::drawLevel()
     //        //              rect.x, rect.y, &clip);
     //
     //    }
-    //}
+    }
 }
 
 
@@ -194,6 +188,7 @@ void Renderer::run()
         // draw level first
         drawLevel();
         drawGameObjects();
+
 	//displayDebugInfo();
         //renderTexture(image, renderer, x, y, &clips[useClip]);
         //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);

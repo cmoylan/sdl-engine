@@ -20,6 +20,9 @@ class Renderer {
     SDL_Renderer *renderer;
     SDL_Window *window;
 
+    //temp
+    bool RENDER_DATA_PRINTED = false;
+
 public:
     Renderer() {};
     ~Renderer() {};
