@@ -5,11 +5,9 @@ Level::Level()
 {
     offsetX = 0;
     offsetY = 0;
-    // TODO: comes from constants or something
-    // TODO: call updatePixelsPerTile whenever these change...setter??
-    tilesOnScreenX = 6;
-    tilesOnScreenY = 6;
-    this->updatePixelsPerTile();
+    // TODO: comes from constants, or options, or something
+    pixelsPerTileX = 100;
+    pixelsPerTileY = 100;
 }
 
 
@@ -84,7 +82,6 @@ void printRenderData(RenderMap data)
 
 
 // ----- Rendering methods ----- //
-
 RenderMap Level::renderData()
 {
     RenderMap map;
@@ -130,7 +127,7 @@ RenderMap Level::renderData()
                 col++;
                 // it's never the end of row
                 // TODO: abstract into a descriptive method
-                if (this->isEndOfRow(i, tilesOnScreenX + tilePrefetch)) {
+                if (this->isEndOfRow(i, tilesOnScreenX() + this->tilePrefetch)) {
                     row++;
                     col = 0;
                 }
@@ -141,7 +138,6 @@ RenderMap Level::renderData()
     };
     return map;
 }
-
 // ----- END Rendering methods ----- //
 
 
@@ -152,29 +148,44 @@ void Level::scrollBy(int x, int y)
 }
 
 
-void Level::updatePixelsPerTile()
-{
-    this->pixelsPerTileX = SCREEN_WIDTH / this->tilesOnScreenX;
-    this->pixelsPerTileY = SCREEN_HEIGHT / this->tilesOnScreenY;
-}
-
 
 // TODO: cache this if it hasn't changed
+// TODO: might want to just save tilesOnScreenX/Y as local vars, instead of calling the same method several times
 std::list<int> Level::layerIndicesOnScreen()
 {
-    // FIXME: abstract (tilesOnScreenX + tilePrefetch)
-    int index = (offsetX / pixelsPerTileX) + ((offsetY / pixelsPerTileY) * (tilesOnScreenX + tilePrefetch));
+    int index = (offsetX / pixelsPerTileX) + ((offsetY / pixelsPerTileY) * (tilesOnScreenX() + tilePrefetch));
     std::list<int> indices;
 
-    for (int y = 0; y <= tilesOnScreenY; y++) {
+    for (int y = 0; y <= tilesOnScreenY(); y++) {
         // for each row, do this
-        for (int x = 0; x <= tilesOnScreenX; x++) {
+        for (int x = 0; x <= tilesOnScreenX(); x++) {
             // for each col
             indices.push_back(index);
             index += 1;
         }
-        index += (mapWidth - (tilesOnScreenX + tilePrefetch));
+        index += (mapWidth - (tilesOnScreenX() + tilePrefetch));
     }
     //Utilities::printCollection(indices);
     return indices;
+}
+
+
+// --------------------------------------------------
+// LEFT OFF HERE
+// debug this
+int Level::tilesOnScreenX()
+{
+    if (!_tilesOnScreenX) {
+        _tilesOnScreenX = (SCREEN_WIDTH / pixelsPerTileX) + tilePrefetch;
+    }
+    return _tilesOnScreenX;
+}
+
+
+int Level::tilesOnScreenY()
+{
+    if (!_tilesOnScreenY) {
+        _tilesOnScreenY = (SCREEN_HEIGHT / pixelsPerTileY) + tilePrefetch;
+    }
+    return _tilesOnScreenY;
 }

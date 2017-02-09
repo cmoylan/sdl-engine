@@ -76,13 +76,10 @@ public:
     // TODO: could be a vector2d
     int offsetX;
     int offsetY;
-    int tilesOnScreenX;
-    int tilesOnScreenY;
     int tilePrefetch = 1; // can come from a config somewhere
+
     // TODO: this might belong above level, in the render code
-    // take length of screen, divide by tilesOnScreenX
     int pixelsPerTileX;
-    // take height of screen, divide by tilesOnScreenY
     int pixelsPerTileY;
 
     Level();
@@ -134,5 +131,10 @@ private:
      */
     bool isEndOfRow(size_t index, int sectorWidth = 0);
 
-    void updatePixelsPerTile();
+    // When the resolution is updated, _tilesOnScreenX/Y should be cleared
+    int _tilesOnScreenX;
+    int tilesOnScreenX();
+
+    int _tilesOnScreenY;
+    int tilesOnScreenY();
 };

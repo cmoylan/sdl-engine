@@ -69,15 +69,16 @@ void Renderer::drawLevel()
     target.h = SCREEN_HEIGHT / 2;
 
     // works properly
-    for (int i = 0; i < 6; i++) {
-        target.x = (SCREEN_WIDTH / 3) * (i % 3);
-        target.y = (SCREEN_HEIGHT / 2) * (i % 2);
-        renderColoredRect(renderer, &target, color, 0, 0, 0);
-        color -= 25;
-    }
+    //for (int i = 0; i < 6; i++) {
+    //    target.x = (SCREEN_WIDTH / 3) * (i % 3);
+    //    target.y = (SCREEN_HEIGHT / 2) * (i % 2);
+    //    renderColoredRect(renderer, &target, color, 0, 0, 0);
+    //    color -= 25;
+    //}
 
 
 
+    // get this working properly - scaling the level
     for (const auto& renderPair : game.level.renderData()) {
         if (!RENDER_DATA_PRINTED) {
             printRenderData(game.level.renderData());
