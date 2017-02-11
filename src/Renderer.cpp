@@ -45,8 +45,9 @@ void Renderer::drawGameObjects()
 
 void Renderer::drawLevel()
 {
-    auto sprite = this->sprites["test-pattern-tileset.png"];
-    //grass-tiles-2-small.png
+    //auto sprite = this->sprites["test-pattern-tileset.png"];
+    auto sprite = this->sprites["grass-tiles-2-small.png"];
+
 
     SDL_Rect clip = {};
     clip.x = 0;
@@ -58,7 +59,6 @@ void Renderer::drawLevel()
     dstn.w = game.level.pixelsPerTileX;
     dstn.h = game.level.pixelsPerTileY;
 
-    int color = 255;
 
     // ------- LEFT OFF HERE ------ //
     // for 1 - 6
@@ -76,24 +76,31 @@ void Renderer::drawLevel()
     //    color -= 25;
     //}
 
+    if (!RENDER_DATA_PRINTED) {
+      printRenderData(game.level.renderData());
+      cout << "tilesonscreenx: " << game.level.tilesOnScreenX() << endl;
+      cout << "tilesonscreeny " << game.level.tilesOnScreenY() << endl;
+      RENDER_DATA_PRINTED = true;
+    }
 
+    // TEMP
+    int r = 255;
+    int g = 255;
+    int b = 255;
 
-    // get this working properly - scaling the level
     for (const auto& renderPair : game.level.renderData()) {
-        if (!RENDER_DATA_PRINTED) {
-            printRenderData(game.level.renderData());
-            RENDER_DATA_PRINTED = true;
+        // renderPair.first; // will be the sprite name
+        for (const auto& rect : renderPair.second) {
+            dstn.x = rect.x;
+            dstn.y = rect.y;
+            renderColoredRect(renderer, &dstn, r, g, b, 0);
+	    r -= 10;
+	    g -= 10;
+	    b -= 10;
+            //renderTexture(sprite.texture, renderer,
+            //              rect.x, rect.y, &clip);
+
         }
-    //    // renderPair.first; // will be the sprite name
-    //    for (const auto& rect : renderPair.second) {
-    //        dstn.x = rect.x;
-    //        dstn.y = rect.y;
-    //        renderColoredRect(renderer, &dstn, color, 0, 0, 0);
-    //        color -= 25;
-    //        //renderTexture(sprite.texture, renderer,
-    //        //              rect.x, rect.y, &clip);
-    //
-    //    }
     }
 }
 

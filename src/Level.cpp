@@ -6,8 +6,8 @@ Level::Level()
     offsetX = 0;
     offsetY = 0;
     // TODO: comes from constants, or options, or something
-    pixelsPerTileX = 100;
-    pixelsPerTileY = 100;
+    pixelsPerTileX = 20;
+    pixelsPerTileY = 20;
 }
 
 
@@ -153,7 +153,9 @@ void Level::scrollBy(int x, int y)
 // TODO: might want to just save tilesOnScreenX/Y as local vars, instead of calling the same method several times
 std::list<int> Level::layerIndicesOnScreen()
 {
-    int index = (offsetX / pixelsPerTileX) + ((offsetY / pixelsPerTileY) * (tilesOnScreenX() + tilePrefetch));
+    int index = (offsetX / pixelsPerTileX) +
+      ((offsetY / pixelsPerTileY) *
+       (tilesOnScreenX() + tilePrefetch));
     std::list<int> indices;
 
     for (int y = 0; y <= tilesOnScreenY(); y++) {
@@ -177,6 +179,11 @@ int Level::tilesOnScreenX()
 {
     if (_tilesOnScreenX == 0) {
         _tilesOnScreenX = (SCREEN_WIDTH / pixelsPerTileX) + tilePrefetch;
+
+	// should not exceed tiles in map
+	if (_tilesOnScreenX > mapWidth) {
+	  _tilesOnScreenX = mapWidth;
+	}
     }
     return _tilesOnScreenX;
 }
@@ -186,6 +193,10 @@ int Level::tilesOnScreenY()
 {
     if (_tilesOnScreenY == 0) {
         _tilesOnScreenY = (SCREEN_HEIGHT / pixelsPerTileY) + tilePrefetch;
+	// should not exceed tiles in map
+	if (_tilesOnScreenY > mapHeight) {
+	  _tilesOnScreenY = mapHeight;
+	}
     }
     return _tilesOnScreenY;
 }

@@ -52,6 +52,7 @@ struct Tileset {
 typedef std::map<std::string, Tileset> TilesetMap;
 
 // temp
+// TODO: move to namespace
 void printRenderData(RenderMap data);
 
 class Level : private Drawable {
@@ -121,6 +122,8 @@ public:
      */
     RenderMap renderData();
 
+  int tilesOnScreenX();
+  int tilesOnScreenY();
 private:
 
     bool loadLayer(const std::string& layerName, const rapidjson::Value& data);
@@ -133,8 +136,6 @@ private:
 
     // When the resolution is updated, _tilesOnScreenX/Y should be cleared
     int _tilesOnScreenX = 0;
-    int tilesOnScreenX();
-
     int _tilesOnScreenY = 0;
-    int tilesOnScreenY();
+
 };
