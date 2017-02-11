@@ -2,8 +2,9 @@
 
 Player::Player()
 {
-    _x = SCREEN_WIDTH - 100;
-    _y = SCREEN_HEIGHT - 100;
+    // set this from the level, but not here
+    _x = 0;//SCREEN_WIDTH - 100;
+    _y = 0; //SCREEN_HEIGHT - 100;
 }
 
 

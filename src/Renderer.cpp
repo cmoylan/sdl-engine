@@ -8,13 +8,13 @@ void Renderer::displayDebugInfo()
     SDL_Color color = { 255, 255, 255, 255 };
 
     SDL_Texture *image = renderText("TTF fonts are cool!", resPath + "sample.ttf",
-				    color, 16, renderer);
-    if (image == nullptr){
-	cleanup(renderer, window);
-	TTF_Quit();
-	SDL_Quit();
-	// FIXME: do something bad here
-	//return 1;
+                                    color, 16, renderer);
+    if (image == nullptr) {
+        cleanup(renderer, window);
+        TTF_Quit();
+        SDL_Quit();
+        // FIXME: do something bad here
+        //return 1;
     }
     //Get the texture w/h so we can center it in the screen
     //int iW, iH;
@@ -49,11 +49,11 @@ void Renderer::drawLevel()
     auto sprite = this->sprites["grass-tiles-2-small.png"];
 
 
-    SDL_Rect clip = {};
-    clip.x = 0;
-    clip.y = 0;
-    clip.w = 32; //SCREEN_WIDTH / game.level.tilesOnScreenX;
-    clip.h = 32; //SCREEN_HEIGHT / game.level.tilesOnScreenY;
+    //  SDL_Rect clip = {};
+    //  clip.x = 0;
+    //  clip.y = 0;
+    //  clip.w = 32; //SCREEN_WIDTH / game.level.tilesOnScreenX;
+    //  clip.h = 32; //SCREEN_HEIGHT / game.level.tilesOnScreenY;
 
     SDL_Rect dstn = {};
     dstn.w = game.level.pixelsPerTileX;
@@ -64,9 +64,9 @@ void Renderer::drawLevel()
     // for 1 - 6
     // draw rectangles in the right place
     // compare to the code spitting out the render data
-    SDL_Rect target = {};
-    target.w = SCREEN_WIDTH / 3;
-    target.h = SCREEN_HEIGHT / 2;
+    //SDL_Rect target = {};
+    //target.w = SCREEN_WIDTH / 3;
+    //target.h = SCREEN_HEIGHT / 2;
 
     // works properly
     //for (int i = 0; i < 6; i++) {
@@ -77,10 +77,10 @@ void Renderer::drawLevel()
     //}
 
     if (!RENDER_DATA_PRINTED) {
-      printRenderData(game.level.renderData());
-      cout << "tilesonscreenx: " << game.level.tilesOnScreenX() << endl;
-      cout << "tilesonscreeny " << game.level.tilesOnScreenY() << endl;
-      RENDER_DATA_PRINTED = true;
+        printRenderData(game.level.renderData());
+        cout << "tiles on screen X: " << game.level.tilesOnScreenX() << endl;
+        cout << "tiles on screen Y: " << game.level.tilesOnScreenY() << endl;
+        RENDER_DATA_PRINTED = true;
     }
 
     // TEMP
@@ -94,9 +94,10 @@ void Renderer::drawLevel()
             dstn.x = rect.x;
             dstn.y = rect.y;
             renderColoredRect(renderer, &dstn, r, g, b, 0);
-	    r -= 10;
-	    g -= 10;
-	    b -= 10;
+            r -= 10;
+            g -= 10;
+            b -= 10;
+            // this should work now that tiles are the same size as sprites
             //renderTexture(sprite.texture, renderer,
             //              rect.x, rect.y, &clip);
 
@@ -105,6 +106,7 @@ void Renderer::drawLevel()
 }
 
 
+// this might be a load, not an init
 void Renderer::init(Game game)
 {
     this->game = game;
@@ -134,10 +136,10 @@ void Renderer::initSDL()
         throw 1;
     }
 
-    if (TTF_Init() != 0){
-	logSDLError(std::cout, "TTF_Init");
-	SDL_Quit();
-	throw 1;
+    if (TTF_Init() != 0) {
+        logSDLError(std::cout, "TTF_Init");
+        SDL_Quit();
+        throw 1;
     }
 
     //Setup our window and renderer
@@ -194,10 +196,10 @@ void Renderer::run()
         // draw
         SDL_RenderClear(renderer);
         // draw level first
-        drawLevel();
-        drawGameObjects();
+        this->drawLevel();
+        this->drawGameObjects();
 
-	//displayDebugInfo();
+        //displayDebugInfo();
         //renderTexture(image, renderer, x, y, &clips[useClip]);
         //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
         //Update the screen

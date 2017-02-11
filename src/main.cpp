@@ -24,7 +24,7 @@ int main(int, char**)
     //          std::endl;
 
     // level number, score, level folder
-    Options opts = { 1, 0, "Test Level" };
+    Options opts = { 1, 0, "Test Level 2" };
     game.load(opts);
 
     try {

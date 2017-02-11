@@ -15,10 +15,10 @@ typedef std::map<std::string, RectangleList> RenderMap;
 
 inline std::ostream& operator<<(std::ostream& os, const Rectangle& rect)
 {
-      os << "[x: " << rect.x;
-      os << ", y: " << rect.y;
-      os << ", clipX: " << rect.clipX;
-      os << ", clipY: " << rect.clipY;
-      os << ", gid: " << rect.gid << "]";
-      return os;
+    os << "[x: " << rect.x;
+    os << ", y: " << rect.y;
+    os << ", clipX: " << rect.clipX;
+    os << ", clipY: " << rect.clipY;
+    os << ", gid: " << rect.gid << "]";
+    return os;
 }

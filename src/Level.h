@@ -57,25 +57,26 @@ void printRenderData(RenderMap data);
 
 class Level : private Drawable {
 
+public:
+
+    std::string levelFileName;
+    // data about the overall map from level.json
     int mapWidth;
     int mapHeight;
     int textureTileWidth;
     int textureTileHeight;
+    int playerStartX;
+    int playerStartY;
 
-    std::string levelFileName;
-
+    // other data - mostly for rendering
     LayerMap layers;
     TilesetMap tilesets;
-
-public:
-
-
 
 
     std::string resPath;  // FIXME: what sets this?
 
-    // TODO: could be a vector2d
-    int offsetX;
+    // data about rendering
+    int offsetX; // TODO: could be a vector2d
     int offsetY;
     int tilePrefetch = 1; // can come from a config somewhere
 
@@ -83,6 +84,7 @@ public:
     int pixelsPerTileX;
     int pixelsPerTileY;
 
+    // ---- Members -------------------------------------------------- //
     Level();
     ~Level() {};
 
@@ -122,11 +124,20 @@ public:
      */
     RenderMap renderData();
 
-  int tilesOnScreenX();
-  int tilesOnScreenY();
+    /**
+     * Determine how many tiles are on screen based on screen width
+     */
+    int tilesOnScreenX();
+
+    /**
+     * Determine how many tiles are on screen based on screen height
+     */
+    int tilesOnScreenY();
+
 private:
 
     bool loadLayer(const std::string& layerName, const rapidjson::Value& data);
+    bool loadMetadata(const rapidjson::Value& data);
     bool loadTileset(const rapidjson::Value& data);
 
     /**

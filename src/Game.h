@@ -17,7 +17,7 @@ struct Options {
 class Game {
 
     Options options;
-    Player player;
+    Player player; // NOTE: the player is being created right here
 
     bool _running = true;
 

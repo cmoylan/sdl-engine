@@ -101,8 +101,16 @@ void Game::init()
     if (level.loadFromJson(this->options.levelFolder) == false) {
         throw 2;
     }
+
+    // have just loaded level
+    // -- move player where level says it should be
+    // FIXME: feels kind of bad to do this
+    // might have to do something like this for other game drawables
+    player._x = level.playerStartX;
+    player._y = level.playerStartY;
+
     this->gameObjects.push_back(&player);
-    level.renderData();
+    //level.renderData();
     //try {
     //    level->init();
     //}
@@ -132,5 +140,8 @@ void Game::teardown()
 
 void Game::update()
 {
-
+    // gravity
+    // do character updates here
+    // actually do all updatables updates here
+    // enemies, random moving stuff
 }

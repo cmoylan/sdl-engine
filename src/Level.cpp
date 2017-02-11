@@ -6,8 +6,9 @@ Level::Level()
     offsetX = 0;
     offsetY = 0;
     // TODO: comes from constants, or options, or something
-    pixelsPerTileX = 20;
-    pixelsPerTileY = 20;
+    // should be the same as sprite size so that nothing distorts
+    pixelsPerTileX = 32;
+    pixelsPerTileY = 32;
 }
 
 
@@ -154,8 +155,8 @@ void Level::scrollBy(int x, int y)
 std::list<int> Level::layerIndicesOnScreen()
 {
     int index = (offsetX / pixelsPerTileX) +
-      ((offsetY / pixelsPerTileY) *
-       (tilesOnScreenX() + tilePrefetch));
+                ((offsetY / pixelsPerTileY) *
+                 (tilesOnScreenX() + tilePrefetch));
     std::list<int> indices;
 
     for (int y = 0; y <= tilesOnScreenY(); y++) {
@@ -172,31 +173,30 @@ std::list<int> Level::layerIndicesOnScreen()
 }
 
 
-// --------------------------------------------------
-// LEFT OFF HERE
-// debug this
+// Determine how many tiles are on screen based on screen size
 int Level::tilesOnScreenX()
 {
     if (_tilesOnScreenX == 0) {
         _tilesOnScreenX = (SCREEN_WIDTH / pixelsPerTileX) + tilePrefetch;
 
-	// should not exceed tiles in map
-	if (_tilesOnScreenX > mapWidth) {
-	  _tilesOnScreenX = mapWidth;
-	}
+        // should not exceed tiles in map
+        if (_tilesOnScreenX > mapWidth) {
+            _tilesOnScreenX = mapWidth;
+        }
     }
     return _tilesOnScreenX;
 }
 
-
+// Determine how many tiles are on screen based on screen size
 int Level::tilesOnScreenY()
 {
     if (_tilesOnScreenY == 0) {
         _tilesOnScreenY = (SCREEN_HEIGHT / pixelsPerTileY) + tilePrefetch;
-	// should not exceed tiles in map
-	if (_tilesOnScreenY > mapHeight) {
-	  _tilesOnScreenY = mapHeight;
-	}
+
+        // should not exceed tiles in map
+        if (_tilesOnScreenY > mapHeight) {
+            _tilesOnScreenY = mapHeight;
+        }
     }
     return _tilesOnScreenY;
 }

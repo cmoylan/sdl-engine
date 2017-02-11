@@ -15,19 +15,15 @@ Level::loadFromJson(const std::string& folder)
 
     document.Parse(jsonString.c_str());
     assert(document.IsObject());
-    assert(document.HasMember("width"));
 
-    mapWidth = document["width"].GetInt();
-    mapHeight = document["height"].GetInt();
-    textureTileWidth = document["tilewidth"].GetInt();
-    textureTileHeight = document["tileheight"].GetInt();
+    this->loadMetadata(document);
 
     // TODO: possibly abstract
     // FIXME: these should raise exceptions, or give a more helpful error
     const Value& layers = document["layers"];
     for (i = 0; i < layers.Size(); i++) {
         std::string layerName = layers[i]["name"].GetString();
-        if (!loadLayer(layerName, layers[i]["data"])) {
+        if (!this->loadLayer(layerName, layers[i]["data"])) {
             return false;
         }
     }
@@ -35,7 +31,7 @@ Level::loadFromJson(const std::string& folder)
     // load tilesets
     const Value& tilesets = document["tilesets"];
     for (i = 0; i < tilesets.Size(); i++) {
-        if (!loadTileset(tilesets[i])) {
+        if (!this->loadTileset(tilesets[i])) {
             return false;
         }
     }
@@ -44,11 +40,31 @@ Level::loadFromJson(const std::string& folder)
 }
 
 
-Level Level::constructFromJson(const std::string& filename)
+Level
+Level::constructFromJson(const std::string& filename)
 {
     Level newLevel;
     newLevel.loadFromJson(filename);
     return newLevel;
+}
+
+
+bool
+Level::loadMetadata(const rapidjson::Value& data)
+{
+    // using scope this->
+    assert(data.HasMember("width"));
+    mapWidth = data["width"].GetInt();
+    assert(data.HasMember("height"));
+    mapHeight = data["height"].GetInt();
+
+    textureTileWidth = data["tilewidth"].GetInt();
+    textureTileHeight = data["tileheight"].GetInt();
+
+    playerStartX = stoi(data["properties"]["PlayerStartX"].GetString());
+    playerStartY = stoi(data["properties"]["PlayerStartY"].GetString());
+
+    return true;
 }
 
 
