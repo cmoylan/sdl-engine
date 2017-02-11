@@ -39,6 +39,9 @@ clean:
 	rm -f build/*
 #find . -name'*orig' | xargs rm
 
+tidy:
+	@find ./src/ -name '*orig' | xargs rm
+
 # http://astyle.sourceforge.net/astyle.html
 style:
 	@astyle --options=.astylerc \
