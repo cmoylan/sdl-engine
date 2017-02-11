@@ -175,7 +175,7 @@ std::list<int> Level::layerIndicesOnScreen()
 // debug this
 int Level::tilesOnScreenX()
 {
-    if (!_tilesOnScreenX) {
+    if (_tilesOnScreenX == 0) {
         _tilesOnScreenX = (SCREEN_WIDTH / pixelsPerTileX) + tilePrefetch;
     }
     return _tilesOnScreenX;
@@ -184,7 +184,7 @@ int Level::tilesOnScreenX()
 
 int Level::tilesOnScreenY()
 {
-    if (!_tilesOnScreenY) {
+    if (_tilesOnScreenY == 0) {
         _tilesOnScreenY = (SCREEN_HEIGHT / pixelsPerTileY) + tilePrefetch;
     }
     return _tilesOnScreenY;

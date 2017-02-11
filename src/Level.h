@@ -132,9 +132,9 @@ private:
     bool isEndOfRow(size_t index, int sectorWidth = 0);
 
     // When the resolution is updated, _tilesOnScreenX/Y should be cleared
-    int _tilesOnScreenX;
+    int _tilesOnScreenX = 0;
     int tilesOnScreenX();
 
-    int _tilesOnScreenY;
+    int _tilesOnScreenY = 0;
     int tilesOnScreenY();
 };
