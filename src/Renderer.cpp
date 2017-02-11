@@ -35,8 +35,8 @@ void Renderer::drawGameObjects()
         SDL_Rect clip = {};
         clip.x = 0;
         clip.y = 0;
-        clip.w = 100;
-        clip.h = 100;
+        clip.w = 32;
+        clip.h = 32;
         renderTexture(sprite.texture, renderer,
                       object->x(), object->y(), &clip);
     }
@@ -175,6 +175,7 @@ bool Renderer::registerAsset(Asset& asset)
         SDL_Quit();
         return false;
     }
+    cout << "- success!" << endl;
 
     // the naming kind of sucks here
     Sprite renderObj = {};

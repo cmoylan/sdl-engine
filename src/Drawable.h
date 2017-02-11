@@ -18,6 +18,8 @@ public:
 
     int _x = 0;
     int _y = 0;
+    int _w = 0;
+    int _h = 0;
 
     int x() { return _x; }
     int y() { return _y; }
