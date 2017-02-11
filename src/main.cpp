@@ -5,13 +5,13 @@
 
 /* TODO:
  * - draw a level
+ *   - scroll the level when the character moves
  *   - actually draw it
+ *   - consider using 64 px sprites, or even 128
  * - automate or fix anything that annoys you
  *   - fix struct debugger by telling a struct how to print itself
  * - better exceptions
- * - smoother scrolling, input handling
- * - scrolling
- *   - test offset
+ * - smoother movement, input handling
  */
 
 int main(int, char**)

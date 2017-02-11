@@ -62,16 +62,16 @@ void Game::handleInput()
 
             // player movement
             case SDLK_w:
-                player.move(0, 10);
+                player.move(0, 5);
                 break;
             case SDLK_a:
-                player.move(-10, 0);
+                player.move(-5, 0);
                 break;
             case SDLK_s:
-                player.move(0, -10);
+                player.move(0, -5);
                 break;
             case SDLK_d:
-                player.move(10, 0);
+                player.move(5, 0);
                 break;
 
             // scroll testing

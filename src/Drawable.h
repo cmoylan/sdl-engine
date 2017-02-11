@@ -18,8 +18,9 @@ public:
 
     int _x = 0;
     int _y = 0;
-    int _w = 0;
-    int _h = 0;
+    // this
+    int spriteOffsetX = 32;
+    int spriteOffsetY = 32;
 
     int x() { return _x; }
     int y() { return _y; }

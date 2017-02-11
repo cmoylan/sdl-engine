@@ -78,7 +78,8 @@ inline SDL_Texture* renderText(const std::string &message, const std::string &fo
  * @param clip The sub-section of the texture to draw (clipping rect)
  *    default of nullptr draws the entire texture
  */
-inline void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst, SDL_Rect *clip = nullptr){
+inline void
+renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst, SDL_Rect *clip = nullptr){
     SDL_RenderCopy(ren, tex, clip, &dst);
     //SDL_RendererFlip flip;
     //SDL_RenderCopyEx(ren, tex, clip, &dst, 0, NULL, flip);
