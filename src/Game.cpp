@@ -37,8 +37,8 @@ void Game::handleInput()
         if (e.type == SDL_QUIT) {
             _running = false;
         }
-        //Use number input to select which clip should be drawn
         if (e.type == SDL_KEYDOWN) {
+            //Use number input to select which clip should be drawn
             switch (e.key.keysym.sym) {
             case SDLK_1:
             case SDLK_KP_1:
@@ -60,21 +60,21 @@ void Game::handleInput()
                 _running = false;
                 break;
 
-            // player movement
+            // -- player movement
             case SDLK_w:
-                player.move(0, 5);
+                tryMovePlayer(0, 5);
                 break;
             case SDLK_a:
-                player.move(-5, 0);
+                tryMovePlayer(-5, 0);
                 break;
             case SDLK_s:
-                player.move(0, -5);
+                tryMovePlayer(0, -5);
                 break;
             case SDLK_d:
-                player.move(5, 0);
+                tryMovePlayer(5, 0);
                 break;
 
-            // scroll testing
+            // -- scroll testing
             case SDLK_UP:
                 level.offsetY += 1;
                 break;
@@ -92,6 +92,20 @@ void Game::handleInput()
                 break;
             }
         }
+    }
+}
+
+
+void Game::tryMovePlayer(int directionX, int directionY)
+{
+    // using this->
+    // TODO: predefine number of pixels per 'move'
+    int x = level.offsetX + directionX;
+    int y = level.offsetY + directionY;
+
+    if (level.isOpen(x, y, PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y)) {
+        player.move(directionX, directionY);
+        level.scrollBy(directionX, directionY);
     }
 }
 

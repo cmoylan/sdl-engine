@@ -14,6 +14,10 @@
  * - smoother movement, input handling
  */
 
+/* Scrolling
+   Drawable _x and _y are positions on the screen
+   Game will keep track of the player's place in the levl
+ */
 int main(int, char**)
 {
     Renderer renderer;

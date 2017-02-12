@@ -42,6 +42,7 @@ public:
     void handleInput();
     void quit();
 
+    void tryMovePlayer(int directionX, int directionY);
     DrawList getGameObjects();
 
 };

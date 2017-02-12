@@ -32,6 +32,29 @@ AssetList Level::assetData()
     return assets;
 }
 
+// int
+// Level::valueAt(int x, int y)
+// {
+//     int row = (((-1 * y) + 99) / (int) tileSizeY);
+//     int col = (x + 100) / (int) tileSizeX;
+//
+//     return currentSector[(row * tilesOnScreenX) + col];
+// }
+
+bool Level::isBlocked(int x, int y, int w, int h)
+{
+    // from the position get the numbers for the platform array
+    // check all 4 corners
+    // if valueAt(x,y)(x+w, y) (x+w, y+h) (x, y+h)
+    return true;
+}
+
+
+bool Level::isOpen(int originX, int originY, int sizeW, int sizeH)
+{
+    return !isBlocked(originX, originY, sizeW, sizeH);
+}
+
 
 // FIXME: not sure how to pass this->mapWidth automatically, so assume if
 //        sectorWidth is 0, we want mapWidth
@@ -199,4 +222,10 @@ int Level::tilesOnScreenY()
         }
     }
     return _tilesOnScreenY;
+}
+
+
+int Level::valueAt(int x, int y)
+{
+    return 0;
 }

@@ -76,8 +76,8 @@ public:
     std::string resPath;  // FIXME: what sets this?
 
     // data about rendering
-    int offsetX; // TODO: could be a vector2d
-    int offsetY;
+    int offsetX; // camera offset
+    int offsetY; // TODO: could be a vector2d
     int tilePrefetch = 1; // can come from a config somewhere
 
     // TODO: this might belong above level, in the render code
@@ -96,10 +96,21 @@ public:
     void printPlatforms();
 
     /**
-     * Scroll by a pixel amount
-     * @param pixelsX the amount to move left-right
-     * @param pixelsY the amount to move up-down
+     * Return if an area on the map is blocked
+     * @param x the origin x coord (lower left corner)
+     * @param y the origin y coord
+     * @param w the width of the rectangle
+     * @param h the height of the rectangle
      */
+    bool isBlocked(int originX, int originY, int sizeW, int sizeH);
+    bool isOpen(int originX, int originY, int sizeW, int sizeH);
+
+
+    /**
+       * Scroll by a pixel amount
+       * @param pixelsX the amount to move left-right
+       * @param pixelsY the amount to move up-down
+       */
     void scrollBy(int pixelsX, int pixelsY);
 
     /**
@@ -124,6 +135,7 @@ public:
      */
     RenderMap renderData();
 
+    // these are kind of just "rendering indices x and y...
     /**
      * Determine how many tiles are on screen based on screen width
      */
@@ -133,6 +145,11 @@ public:
      * Determine how many tiles are on screen based on screen height
      */
     int tilesOnScreenY();
+
+    /**
+     * Return the sprite gid at a given point on screen
+     */
+    int valueAt(int x, int y);
 
 private:
 

@@ -27,7 +27,7 @@
  "properties":
     {
      "PlayerStartX":"32",
-     "PlayerStartY":"32"
+     "PlayerStartY":"128"
     },
  "renderorder":"left-down",
  "tileheight":32,

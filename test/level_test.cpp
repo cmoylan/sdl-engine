@@ -23,8 +23,6 @@ void compareCollections(list<int> expected, list<int> actual)
 TEST_CASE("#layerIndicesOnScreen", "[level]")
 {
     Level level = Level::constructFromJson("Test Level 2");
-    level.tilesOnScreenX = 2;
-    level.tilesOnScreenY = 2;
 
     SECTION("with no offset") {
         list<int> expected = { 0, 1, 2,
