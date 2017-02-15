@@ -92,7 +92,7 @@ public:
     bool loadFromJson(const std::string& filename);
     static Level constructFromJson(const std::string& filename);
 
-    // FIXME: this blows up if run before `loadFromJson`
+    // NOTE: this blows up if run before `loadFromJson`
     void printPlatforms();
 
     /**

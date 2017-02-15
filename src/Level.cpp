@@ -35,6 +35,8 @@ AssetList Level::assetData()
 
 bool Level::isOpen(int x, int y, int w, int h)
 {
+    // there is a slight bug in here
+    // this is off by 1 for some reason
 
     // value at x, y
     // value at x + w, y

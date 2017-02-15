@@ -31,6 +31,7 @@ void Game::handleInput()
     // FIXME: this doesn't belong here, should more into it's own thing
     // FIXME: need to allow keys to be remapped
     SDL_Event e;
+    int moveSize = 8;
 
     //Event Polling
     while (SDL_PollEvent(&e)) {
@@ -45,16 +46,16 @@ void Game::handleInput()
 
             // -- player movement
             case SDLK_w:
-                tryMovePlayer(0, 5);
+                tryMovePlayer(0, -moveSize);
                 break;
             case SDLK_a:
-                tryMovePlayer(-5, 0);
+                tryMovePlayer(-moveSize, 0);
                 break;
             case SDLK_s:
-                tryMovePlayer(0, -5);
+                tryMovePlayer(0, moveSize);
                 break;
             case SDLK_d:
-                tryMovePlayer(5, 0);
+                tryMovePlayer(moveSize, 0);
                 break;
 
             // -- scroll testing
@@ -87,7 +88,10 @@ void Game::tryMovePlayer(int directionX, int directionY)
     int x = playerPositionOnMap.x + directionX;
     int y = playerPositionOnMap.y + directionY;
 
-    if (level.isOpen(x, y, PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y)) {
+    // Why does this have to be pixels per tile - 1 ?
+    if (level.isOpen(x, y,
+                     (PIXELS_PER_TILE_X - 1),
+                     (PIXELS_PER_TILE_Y - 1))) {
         player.move(directionX, directionY);
 
         // update position on map!
