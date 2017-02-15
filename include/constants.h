@@ -11,7 +11,14 @@ const int PIXELS_PER_TILE_Y = 32;
 
 const std::string WINDOW_TITLE = "Game";
 
+
+// Random things too small for their own file
 struct Vector2D {
+    int x;
+    int y;
+};
+
+struct Point {
     int x;
     int y;
 };

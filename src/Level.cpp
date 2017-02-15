@@ -32,34 +32,32 @@ AssetList Level::assetData()
     return assets;
 }
 
-// int
-// Level::valueAt(int x, int y)
-// {
-//     int row = (((-1 * y) + 99) / (int) tileSizeY);
-//     int col = (x + 100) / (int) tileSizeX;
-//
-//     return currentSector[(row * tilesOnScreenX) + col];
-// }
 
-bool Level::isBlocked(int x, int y, int w, int h)
+bool Level::isOpen(int x, int y, int w, int h)
 {
 
-  // value at x, y
-  // value at x + w, y
-  // value at x + w, y + h
-  // value at x, y + h
-  // if all 4 are 0, can move
+    // value at x, y
+    // value at x + w, y
+    // value at x + w, y + h
+    // value at x, y + h
+    // if all 4 are 0, can move
 
     // from the position get the numbers for the platform array
     // check all 4 corners
     // if valueAt(x,y)(x+w, y) (x+w, y+h) (x, y+h)
-    return true;
+    if (valueAt(x, y) == 0 &&
+            valueAt(x + w, y) == 0 &&
+            valueAt(x + w, y + h) == 0 &&
+            valueAt(x, y + h) == 0) {
+        return true;
+    }
+    return false;
 }
 
 
-bool Level::isOpen(int originX, int originY, int sizeW, int sizeH)
+bool Level::isBlocked(int originX, int originY, int sizeW, int sizeH)
 {
-    return !isBlocked(originX, originY, sizeW, sizeH);
+    return !isOpen(originX, originY, sizeW, sizeH);
 }
 
 
@@ -232,7 +230,14 @@ int Level::tilesOnScreenY()
 }
 
 
-int Level::valueAt(int x, int y)
+int Level::valueAt(int x, int y, std::string layer)
 {
-    return 0;
+    // Divide by tile size to get row, col
+    int row = y / PIXELS_PER_TILE_Y;
+    int col = x / PIXELS_PER_TILE_X;
+    int index = (row * mapWidth) + col;
+
+    vector<int>& tiles = layers.at(layer).tiles;
+    int tile = tiles.at(index);
+    return tile;
 }

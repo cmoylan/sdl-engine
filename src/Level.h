@@ -149,7 +149,7 @@ public:
     /**
      * Return the sprite gid at a given point on screen
      */
-    int valueAt(int x, int y);
+    int valueAt(int x, int y, std::string layer = "platforms");
 
 private:
 

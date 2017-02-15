@@ -38,24 +38,7 @@ void Game::handleInput()
             _running = false;
         }
         if (e.type == SDL_KEYDOWN) {
-            //Use number input to select which clip should be drawn
             switch (e.key.keysym.sym) {
-            case SDLK_1:
-            case SDLK_KP_1:
-                //useClip = 0;
-                break;
-            case SDLK_2:
-            case SDLK_KP_2:
-                //useClip = 1;
-                break;
-            case SDLK_3:
-            case SDLK_KP_3:
-                //useClip = 2;
-                break;
-            case SDLK_4:
-            case SDLK_KP_4:
-                //useClip = 3;
-                break;
             case SDLK_ESCAPE:
                 _running = false;
                 break;
@@ -100,13 +83,18 @@ void Game::tryMovePlayer(int directionX, int directionY)
 {
     // using this->
     // TODO: predefine number of pixels per 'move'
-    // calculate the absolute position on the map
-    int x = level.offsetX + directionX;
-    int y = level.offsetY + directionY;
+
+    int x = playerPositionOnMap.x + directionX;
+    int y = playerPositionOnMap.y + directionY;
 
     if (level.isOpen(x, y, PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y)) {
         player.move(directionX, directionY);
-        level.scrollBy(directionX, directionY);
+
+        // update position on map!
+        updatePlayerPositionBy(directionX, directionY);
+
+        // FIXME: still needs to be written
+        //level.scrollBy(directionX, directionY);
     }
 }
 
@@ -121,8 +109,10 @@ void Game::init()
     // -- move player where level says it should be
     // FIXME: feels kind of bad to do this
     // might have to do something like this for other game drawables
-    player._x = level.playerStartX;
-    player._y = level.playerStartY;
+    // what if it's off screen??? the following assumes it is on screen
+    player.move(level.playerStartX, level.playerStartY);
+    playerPositionOnMap.x = level.playerStartX;
+    playerPositionOnMap.y = level.playerStartY;
 
     this->gameObjects.push_back(&player);
     //level.renderData();
@@ -159,4 +149,12 @@ void Game::update()
     // do character updates here
     // actually do all updatables updates here
     // enemies, random moving stuff
+}
+
+
+
+void Game::updatePlayerPositionBy(int directionX, int directionY)
+{
+    playerPositionOnMap.x  += directionX;
+    playerPositionOnMap.y += directionY;
 }

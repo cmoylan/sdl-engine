@@ -19,6 +19,9 @@ class Game {
     Options options;
     Player player; // NOTE: the player is being created right here
 
+    Point playerPositionOnMap;
+    void updatePlayerPositionBy(int directionX, int directionY);
+
     bool _running = true;
 
     DrawList gameObjects;
