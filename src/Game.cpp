@@ -100,6 +100,7 @@ void Game::tryMovePlayer(int directionX, int directionY)
 {
     // using this->
     // TODO: predefine number of pixels per 'move'
+    // calculate the absolute position on the map
     int x = level.offsetX + directionX;
     int y = level.offsetY + directionY;
 

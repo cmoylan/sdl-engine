@@ -14,6 +14,11 @@
  * - smoother movement, input handling
  */
 
+// for sunday:
+// left off on level::valueat
+// get that working, and then get isBlocked working
+// that should be it
+
 /* Scrolling
    Drawable _x and _y are positions on the screen
    Game will keep track of the player's place in the levl

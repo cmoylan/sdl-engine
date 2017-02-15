@@ -43,6 +43,13 @@ AssetList Level::assetData()
 
 bool Level::isBlocked(int x, int y, int w, int h)
 {
+
+  // value at x, y
+  // value at x + w, y
+  // value at x + w, y + h
+  // value at x, y + h
+  // if all 4 are 0, can move
+
     // from the position get the numbers for the platform array
     // check all 4 corners
     // if valueAt(x,y)(x+w, y) (x+w, y+h) (x, y+h)
