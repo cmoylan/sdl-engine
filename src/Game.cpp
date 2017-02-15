@@ -83,23 +83,51 @@ void Game::handleInput()
 void Game::tryMovePlayer(int directionX, int directionY)
 {
     // using this->
-    // TODO: predefine number of pixels per 'move'
 
     int x = playerPositionOnMap.x + directionX;
     int y = playerPositionOnMap.y + directionY;
 
     // Why does this have to be pixels per tile - 1 ?
+    // *INDENT-OFF*
     if (level.isOpen(x, y,
                      (PIXELS_PER_TILE_X - 1),
-                     (PIXELS_PER_TILE_Y - 1))) {
+                     (PIXELS_PER_TILE_Y - 1))) 
+    {
+        // move on screen
         player.move(directionX, directionY);
 
-        // update position on map!
+        // update the player's position on the level
         updatePlayerPositionBy(directionX, directionY);
 
-        // FIXME: still needs to be written
-        //level.scrollBy(directionX, directionY);
+        tryScrollLevel(directionX, directionY);
     }
+    // *INDENT-ON*
+}
+
+
+void Game::tryScrollLevel(int directionX, int directionY)
+{
+    // --- WORKING --- //
+
+    // this is not quite right
+
+    // x and y screen buffer area
+    // player.x() and player.y() are player position on screen
+    // bufferX and screen_width - bufferX
+    // also keep in mind that at the edges of the level, the
+    // player will get within the buffer
+    if (options.screenBufferX <
+            player.x() <
+            (SCREEN_WIDTH - options.screenBufferX)) {
+        // can scroll left/right
+        level.scrollBy(directionX, 0);
+    }
+
+    // if can scroll up/down (y)
+    // scroll
+    // if can scroll left/right (x)
+    // scroll
+
 }
 
 

@@ -22,3 +22,10 @@ struct Point {
     int x;
     int y;
 };
+
+/* NOTES:
+ * - use // *INDENT-OFF*
+ *        and
+ *       // *INDENT_ON*
+ *   to turn off formatting. Can also use *NOPAD* for single lines.
+ */

@@ -14,11 +14,6 @@
  * - smoother movement, input handling
  */
 
-// for sunday:
-// left off on level::valueat
-// get that working, and then get isBlocked working
-// that should be it
-
 /* Scrolling
    Drawable _x and _y are positions on the screen
    Game will keep track of the player's place in the levl
@@ -32,8 +27,13 @@ int main(int, char**)
     //std::cout << "tile w/h: " << SCREEN_WIDTH / 20 << " - " << SCREEN_HEIGHT / 20 <<
     //          std::endl;
 
-    // level number, score, level folder
-    Options opts = { 1, 0, "Test Level 2" };
+    Options opts;
+    opts.levelNumber = 1;
+    opts.score = 0;
+    opts.levelFolder = "Test Level 2";
+    opts.screenBufferX = 64;
+    opts.screenBufferY = 64;
+
     game.load(opts);
 
     try {

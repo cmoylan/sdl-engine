@@ -11,6 +11,8 @@ struct Options {
     int levelNumber;
     int score;
     std::string levelFolder;
+    int screenBufferX;
+    int screenBufferY;
 };
 
 
@@ -46,6 +48,7 @@ public:
     void quit();
 
     void tryMovePlayer(int directionX, int directionY);
+    void tryScrollLevel(int directionX, int directionY);
     DrawList getGameObjects();
 
 };

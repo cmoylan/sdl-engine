@@ -35,18 +35,7 @@ AssetList Level::assetData()
 
 bool Level::isOpen(int x, int y, int w, int h)
 {
-    // there is a slight bug in here
-    // this is off by 1 for some reason
-
-    // value at x, y
-    // value at x + w, y
-    // value at x + w, y + h
-    // value at x, y + h
-    // if all 4 are 0, can move
-
-    // from the position get the numbers for the platform array
-    // check all 4 corners
-    // if valueAt(x,y)(x+w, y) (x+w, y+h) (x, y+h)
+    // from the position get the numbers for the platforms array, check all 4 corners
     if (valueAt(x, y) == 0 &&
             valueAt(x + w, y) == 0 &&
             valueAt(x + w, y + h) == 0 &&
@@ -174,6 +163,8 @@ RenderMap Level::renderData()
 
 void Level::scrollBy(int x, int y)
 {
+    // FIXME: should know if it can't scroll itself,
+    // rather than blindly scrolling
     this->offsetX += x;
     this->offsetY += y;
 }
