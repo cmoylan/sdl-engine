@@ -110,8 +110,9 @@ public:
        * Scroll by a pixel amount
        * @param pixelsX the amount to move left-right
        * @param pixelsY the amount to move up-down
+       * @returns a boolean indicating if the level scrolled
        */
-    void scrollBy(int pixelsX, int pixelsY);
+    bool scrollBy(int pixelsX, int pixelsY);
 
     /**
      * Get the indices of the tiles currently on screen

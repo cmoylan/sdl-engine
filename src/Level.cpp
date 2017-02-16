@@ -161,12 +161,26 @@ RenderMap Level::renderData()
 // ----- END Rendering methods ----- //
 
 
-void Level::scrollBy(int x, int y)
+bool Level::scrollBy(int x, int y)
 {
-    // FIXME: should know if it can't scroll itself,
-    // rather than blindly scrolling
-    this->offsetX += x;
-    this->offsetY += y;
+    // FIXME: why is this negative...i think offset is backwards
+    bool didScroll = false;
+
+    int newOffsetX = abs(this->offsetX - x);
+    if ((SCREEN_WIDTH + newOffsetX) < (this->mapWidth * PIXELS_PER_TILE_X)) {
+        // can scroll
+        this->offsetX -= x;
+        didScroll = true;
+    }
+
+    int newOffsetY = abs(this->offsetY - y);
+
+    if ((SCREEN_HEIGHT + newOffsetY) < (this->mapHeight * PIXELS_PER_TILE_Y)) {
+        this->offsetY -= y;
+        didScroll = true;
+    }
+
+    return didScroll;
 }
 
 
