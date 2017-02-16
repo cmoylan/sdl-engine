@@ -144,19 +144,6 @@ void Game::tryScrollLevel(int directionX, int directionY)
     if (player.y() != scrollMeridianY) {
         player.move(0, directionY);
     }
-    cout << "player y, meridianY: " << player.y();
-    cout << ", " << scrollMeridianY << endl;
-    // x and y screen buffer area
-    // player.x() and player.y() are player position on screen
-    // bufferX and screen_width - bufferX
-    // also keep in mind that at the edges of the level, the
-    // player will get within the buffer
-    /*if (options.screenBufferX <
-            player.x() <
-            (SCREEN_WIDTH - options.screenBufferX)) {
-        // can scroll left/right
-        level.scrollBy(directionX, 0);
-    }*/
 }
 
 
