@@ -174,7 +174,6 @@ bool Level::scrollBy(int x, int y)
     }
 
     int newOffsetY = abs(this->offsetY - y);
-
     if ((SCREEN_HEIGHT + newOffsetY) < (this->mapHeight * PIXELS_PER_TILE_Y)) {
         this->offsetY -= y;
         didScroll = true;

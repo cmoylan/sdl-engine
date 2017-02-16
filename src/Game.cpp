@@ -110,6 +110,11 @@ void Game::tryScrollLevel(int directionX, int directionY)
 {
     // --- WORKING --- //
 
+    // kind of works, noticing some weird diagonal scrolling
+
+    // also remove any references to level->pixelsPerTile
+    // they should all go through the constant
+
     // if the player is in the middle of the level,
     // try to scroll it, do not move player on screen
     // if it could not scroll, move the player
