@@ -80,10 +80,6 @@ public:
     int offsetY; // TODO: could be a vector2d
     int tilePrefetch = 1; // can come from a config somewhere
 
-    // TODO: this might belong above level, in the render code
-    int pixelsPerTileX;
-    int pixelsPerTileY;
-
     // ---- Members -------------------------------------------------- //
     Level();
     ~Level() {};

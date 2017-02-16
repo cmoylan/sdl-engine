@@ -58,8 +58,8 @@ void Renderer::drawLevel()
     //  clip.h = 32; //SCREEN_HEIGHT / game.level.tilesOnScreenY;
 
     SDL_Rect dstn = {};
-    dstn.w = game.level.pixelsPerTileX;
-    dstn.h = game.level.pixelsPerTileY;
+    dstn.w = PIXELS_PER_TILE_X;
+    dstn.h = PIXELS_PER_TILE_Y;
 
 
     // ------- LEFT OFF HERE ------ //

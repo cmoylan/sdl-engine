@@ -5,10 +5,6 @@ Level::Level()
 {
     offsetX = 0;
     offsetY = 0;
-    // TODO: comes from constants, or options, or something
-    // should be the same as sprite size so that nothing distorts
-    pixelsPerTileX = 32;
-    pixelsPerTileY = 32;
 }
 
 
@@ -137,8 +133,8 @@ RenderMap Level::renderData()
 
                 if (tile != 0) {
                     Rectangle rect = {};
-                    rect.x = (col * this->pixelsPerTileX) + offsetX;
-                    rect.y = (row * this->pixelsPerTileY) + offsetY;
+                    rect.x = (col * PIXELS_PER_TILE_X) + offsetX;
+                    rect.y = (row * PIXELS_PER_TILE_Y) + offsetY;
                     //rect.clipX = tileWidth;
                     //rect.clipY = tileHeight;
                     rectangles.push_front(rect);
@@ -188,8 +184,8 @@ bool Level::scrollBy(int x, int y)
 // TODO: might want to just save tilesOnScreenX/Y as local vars, instead of calling the same method several times
 std::list<int> Level::layerIndicesOnScreen()
 {
-    int index = (offsetX / pixelsPerTileX) +
-                ((offsetY / pixelsPerTileY) *
+    int index = (offsetX / PIXELS_PER_TILE_X) +
+                ((offsetY / PIXELS_PER_TILE_Y) *
                  (tilesOnScreenX() + tilePrefetch));
     std::list<int> indices;
 
@@ -211,7 +207,7 @@ std::list<int> Level::layerIndicesOnScreen()
 int Level::tilesOnScreenX()
 {
     if (_tilesOnScreenX == 0) {
-        _tilesOnScreenX = (SCREEN_WIDTH / pixelsPerTileX) + tilePrefetch;
+        _tilesOnScreenX = (SCREEN_WIDTH / PIXELS_PER_TILE_X) + tilePrefetch;
 
         // should not exceed tiles in map
         if (_tilesOnScreenX > mapWidth) {
@@ -225,7 +221,7 @@ int Level::tilesOnScreenX()
 int Level::tilesOnScreenY()
 {
     if (_tilesOnScreenY == 0) {
-        _tilesOnScreenY = (SCREEN_HEIGHT / pixelsPerTileY) + tilePrefetch;
+        _tilesOnScreenY = (SCREEN_HEIGHT / PIXELS_PER_TILE_Y) + tilePrefetch;
 
         // should not exceed tiles in map
         if (_tilesOnScreenY > mapHeight) {
