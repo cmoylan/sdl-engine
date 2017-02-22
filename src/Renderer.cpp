@@ -193,11 +193,10 @@ bool Renderer::registerAsset(Asset& asset)
 void Renderer::run()
 {
     Uint32 startTime;
-    int tick;
+    int tick = 0;
 
     while (this->game.running()) {
         if (tick > 9) {
-
             tick = 0;
         }
 

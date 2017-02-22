@@ -28,12 +28,12 @@ DrawList Game::getGameObjects()
 
 void Game::handleInput(int tick)
 {
-    // this is being called twice. WHY?
+    // ----- this is being called twice. WHY?
 
     // FIXME: this doesn't belong here, should more into it's own thing
     // FIXME: need to allow keys to be remapped
     SDL_Event e;
-    int moveSize = 8;
+    int moveSize = 16;
     bool eventHandled = false;
 
     //Event Polling
@@ -52,6 +52,7 @@ void Game::handleInput(int tick)
             case SDLK_w:
                 tryMovePlayer(0, -moveSize);
                 eventHandled = true;
+                cout << "handling it!" << endl;
                 break;
             case SDLK_a:
                 tryMovePlayer(-moveSize, 0);
@@ -86,9 +87,6 @@ void Game::handleInput(int tick)
             }
         }
 
-        if (eventHandled) {
-            break;
-        }
     }
 }
 
@@ -151,19 +149,23 @@ void Game::tryScrollLevel(int directionX, int directionY)
     int scrollMeridianY = (SCREEN_HEIGHT / 2) - (PIXELS_PER_TILE_Y / 2);
     if (player.y() == scrollMeridianY) {
         // getting wrong response from scrollby
-        cout << "y == smy";
         if (not level.scrollBy(0, directionY)) {
             cout << "should not be in here" << endl;
             player.move(0, directionY);
         }
+        cout << "offsetx: " << level.offsetX;
+//         cout << "   |   level indices: ";
+//         for (auto i : level.layerIndicesOnScreen()) {
+//             cout << i << ", ";
+//         }
+        cout << "tiles on screen y: " << level.tilesOnScreenY();
+        cout << endl;
     }
 
     //if (player.y() != scrollMeridianY) {
     else {
-        cout << "y != smy";
         player.move(0, directionY);
     }
-    cout << endl;
 }
 
 
