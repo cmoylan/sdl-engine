@@ -26,8 +26,8 @@
  "orientation":"orthogonal",
  "properties":
     {
-     "PlayerStartX":"32",
-     "PlayerStartY":"128"
+     "PlayerStartX":"64",
+     "PlayerStartY":"160"
     },
  "renderorder":"left-down",
  "tileheight":32,

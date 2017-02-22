@@ -24,11 +24,15 @@ class Game {
     Point playerPositionOnMap;
     void updatePlayerPositionBy(int directionX, int directionY);
 
-    bool _running = true;
+
+    // unused for the time being
+    int playerInputX = 0;
+    int playerInputY = 0;
 
     DrawList gameObjects;
 
 public:
+    bool _running = true;
 
     Level level; // acces to this should be readonly
 
@@ -44,7 +48,7 @@ public:
     void init();
     void teardown();
     void update();
-    void handleInput();
+    void handleInput(int tick);
     void quit();
 
     void tryMovePlayer(int directionX, int directionY);

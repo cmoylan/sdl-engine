@@ -21,7 +21,7 @@ class Renderer {
     SDL_Window *window;
 
     //temp
-    bool RENDER_DATA_PRINTED = false;
+    bool RENDER_DATA_PRINTED = true;
 
 public:
     Renderer() {};

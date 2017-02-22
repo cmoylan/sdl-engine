@@ -26,15 +26,19 @@ DrawList Game::getGameObjects()
 // }
 
 
-void Game::handleInput()
+void Game::handleInput(int tick)
 {
+    // this is being called twice. WHY?
+
     // FIXME: this doesn't belong here, should more into it's own thing
     // FIXME: need to allow keys to be remapped
     SDL_Event e;
     int moveSize = 8;
+    bool eventHandled = false;
 
     //Event Polling
     while (SDL_PollEvent(&e)) {
+
         if (e.type == SDL_QUIT) {
             _running = false;
         }
@@ -47,15 +51,20 @@ void Game::handleInput()
             // -- player movement
             case SDLK_w:
                 tryMovePlayer(0, -moveSize);
+                eventHandled = true;
                 break;
             case SDLK_a:
                 tryMovePlayer(-moveSize, 0);
+                eventHandled = true;
                 break;
             case SDLK_s:
                 tryMovePlayer(0, moveSize);
+                cout << "tick: " << tick << endl;
+                eventHandled = true;
                 break;
             case SDLK_d:
                 tryMovePlayer(moveSize, 0);
+                eventHandled = true;
                 break;
 
             // -- scroll testing
@@ -76,6 +85,10 @@ void Game::handleInput()
                 break;
             }
         }
+
+        if (eventHandled) {
+            break;
+        }
     }
 }
 
@@ -91,7 +104,7 @@ void Game::tryMovePlayer(int directionX, int directionY)
     // *INDENT-OFF*
     if (level.isOpen(x, y,
                      (PIXELS_PER_TILE_X - 1),
-                     (PIXELS_PER_TILE_Y - 1))) 
+                     (PIXELS_PER_TILE_Y - 1)))
     {
         // update the player's position on the level
         updatePlayerPositionBy(directionX, directionY);
@@ -99,6 +112,7 @@ void Game::tryMovePlayer(int directionX, int directionY)
 
         // move on screen
         //player.move(directionX, directionY);
+        cout << "try move player --" << endl;
         tryScrollLevel(directionX, directionY);
     }
     // *INDENT-ON*
@@ -118,16 +132,18 @@ void Game::tryScrollLevel(int directionX, int directionY)
     // if the player is in the middle of the level,
     // try to scroll it, do not move player on screen
     // if it could not scroll, move the player
-    int scrollMeridianX = (SCREEN_WIDTH / 2) - (PIXELS_PER_TILE_X / 2);
+    /*int scrollMeridianX = (SCREEN_WIDTH / 2) - (PIXELS_PER_TILE_X / 2);
     if (player.x() == scrollMeridianX) {
         if (not level.scrollBy(directionX, 0)) {
             player.move(directionX, 0);
         }
-    }
+    }*/
 
     // if the player is not in the middle of the level,
     // we must be at an edge, move player on screen
-    if (player.x() != scrollMeridianX) {
+    //if (player.x() != scrollMeridianX) {
+    if (false) {}
+    else {
         player.move(directionX, 0);
     }
 
@@ -135,15 +151,19 @@ void Game::tryScrollLevel(int directionX, int directionY)
     int scrollMeridianY = (SCREEN_HEIGHT / 2) - (PIXELS_PER_TILE_Y / 2);
     if (player.y() == scrollMeridianY) {
         // getting wrong response from scrollby
+        cout << "y == smy";
         if (not level.scrollBy(0, directionY)) {
             cout << "should not be in here" << endl;
             player.move(0, directionY);
         }
     }
 
-    if (player.y() != scrollMeridianY) {
+    //if (player.y() != scrollMeridianY) {
+    else {
+        cout << "y != smy";
         player.move(0, directionY);
     }
+    cout << endl;
 }
 
 
@@ -203,6 +223,8 @@ void Game::update()
 
 void Game::updatePlayerPositionBy(int directionX, int directionY)
 {
-    playerPositionOnMap.x  += directionX;
+    playerPositionOnMap.x += directionX;
     playerPositionOnMap.y += directionY;
+    cout << "player map pos: " << playerPositionOnMap.x;
+    cout << ", " << playerPositionOnMap.y << endl;
 }

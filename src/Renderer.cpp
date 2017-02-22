@@ -192,8 +192,18 @@ bool Renderer::registerAsset(Asset& asset)
 
 void Renderer::run()
 {
+    Uint32 startTime;
+    int tick;
+
     while (this->game.running()) {
-        this->game.handleInput();
+        if (tick > 9) {
+
+            tick = 0;
+        }
+
+        startTime = SDL_GetTicks();
+
+        this->game.handleInput(tick);
         this->game.update();
 
         // draw
@@ -208,6 +218,12 @@ void Renderer::run()
         //Update the screen
         SDL_RenderPresent(renderer);
         //this->game.quit();
+
+        if (1000 / FPS > SDL_GetTicks() - startTime) {
+            SDL_Delay(1000 / FPS - (SDL_GetTicks() - startTime));
+        }
+
+        tick += 1;
     }
 }
 

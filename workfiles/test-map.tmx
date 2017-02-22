@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="left-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="1">
  <properties>
-  <property name="PlayerStartX" value="32"/>
-  <property name="PlayerStartY" value="128"/>
+  <property name="PlayerStartX" value="64"/>
+  <property name="PlayerStartY" value="160"/>
  </properties>
  <tileset firstgid="1" name="grass-tiles-2-small" tilewidth="32" tileheight="32" tilecount="72">
   <image source="grass-tiles-2-small.png" width="384" height="192"/>
