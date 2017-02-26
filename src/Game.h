@@ -32,7 +32,7 @@ class Game {
     DrawList gameObjects;
 
 public:
-        bool _running = true;
+    bool _running = true;
 
     Level level; // acces to this should be readonly
 

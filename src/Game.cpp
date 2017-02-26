@@ -98,6 +98,10 @@ void Game::tryMovePlayer(int directionX, int directionY)
     int x = playerPositionOnMap.x + directionX;
     int y = playerPositionOnMap.y + directionY;
 
+    // the leve scrolls when it shouldn't,
+    // when the player is moving
+    // but the level isn't
+
     // Why does this have to be pixels per tile - 1 ?
     // *INDENT-OFF*
     if (level.isOpen(x, y,
@@ -111,6 +115,8 @@ void Game::tryMovePlayer(int directionX, int directionY)
         // move on screen
         //player.move(directionX, directionY);
         cout << "try move player --" << endl;
+        cout << "indices on screen: ";
+        Utilities::printCollection(level.layerIndicesOnScreen());
         tryScrollLevel(directionX, directionY);
     }
     // *INDENT-ON*
@@ -122,24 +128,8 @@ void Game::tryScrollLevel(int directionX, int directionY)
 {
     // --- WORKING --- //
 
-    // kind of works, noticing some weird diagonal scrolling
+    // problem scrolling to bottom
 
-    // also remove any references to level->pixelsPerTile
-    // they should all go through the constant
-
-    // if the player is in the middle of the level,
-    // try to scroll it, do not move player on screen
-    // if it could not scroll, move the player
-    /*int scrollMeridianX = (SCREEN_WIDTH / 2) - (PIXELS_PER_TILE_X / 2);
-    if (player.x() == scrollMeridianX) {
-        if (not level.scrollBy(directionX, 0)) {
-            player.move(directionX, 0);
-        }
-    }*/
-
-    // if the player is not in the middle of the level,
-    // we must be at an edge, move player on screen
-    //if (player.x() != scrollMeridianX) {
     if (false) {}
     else {
         player.move(directionX, 0);
@@ -147,22 +137,18 @@ void Game::tryScrollLevel(int directionX, int directionY)
 
     // -- do the same things but for Y
     int scrollMeridianY = (SCREEN_HEIGHT / 2) - (PIXELS_PER_TILE_Y / 2);
+    cout << "^^----- sm: p: " << scrollMeridianY << " | " << player.y() << endl;
+
     if (player.y() == scrollMeridianY) {
         // getting wrong response from scrollby
-        if (not level.scrollBy(0, directionY)) {
-            cout << "should not be in here" << endl;
+        if (!level.scrollBy(0, directionY)) {
             player.move(0, directionY);
         }
-        cout << "offsetx: " << level.offsetX;
-//         cout << "   |   level indices: ";
-//         for (auto i : level.layerIndicesOnScreen()) {
-//             cout << i << ", ";
-//         }
-        cout << "tiles on screen y: " << level.tilesOnScreenY();
-        cout << endl;
+        //cout << "offsetx: " << level.offsetX;
+        //cout << "tiles on screen y: " << level.tilesOnScreenY();
+        //cout << endl;
     }
 
-    //if (player.y() != scrollMeridianY) {
     else {
         player.move(0, directionY);
     }
@@ -227,6 +213,6 @@ void Game::updatePlayerPositionBy(int directionX, int directionY)
 {
     playerPositionOnMap.x += directionX;
     playerPositionOnMap.y += directionY;
-    cout << "player map pos: " << playerPositionOnMap.x;
-    cout << ", " << playerPositionOnMap.y << endl;
+    //cout << "player map pos: " << playerPositionOnMap.x;
+    //cout << ", " << playerPositionOnMap.y << endl;
 }

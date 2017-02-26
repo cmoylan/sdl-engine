@@ -163,17 +163,21 @@ bool Level::scrollBy(int x, int y)
     bool didScroll = false;
 
     if (x != 0) {
-        cout << "--------------- scrolling x" << endl;
-    int newOffsetX = abs(this->offsetX - x);
-    if ((SCREEN_WIDTH + newOffsetX) < (this->mapWidth * PIXELS_PER_TILE_X)) {
-        // can scroll
-        this->offsetX -= x;
-        didScroll = true;
-    }
+        //cout << "--------------- scrolling x" << endl;
+        int newOffsetX = this->offsetX - x;
+        if ((SCREEN_WIDTH + newOffsetX) < (this->mapWidth * PIXELS_PER_TILE_X)
+                && (newOffsetX <= 0)
+           ) {
+            // can scroll
+            this->offsetX -= x;
+            didScroll = true;
+        }
     }
 
-    int newOffsetY = abs(this->offsetY - y);
-    if ((SCREEN_HEIGHT + newOffsetY) < (this->mapHeight * PIXELS_PER_TILE_Y)) {
+    int newOffsetY = this->offsetY - y;
+    if ((SCREEN_HEIGHT + newOffsetY) < (this->mapHeight * PIXELS_PER_TILE_Y)
+            && (newOffsetY <= 0)
+       ) {
         this->offsetY -= y;
         didScroll = true;
     }
@@ -187,10 +191,12 @@ bool Level::scrollBy(int x, int y)
 // TODO: might want to just save tilesOnScreenX/Y as local vars, instead of calling the same method several times
 std::list<int> Level::layerIndicesOnScreen()
 {
-    // --- i think the bug is in here
     int index = (offsetX / PIXELS_PER_TILE_X) +
                 ((offsetY / PIXELS_PER_TILE_Y) *
                  (tilesOnScreenX() + tilePrefetch));
+    if (index < 0) {
+        index = 0;
+    };
     std::list<int> indices;
 
     for (int y = 0; y <= tilesOnScreenY(); y++) {
