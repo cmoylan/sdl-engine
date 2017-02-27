@@ -34,7 +34,6 @@ void Game::handleInput(int tick)
     // FIXME: need to allow keys to be remapped
     SDL_Event e;
     int moveSize = 16;
-    bool eventHandled = false;
 
     //Event Polling
     while (SDL_PollEvent(&e)) {
@@ -51,21 +50,17 @@ void Game::handleInput(int tick)
             // -- player movement
             case SDLK_w:
                 tryMovePlayer(0, -moveSize);
-                eventHandled = true;
                 cout << "handling it!" << endl;
                 break;
             case SDLK_a:
                 tryMovePlayer(-moveSize, 0);
-                eventHandled = true;
                 break;
             case SDLK_s:
                 tryMovePlayer(0, moveSize);
                 cout << "tick: " << tick << endl;
-                eventHandled = true;
                 break;
             case SDLK_d:
                 tryMovePlayer(moveSize, 0);
-                eventHandled = true;
                 break;
 
             // -- scroll testing
@@ -137,8 +132,7 @@ void Game::tryScrollLevel(int directionX, int directionY)
 
     // -- do the same things but for Y
     int scrollMeridianY = (SCREEN_HEIGHT / 2) - (PIXELS_PER_TILE_Y / 2);
-    cout << "^^----- sm: p: " << scrollMeridianY << " | " << player.y() << endl;
-
+    //cout << "^^----- sm: p: " << scrollMeridianY << " | " << player.y() << endl;
     if (player.y() == scrollMeridianY) {
         // getting wrong response from scrollby
         if (!level.scrollBy(0, directionY)) {

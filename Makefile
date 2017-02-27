@@ -8,7 +8,7 @@ CXX = g++
 SDL_LIB = -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf
 SDL_INCLUDE = -I/usr/local/include -I./include
 # You may need to change -std=c++11 to -std=c++0x if your compiler is a bit older
-CXXFLAGS = -W -Wall -c -std=c++17 -g $(SDL_INCLUDE)
+CXXFLAGS = -W -Wall -Wextra -c -std=c++17 -g $(SDL_INCLUDE)
 LDFLAGS = $(SDL_LIB)
 EXE = engine
 

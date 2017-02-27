@@ -175,6 +175,9 @@ bool Level::scrollBy(int x, int y)
     }
 
     int newOffsetY = this->offsetY - y;
+    cout << "screenh + new offset Y: " << SCREEN_HEIGHT + newOffsetY;
+    cout << "  |  maph *pixels: " << mapHeight * PIXELS_PER_TILE_Y << endl;
+
     if ((SCREEN_HEIGHT + newOffsetY) < (this->mapHeight * PIXELS_PER_TILE_Y)
             && (newOffsetY <= 0)
        ) {
@@ -191,11 +194,14 @@ bool Level::scrollBy(int x, int y)
 // TODO: might want to just save tilesOnScreenX/Y as local vars, instead of calling the same method several times
 std::list<int> Level::layerIndicesOnScreen()
 {
-    int index = (offsetX / PIXELS_PER_TILE_X) +
-                ((offsetY / PIXELS_PER_TILE_Y) *
-                 (tilesOnScreenX() + tilePrefetch));
+    // BUG index is not right
+    int index = (abs(offsetX) / PIXELS_PER_TILE_X) +
+                ((abs(offsetY) / PIXELS_PER_TILE_Y) *
+                 tilesOnScreenX()); // + tilePrefetch
+
     if (index < 0) {
-        index = 0;
+        //cout << "index < 0: " << index << endl;
+        //index = 0;
     };
     std::list<int> indices;
 
