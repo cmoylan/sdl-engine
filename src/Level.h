@@ -108,6 +108,8 @@ public:
        * @returns a boolean indicating if the level scrolled
        */
     bool scrollBy(int pixelsX, int pixelsY);
+    bool scrollByX(int pixelsX);
+    bool scrollByY(int pixelsY);
 
     /**
      * Get the indices of the tiles currently on screen

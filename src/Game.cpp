@@ -126,9 +126,15 @@ void Game::tryScrollLevel(int directionX, int directionY)
 
     // FIXME: can store these instead of calculating every time
     int scrollMeridianX = (SCREEN_WIDTH / 2) - (PIXELS_PER_TILE_X / 2);
+    //cout << "scroll meridianX: " << scrollMeridianX;
+    //cout << " | playerx: " << player.x() << endl;
     if (player.x() == scrollMeridianX) {
-        if (!level.scrollBy(directionX, 0)) {
+        if (!level.scrollByX(directionX)) {
+            cout << "moving player x by: " << directionX << endl;
             player.move(directionX, 0);
+        }
+        else {
+            cout << "we think we scrolled x" << endl;
         }
     }
     else {
@@ -136,8 +142,10 @@ void Game::tryScrollLevel(int directionX, int directionY)
     }
 
     int scrollMeridianY = (SCREEN_HEIGHT / 2) - (PIXELS_PER_TILE_Y / 2);
+    //cout << "scroll meridianYX: " << scrollMeridianY;
+    //cout << " | playery: " << player.y() << endl;
     if (player.y() == scrollMeridianY) {
-        if (!level.scrollBy(0, directionY)) {
+        if (!level.scrollByY(directionY)) {
             player.move(0, directionY);
         }
     }

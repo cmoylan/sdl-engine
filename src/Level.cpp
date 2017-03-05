@@ -161,17 +161,43 @@ RenderMap Level::renderData()
 // ----- END Rendering methods ----- //
 
 
+// FIXME: I don't like how this method works
+// I don't think it works
 bool Level::scrollBy(int x, int y)
 {
     bool didScroll = false;
 
+    if (x != 0) {
+        didScroll = scrollByX(x);
+    }
+
+    if (y != 0) {
+        scrollByY(y);
+        didScroll = scrollByY(y) || didScroll;
+    }
+
+    return didScroll;
+
+}
+
+
+bool Level::scrollByX(int x)
+{
     int newOffsetX = this->offsetX + x;
+    cout << "new offset X: " << newOffsetX << endl;
+    // 16
     if ((SCREEN_WIDTH + newOffsetX) < (this->mapWidth * PIXELS_PER_TILE_X)
             && (newOffsetX >= 0)) {
         this->offsetX += x;
-        didScroll = true;
+        cout << "did scroll x" << endl;
+        return true;
     }
+    return false;
+}
 
+
+bool Level::scrollByY(int y)
+{
     int newOffsetY = this->offsetY + y;
     //cout << "offsetY, y: " << offsetY << " " << y;
     //cout << "  |  newoffsetY: " << newOffsetY;
@@ -180,10 +206,10 @@ bool Level::scrollBy(int x, int y)
     if ((SCREEN_HEIGHT + newOffsetY) < (this->mapHeight * PIXELS_PER_TILE_Y)
             && (newOffsetY >= 0)) {
         this->offsetY += y;
-        didScroll = true;
+        return true;
     }
+    return false;
 
-    return didScroll;
 }
 
 
