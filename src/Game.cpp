@@ -136,9 +136,6 @@ void Game::tryScrollLevel(int directionX, int directionY)
         if (!level.scrollBy(0, directionY)) {
             player.move(0, directionY);
         }
-        //cout << "offsetx: " << level.offsetX;
-        //cout << "tiles on screen y: " << level.tilesOnScreenY();
-        //cout << endl;
     }
 
     else {

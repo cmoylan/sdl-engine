@@ -166,13 +166,8 @@ bool Level::scrollBy(int x, int y)
 {
     // ------------- LEFT OFF HERE
     /*
-      offset should be positive
       the logic
-
-
      */
-
-    // FIXME: why is this negative...i think offset is backwards
     bool didScroll = false;
 
     if (x != 0) {
@@ -193,7 +188,8 @@ bool Level::scrollBy(int x, int y)
     cout << "  |  screenh + new offset Y: " << SCREEN_HEIGHT + newOffsetY;
     cout << "  |  maph * pixels: " << mapHeight * PIXELS_PER_TILE_Y << endl;
 
-    if ((SCREEN_HEIGHT + newOffsetY) < (this->mapHeight * PIXELS_PER_TILE_Y)
+    if ((SCREEN_HEIGHT + newOffsetY) < (this->mapHeight * PIXELS_PER_TILE_Y) &&
+        (newOffsetY >= 0)
        ) {
         this->offsetY += y;
         didScroll = true;
@@ -211,6 +207,7 @@ std::list<int> Level::layerIndicesOnScreen()
     // BUG index is not right
     // BUG BUG BUG
     // FIXME
+    // this seems to be okay now
     int index = (offsetX / PIXELS_PER_TILE_X) +
         ((offsetY / PIXELS_PER_TILE_Y) *
          tilesOnScreenX()); // + tilePrefetch
