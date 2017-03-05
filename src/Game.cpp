@@ -89,7 +89,6 @@ void Game::handleInput(int tick)
 void Game::tryMovePlayer(int directionX, int directionY)
 {
     // using this->
-
     int x = playerPositionOnMap.x + directionX;
     int y = playerPositionOnMap.y + directionY;
 
@@ -109,9 +108,9 @@ void Game::tryMovePlayer(int directionX, int directionY)
 
         // move on screen
         //player.move(directionX, directionY);
-        cout << "try move player --" << endl;
-        cout << "indices on screen: ";
-        Utilities::printCollection(level.layerIndicesOnScreen());
+        //cout << "try move player --" << endl;
+        //cout << "indices on screen: ";
+        //Utilities::printCollection(level.layerIndicesOnScreen());
         tryScrollLevel(directionX, directionY);
     }
     // *INDENT-ON*

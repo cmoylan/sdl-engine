@@ -96,9 +96,7 @@ void Renderer::drawLevel()
             dstn.x = rect.x;
             dstn.y = rect.y;
             renderColoredRect(renderer, &dstn, r, g, b, 0);
-            r -= 10;
-            g -= 10;
-            b -= 10;
+
             // this should work now that tiles are the same size as sprites
             //renderTexture(sprite.texture, renderer,
             //              rect.x, rect.y, &clip);
