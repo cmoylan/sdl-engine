@@ -51,6 +51,8 @@ Level::isOpenOrClosest(int originX, int originY,
                        int sizeW, int sizeH,
                        int velocityX, int velocityY)
 {
+    using namespace Utilities;
+
     Vector2D newVelocity = {0, 0};
 
     int desiredX = originX + velocityX;
@@ -63,7 +65,22 @@ Level::isOpenOrClosest(int originX, int originY,
     }
 
     // if it's not, figure it out
+    else {
+        // FIXME: this bit is running even if we can't go velocity + 1, so check that first
+        //cout << "------------------------------------------------->" << endl;
+        // start subtracting from the velocities until it's open
+        while (velocityX != 0 || velocityY != 0) {
+            velocityX = differenceToOrigin(velocityX, 1);
+            velocityY = differenceToOrigin(velocityY, 1);
+            //cout << "velocities: " << velocityX << ", " << velocityY << endl;
 
+            if (isOpen((originX + velocityX), (originY + velocityY), sizeW, sizeH)) {
+                newVelocity.x = velocityX;
+                newVelocity.y = velocityY;
+                break;
+            }
+        }
+    }
     return newVelocity;
 }
 
@@ -235,10 +252,11 @@ bool Level::scrollByY(int y)
     if ((SCREEN_HEIGHT + newOffsetY) < (this->mapHeight * PIXELS_PER_TILE_Y)
             && (newOffsetY >= 0)) {
         this->offsetY += y;
+        //cout << "scrolling by y: " << y << endl;
         return true;
     }
-    cout << "adding this to index: " << (mapWidth - (tilesOnScreenX() +
-                                         tilePrefetch)) << endl;
+    //cout << "adding this to index: " << (mapWidth - (tilesOnScreenX() +
+    //                                     tilePrefetch)) << endl;
     return false;
 
 }
@@ -247,13 +265,13 @@ bool Level::scrollByY(int y)
 
 // TODO: cache this if it hasn't changed
 // TODO: might want to just save tilesOnScreenX/Y as local vars, instead of calling the same method several times
-std::list<int> Level::layerIndicesOnScreen()
+list<int> Level::layerIndicesOnScreen()
 {
     int index = (offsetX / PIXELS_PER_TILE_X) +
                 ((offsetY / PIXELS_PER_TILE_Y) * mapWidth);
     //tilesOnScreenX()); // + tilePrefetch
 
-    std::list<int> indices;
+    list<int> indices;
 
     for (int y = 0; y <= tilesOnScreenY(); y++) {
         // for each row, do this
@@ -271,13 +289,14 @@ std::list<int> Level::layerIndicesOnScreen()
 
 int Level::screenOffsetX()
 {
-    return (offsetX % PIXELS_PER_TILE_X == 0) ? 0 : (PIXELS_PER_TILE_X / 2);
+    return offsetX % PIXELS_PER_TILE_X;
 }
 
 
 int Level::screenOffsetY()
 {
-    return (offsetY % PIXELS_PER_TILE_Y == 0) ? 0 : (PIXELS_PER_TILE_Y / 2);
+    return offsetY % PIXELS_PER_TILE_Y;
+
 }
 
 

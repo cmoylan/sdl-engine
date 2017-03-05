@@ -33,7 +33,8 @@ void Game::handleInput(int tick)
     // FIXME: this doesn't belong here, should more into it's own thing
     // FIXME: need to allow keys to be remapped
     SDL_Event e;
-    int moveSize = 16;
+    //int moveSize = 16;
+    int moveSize = 20;
 
     //Event Polling
     while (SDL_PollEvent(&e)) {
@@ -84,45 +85,19 @@ void Game::handleInput(int tick)
     }
 }
 
+
 // TODO: move to world
 void Game::tryMovePlayer(int directionX, int directionY)
 {
-    // using this->
-    int x = playerPositionOnMap.x + directionX;
-    int y = playerPositionOnMap.y + directionY;
-
-
-    // Why does this have to be pixels per tile - 1 ?
-    // *INDENT-OFF*
-    // level.isOpen should work like this
-    // if the desired location is open, return something truthy, the desired location
-    // if the desired location is not open, return the next closest open location
-    // // will need to know the starting position and desired ending position
-    // then, pass those to update player position and try scroll level
-    Vector2D velocity = level.isOpenOrClosest(playerPositionOnMap.x, playerPositionOnMap.y, 
-                                              PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y, 
-                                              directionX, directionY);
+    Vector2D velocity = level.isOpenOrClosest(playerPositionOnMap.x,
+                        playerPositionOnMap.y,
+                        PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y,
+                        directionX, directionY);
     updatePlayerPositionBy(velocity.x, velocity.y);
     if (!velocity.isZero()) {
-        tryScrollLevel(directionX, directionY);
+        cout << "velocity: " << velocity.x << ", " << velocity.y << endl;
+        tryScrollLevel(velocity.x, velocity.y);
     }
-
-    // update player to position
-    // if it is not 0/0, tryscroll level
-
-//     if (level.isOpen(x, y,
-//                      (PIXELS_PER_TILE_X - 1),
-//                      (PIXELS_PER_TILE_Y - 1)))
-//     {
-//         // update the player's position on the level
-//         updatePlayerPositionBy(directionX, directionY);
-// 
-//         // move on screen
-//         //cout << "indices on screen: ";
-//         //Utilities::printCollection(level.layerIndicesOnScreen());
-//         tryScrollLevel(directionX, directionY);
-//     }
-    // *INDENT-ON*
 }
 
 
@@ -130,16 +105,19 @@ void Game::tryMovePlayer(int directionX, int directionY)
 // NOTE: really more of "update player position and level scroll on screen"
 void Game::tryScrollLevel(int directionX, int directionY)
 {
+    int buffer = 25; // should be larger than move size
     // Get the center of the screen for x/y
     // Attempt to scroll level if character is at that place on screen
-    // NOTE: If this isn't working, do something like:
+    // FIXME: do something like:
     //          if ((meridian - buffer) < player.x() < (meridian + buffer))
 
     // FIXME: can store these instead of calculating every time
     int scrollMeridianX = (SCREEN_WIDTH / 2) - (PIXELS_PER_TILE_X / 2);
     //cout << "scroll meridianX: " << scrollMeridianX;
     //cout << " | playerx: " << player.x() << endl;
-    if (player.x() == scrollMeridianX) {
+    if (player.x() >= (scrollMeridianX - buffer) &&
+            (player.x() < (scrollMeridianX + buffer))
+       ) {
         if (!level.scrollByX(directionX)) {
             player.move(directionX, 0);
         }
@@ -151,7 +129,9 @@ void Game::tryScrollLevel(int directionX, int directionY)
     int scrollMeridianY = (SCREEN_HEIGHT / 2) - (PIXELS_PER_TILE_Y / 2);
     //cout << "scroll meridianYX: " << scrollMeridianY;
     //cout << " | playery: " << player.y() << endl;
-    if (player.y() == scrollMeridianY) {
+    if (player.y() >= (scrollMeridianY - buffer) &&
+            player.y() < (scrollMeridianY + buffer)) {
+        //if (player.y() >= scrollMeridianY) {
         if (!level.scrollByY(directionY)) {
             player.move(0, directionY);
         }
@@ -159,6 +139,7 @@ void Game::tryScrollLevel(int directionX, int directionY)
     else {
         player.move(0, directionY);
     }
+
 }
 
 
@@ -220,6 +201,7 @@ void Game::updatePlayerPositionBy(int directionX, int directionY)
 {
     playerPositionOnMap.x += directionX;
     playerPositionOnMap.y += directionY;
+    cout << "player position: " << playerPositionOnMap << endl;;
 }
 
 

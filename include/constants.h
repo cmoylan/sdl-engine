@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 
 //Screen attributes
 const int SCREEN_WIDTH  = 640;
@@ -14,6 +15,7 @@ const std::string WINDOW_TITLE = "Game";
 
 
 // Random things too small for their own file
+// TODO: figure out if you can template the operator<< things
 struct Vector2D {
     int x;
     int y;
@@ -23,10 +25,20 @@ struct Vector2D {
     }
 };
 
+inline std::ostream& operator<<(std::ostream& os, const Vector2D& object) {
+    os << "[" << object.x << ", " << object.y << "]";
+    return os;
+}
+
 struct Point {
     int x;
     int y;
 };
+
+inline std::ostream& operator<<(std::ostream& os, const Point& object) {
+    os << "[" << object.x << ", " << object.y << "]";
+    return os;
+}
 
 /* NOTES:
  * - use // *INDENT-OFF*

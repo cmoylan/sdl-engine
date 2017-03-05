@@ -18,4 +18,27 @@ namespace Utilities {
         }
         cout << endl;
     }
+ 
+    /**
+     * Return the max of 2 numbers
+     */
+    inline int max(int a, int b)
+    {
+        return (a >= b) ? a : b;
+    }
+    
+    /**
+     * 
+     */
+    inline int differenceToOrigin(int number, int difference, int origin = 0) 
+    {
+        if (number < origin) {
+            return number + difference;
+        }
+        else if (number > origin) {
+            return number - difference;
+        }
+        return number;
+    }
+    
 }
