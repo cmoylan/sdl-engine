@@ -31,6 +31,10 @@ AssetList Level::assetData()
 
 bool Level::isOpen(int x, int y, int w, int h)
 {
+    // have to subtract one because of 0-indexing
+    w -= 1;
+    h -= 1;
+
     // from the position get the numbers for the platforms array, check all 4 corners
     if (valueAt(x, y) == 0 &&
             valueAt(x + w, y) == 0 &&
@@ -41,6 +45,27 @@ bool Level::isOpen(int x, int y, int w, int h)
     return false;
 }
 
+
+Vector2D
+Level::isOpenOrClosest(int originX, int originY,
+                       int sizeW, int sizeH,
+                       int velocityX, int velocityY)
+{
+    Vector2D newVelocity = {0, 0};
+
+    int desiredX = originX + velocityX;
+    int desiredY = originY + velocityY;
+
+    // if it's open, return desiredX/Y
+    if (isOpen(desiredX, desiredY, sizeW, sizeH)) {
+        newVelocity.x = velocityX;
+        newVelocity.y = velocityY;
+    }
+
+    // if it's not, figure it out
+
+    return newVelocity;
+}
 
 bool Level::isBlocked(int originX, int originY, int sizeW, int sizeH)
 {
@@ -189,14 +214,11 @@ bool Level::scrollBy(int x, int y)
 
 bool Level::scrollByX(int x)
 {
-    //cout << "inside scrollbyx" << endl;
     int newOffsetX = this->offsetX + x;
-    //cout << "new offset X: " << newOffsetX << endl;
     // 16
     if ((SCREEN_WIDTH + newOffsetX) < (this->mapWidth * PIXELS_PER_TILE_X)
             && (newOffsetX >= 0)) {
         this->offsetX += x;
-        //cout << "did scroll x" << endl;
         return true;
     }
     return false;
@@ -241,7 +263,6 @@ std::list<int> Level::layerIndicesOnScreen()
             index += 1;
         }
         index += (mapWidth - (tilesOnScreenX() + tilePrefetch));
-        //index += ((offsetY / PIXELS_PER_TILE_Y) * tilesOnScreenX());
     }
     //Utilities::printCollection(indices);
     return indices;

@@ -84,40 +84,49 @@ void Game::handleInput(int tick)
     }
 }
 
-
-// ----- LEFT OFF HERE
-// FIXME: horizontal movement does not work
+// TODO: move to world
 void Game::tryMovePlayer(int directionX, int directionY)
 {
     // using this->
     int x = playerPositionOnMap.x + directionX;
     int y = playerPositionOnMap.y + directionY;
 
-    // the leve scrolls when it shouldn't,
-    // when the player is moving
-    // but the level isn't
 
     // Why does this have to be pixels per tile - 1 ?
     // *INDENT-OFF*
-    if (level.isOpen(x, y,
-                     (PIXELS_PER_TILE_X - 1),
-                     (PIXELS_PER_TILE_Y - 1)))
-    {
-        // update the player's position on the level
-        updatePlayerPositionBy(directionX, directionY);
-
-
-        // move on screen
-        //player.move(directionX, directionY);
-        //cout << "try move player --" << endl;
-        //cout << "indices on screen: ";
-        //Utilities::printCollection(level.layerIndicesOnScreen());
+    // level.isOpen should work like this
+    // if the desired location is open, return something truthy, the desired location
+    // if the desired location is not open, return the next closest open location
+    // // will need to know the starting position and desired ending position
+    // then, pass those to update player position and try scroll level
+    Vector2D velocity = level.isOpenOrClosest(playerPositionOnMap.x, playerPositionOnMap.y, 
+                                              PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y, 
+                                              directionX, directionY);
+    updatePlayerPositionBy(velocity.x, velocity.y);
+    if (!velocity.isZero()) {
         tryScrollLevel(directionX, directionY);
     }
+
+    // update player to position
+    // if it is not 0/0, tryscroll level
+
+//     if (level.isOpen(x, y,
+//                      (PIXELS_PER_TILE_X - 1),
+//                      (PIXELS_PER_TILE_Y - 1)))
+//     {
+//         // update the player's position on the level
+//         updatePlayerPositionBy(directionX, directionY);
+// 
+//         // move on screen
+//         //cout << "indices on screen: ";
+//         //Utilities::printCollection(level.layerIndicesOnScreen());
+//         tryScrollLevel(directionX, directionY);
+//     }
     // *INDENT-ON*
 }
 
 
+// TODO: should become a Camera class
 // NOTE: really more of "update player position and level scroll on screen"
 void Game::tryScrollLevel(int directionX, int directionY)
 {
@@ -132,11 +141,7 @@ void Game::tryScrollLevel(int directionX, int directionY)
     //cout << " | playerx: " << player.x() << endl;
     if (player.x() == scrollMeridianX) {
         if (!level.scrollByX(directionX)) {
-            cout << "moving player x by: " << directionX << endl;
             player.move(directionX, 0);
-        }
-        else {
-            cout << "we think we scrolled x" << endl;
         }
     }
     else {
@@ -215,6 +220,11 @@ void Game::updatePlayerPositionBy(int directionX, int directionY)
 {
     playerPositionOnMap.x += directionX;
     playerPositionOnMap.y += directionY;
-    //cout << "player map pos: " << playerPositionOnMap.x;
-    //cout << ", " << playerPositionOnMap.y << endl;
+}
+
+
+void Game::updatePlayerPositionTo(Point newPosition)
+{
+    playerPositionOnMap.x = newPosition.x;
+    playerPositionOnMap.y = newPosition.y;
 }

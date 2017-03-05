@@ -23,6 +23,7 @@ class Game {
 
     Point playerPositionOnMap;
     void updatePlayerPositionBy(int directionX, int directionY);
+    void updatePlayerPositionTo(Point newPosition);
 
 
     // unused for the time being

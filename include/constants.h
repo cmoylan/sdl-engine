@@ -17,6 +17,10 @@ const std::string WINDOW_TITLE = "Game";
 struct Vector2D {
     int x;
     int y;
+    
+    bool isZero() {
+        return (x == 0) && (y == 0);
+    }
 };
 
 struct Point {

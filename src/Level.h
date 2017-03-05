@@ -100,6 +100,9 @@ public:
      */
     bool isBlocked(int originX, int originY, int sizeW, int sizeH);
     bool isOpen(int originX, int originY, int sizeW, int sizeH);
+    Vector2D isOpenOrClosest(int originX, int originY,
+                             int sizeW, int sizeH,
+                             int velocityX, int velocityY);
 
     /**
        * Scroll by a pixel amount

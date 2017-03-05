@@ -187,8 +187,6 @@ void Renderer::run()
         this->drawGameObjects();
 
         //displayDebugInfo();
-        //renderTexture(image, renderer, x, y, &clips[useClip]);
-        //renderTexture(image, renderer, player.xPos(), player.yPos(), &clips[useClip]);
         //Update the screen
         SDL_RenderPresent(renderer);
         //this->game.quit();
