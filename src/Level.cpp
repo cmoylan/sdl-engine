@@ -161,36 +161,24 @@ RenderMap Level::renderData()
 // ----- END Rendering methods ----- //
 
 
-// FIXME: make this positive, the mental gymnastics are killing me
 bool Level::scrollBy(int x, int y)
 {
-    // ------------- LEFT OFF HERE
-    /*
-      the logic
-     */
     bool didScroll = false;
 
-    if (x != 0) {
-        //cout << "--------------- scrolling x" << endl;
-        int newOffsetX = this->offsetX - x;
-        if ((SCREEN_WIDTH + newOffsetX) < (this->mapWidth * PIXELS_PER_TILE_X)
-                && (newOffsetX <= 0)
-           ) {
-            // can scroll
-            this->offsetX -= x;
-            didScroll = true;
-        }
+    int newOffsetX = this->offsetX + x;
+    if ((SCREEN_WIDTH + newOffsetX) < (this->mapWidth * PIXELS_PER_TILE_X)
+            && (newOffsetX >= 0)) {
+        this->offsetX += x;
+        didScroll = true;
     }
 
     int newOffsetY = this->offsetY + y;
-    cout << "offsetY, y: " << offsetY << " " << y;
-    cout << "  |  newoffsetY: " << newOffsetY;
-    cout << "  |  screenh + new offset Y: " << SCREEN_HEIGHT + newOffsetY;
-    cout << "  |  maph * pixels: " << mapHeight * PIXELS_PER_TILE_Y << endl;
-
-    if ((SCREEN_HEIGHT + newOffsetY) < (this->mapHeight * PIXELS_PER_TILE_Y) &&
-        (newOffsetY >= 0)
-       ) {
+    //cout << "offsetY, y: " << offsetY << " " << y;
+    //cout << "  |  newoffsetY: " << newOffsetY;
+    //cout << "  |  screenh + new offset Y: " << SCREEN_HEIGHT + newOffsetY;
+    //cout << "  |  maph * pixels: " << mapHeight * PIXELS_PER_TILE_Y << endl;
+    if ((SCREEN_HEIGHT + newOffsetY) < (this->mapHeight * PIXELS_PER_TILE_Y)
+            && (newOffsetY >= 0)) {
         this->offsetY += y;
         didScroll = true;
     }
@@ -204,18 +192,10 @@ bool Level::scrollBy(int x, int y)
 // TODO: might want to just save tilesOnScreenX/Y as local vars, instead of calling the same method several times
 std::list<int> Level::layerIndicesOnScreen()
 {
-    // BUG index is not right
-    // BUG BUG BUG
-    // FIXME
-    // this seems to be okay now
     int index = (offsetX / PIXELS_PER_TILE_X) +
-        ((offsetY / PIXELS_PER_TILE_Y) *
-         tilesOnScreenX()); // + tilePrefetch
+                ((offsetY / PIXELS_PER_TILE_Y) *
+                 tilesOnScreenX()); // + tilePrefetch
 
-    if (index < 0) {
-        //cout << "index < 0: " << index << endl;
-        //index = 0;
-    };
     std::list<int> indices;
 
     for (int y = 0; y <= tilesOnScreenY(); y++) {
@@ -234,14 +214,13 @@ std::list<int> Level::layerIndicesOnScreen()
 
 int Level::screenOffsetX()
 {
-    return 0;
+    return (offsetX % PIXELS_PER_TILE_X == 0) ? 0 : (PIXELS_PER_TILE_X / 2);
 }
 
 
 int Level::screenOffsetY()
 {
-    // TODO: remove hardcoded numbers
-    return (offsetY % 32 == 0) ? 0 : 16;
+    return (offsetY % PIXELS_PER_TILE_Y == 0) ? 0 : (PIXELS_PER_TILE_Y / 2);
 }
 
 

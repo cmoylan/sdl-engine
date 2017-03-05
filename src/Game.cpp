@@ -85,6 +85,8 @@ void Game::handleInput(int tick)
 }
 
 
+// ----- LEFT OFF HERE
+// FIXME: horizontal movement does not work
 void Game::tryMovePlayer(int directionX, int directionY)
 {
     // using this->
@@ -119,25 +121,26 @@ void Game::tryMovePlayer(int directionX, int directionY)
 // NOTE: really more of "update player position and level scroll on screen"
 void Game::tryScrollLevel(int directionX, int directionY)
 {
-    // --- WORKING --- //
+    // Get the center of the screen for x/y
+    // Attempt to scroll level if character is at that place on screen
 
-    // problem scrolling to bottom
-
-    if (false) {}
+    // FIXME: can store these instead of calculating every time
+    int scrollMeridianX = (SCREEN_WIDTH / 2) - (PIXELS_PER_TILE_X / 2);
+    if (player.x() == scrollMeridianX) {
+        if (!level.scrollBy(directionX, 0)) {
+            player.move(directionX, 0);
+        }
+    }
     else {
         player.move(directionX, 0);
     }
 
-    // -- do the same things but for Y
     int scrollMeridianY = (SCREEN_HEIGHT / 2) - (PIXELS_PER_TILE_Y / 2);
-    //cout << "^^----- sm: p: " << scrollMeridianY << " | " << player.y() << endl;
     if (player.y() == scrollMeridianY) {
-        // getting wrong response from scrollby
         if (!level.scrollBy(0, directionY)) {
             player.move(0, directionY);
         }
     }
-
     else {
         player.move(0, directionY);
     }
