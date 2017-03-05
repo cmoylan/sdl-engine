@@ -101,7 +101,6 @@ public:
     bool isBlocked(int originX, int originY, int sizeW, int sizeH);
     bool isOpen(int originX, int originY, int sizeW, int sizeH);
 
-
     /**
        * Scroll by a pixel amount
        * @param pixelsX the amount to move left-right
@@ -131,6 +130,13 @@ public:
      * @return a RenderMap with an entry for each layer
      */
     RenderMap renderData();
+
+    /**
+     * Provide the offsets for rendering
+     * @return an integer indicating how much the rendered level should be offset on screen
+     */
+    int screenOffsetX();
+    int screenOffsetY();
 
     // these are kind of just "rendering indices x and y...
     /**

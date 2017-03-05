@@ -111,6 +111,10 @@ RenderMap Level::renderData()
 
     // generate the clips first, rect is just the x,y and a clip id...or a gid
 
+    // FIXME: call this screenOffset?
+    int renderOffsetX = screenOffsetX();
+    int renderOffsetY = screenOffsetY();
+
     for (const auto& layerPair : layers) {
         // only do platforms for now...remove this later
         if (layerPair.first == "platforms") {
@@ -133,8 +137,8 @@ RenderMap Level::renderData()
 
                 if (tile != 0) {
                     Rectangle rect = {};
-                    rect.x = (col * PIXELS_PER_TILE_X) + offsetX;
-                    rect.y = (row * PIXELS_PER_TILE_Y) + offsetY;
+                    rect.x = (col * PIXELS_PER_TILE_X) - renderOffsetX;
+                    rect.y = (row * PIXELS_PER_TILE_Y) - renderOffsetY;
                     //rect.clipX = tileWidth;
                     //rect.clipY = tileHeight;
                     rectangles.push_front(rect);
@@ -228,6 +232,19 @@ std::list<int> Level::layerIndicesOnScreen()
     }
     //Utilities::printCollection(indices);
     return indices;
+}
+
+
+int Level::screenOffsetX()
+{
+    return 0;
+}
+
+
+int Level::screenOffsetY()
+{
+    // TODO: remove hardcoded numbers
+    return (offsetY % 32 == 0) ? 0 : 16;
 }
 
 

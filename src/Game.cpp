@@ -50,14 +50,13 @@ void Game::handleInput(int tick)
             // -- player movement
             case SDLK_w:
                 tryMovePlayer(0, -moveSize);
-                cout << "handling it!" << endl;
                 break;
             case SDLK_a:
                 tryMovePlayer(-moveSize, 0);
                 break;
             case SDLK_s:
                 tryMovePlayer(0, moveSize);
-                cout << "tick: " << tick << endl;
+                //cout << "tick: " << tick << endl;
                 break;
             case SDLK_d:
                 tryMovePlayer(moveSize, 0);
