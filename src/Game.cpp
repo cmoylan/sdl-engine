@@ -123,6 +123,8 @@ void Game::tryScrollLevel(int directionX, int directionY)
 {
     // Get the center of the screen for x/y
     // Attempt to scroll level if character is at that place on screen
+    // NOTE: If this isn't working, do something like:
+    //          if ((meridian - buffer) < player.x() < (meridian + buffer))
 
     // FIXME: can store these instead of calculating every time
     int scrollMeridianX = (SCREEN_WIDTH / 2) - (PIXELS_PER_TILE_X / 2);

@@ -189,13 +189,14 @@ bool Level::scrollBy(int x, int y)
 
 bool Level::scrollByX(int x)
 {
+    //cout << "inside scrollbyx" << endl;
     int newOffsetX = this->offsetX + x;
-    cout << "new offset X: " << newOffsetX << endl;
+    //cout << "new offset X: " << newOffsetX << endl;
     // 16
     if ((SCREEN_WIDTH + newOffsetX) < (this->mapWidth * PIXELS_PER_TILE_X)
             && (newOffsetX >= 0)) {
         this->offsetX += x;
-        cout << "did scroll x" << endl;
+        //cout << "did scroll x" << endl;
         return true;
     }
     return false;
@@ -214,6 +215,8 @@ bool Level::scrollByY(int y)
         this->offsetY += y;
         return true;
     }
+    cout << "adding this to index: " << (mapWidth - (tilesOnScreenX() +
+                                         tilePrefetch)) << endl;
     return false;
 
 }
@@ -225,8 +228,8 @@ bool Level::scrollByY(int y)
 std::list<int> Level::layerIndicesOnScreen()
 {
     int index = (offsetX / PIXELS_PER_TILE_X) +
-                ((offsetY / PIXELS_PER_TILE_Y) *
-                 tilesOnScreenX()); // + tilePrefetch
+                ((offsetY / PIXELS_PER_TILE_Y) * mapWidth);
+    //tilesOnScreenX()); // + tilePrefetch
 
     std::list<int> indices;
 
@@ -238,6 +241,7 @@ std::list<int> Level::layerIndicesOnScreen()
             index += 1;
         }
         index += (mapWidth - (tilesOnScreenX() + tilePrefetch));
+        //index += ((offsetY / PIXELS_PER_TILE_Y) * tilesOnScreenX());
     }
     //Utilities::printCollection(indices);
     return indices;
