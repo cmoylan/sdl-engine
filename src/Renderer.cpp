@@ -50,33 +50,16 @@ void Renderer::drawLevel()
     //auto sprite = this->sprites["test-pattern-tileset.png"];
     auto sprite = this->sprites["grass-tiles-2-small.png"];
 
-
-    //  SDL_Rect clip = {};
-    //  clip.x = 0;
-    //  clip.y = 0;
-    //  clip.w = 32; //SCREEN_WIDTH / game.level.tilesOnScreenX;
-    //  clip.h = 32; //SCREEN_HEIGHT / game.level.tilesOnScreenY;
+    SDL_Rect clip = {};
+    clip.x = 0; // TODO: this is the position on the sprite sheet.
+    clip.y = 0;
+    clip.w = PIXELS_PER_TILE_X;
+    clip.h = PIXELS_PER_TILE_Y;
 
     SDL_Rect dstn = {};
     dstn.w = PIXELS_PER_TILE_X;
     dstn.h = PIXELS_PER_TILE_Y;
 
-
-    // ------- LEFT OFF HERE ------ //
-    // for 1 - 6
-    // draw rectangles in the right place
-    // compare to the code spitting out the render data
-    //SDL_Rect target = {};
-    //target.w = SCREEN_WIDTH / 3;
-    //target.h = SCREEN_HEIGHT / 2;
-
-    // works properly
-    //for (int i = 0; i < 6; i++) {
-    //    target.x = (SCREEN_WIDTH / 3) * (i % 3);
-    //    target.y = (SCREEN_HEIGHT / 2) * (i % 2);
-    //    renderColoredRect(renderer, &target, color, 0, 0, 0);
-    //    color -= 25;
-    //}
 
     if (!RENDER_DATA_PRINTED) {
         printRenderData(game.level.renderData());
@@ -85,21 +68,15 @@ void Renderer::drawLevel()
         RENDER_DATA_PRINTED = true;
     }
 
-    // TEMP
-    int r = 255;
-    int g = 255;
-    int b = 255;
-
     for (const auto& renderPair : game.level.renderData()) {
         // renderPair.first; // will be the sprite name
         for (const auto& rect : renderPair.second) {
             dstn.x = rect.x;
             dstn.y = rect.y;
-            renderColoredRect(renderer, &dstn, r, g, b, 0);
+            //renderColoredRect(renderer, &dstn, r, g, b, 0);
 
-            // this should work now that tiles are the same size as sprites
-            //renderTexture(sprite.texture, renderer,
-            //              rect.x, rect.y, &clip);
+            renderTexture(sprite.texture, renderer,
+                          dstn.x, dstn.y, &clip);
 
         }
     }

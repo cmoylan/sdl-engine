@@ -5,7 +5,6 @@
 
 /* TODO:
  * - draw a level
- *   - scroll the level when the character moves
  *   - actually draw it
  *   - consider using 64 px sprites, or even 128
  * - automate or fix anything that annoys you
@@ -14,10 +13,6 @@
  * - smoother movement, input handling
  */
 
-/* Scrolling
-   Drawable _x and _y are positions on the screen
-   Game will keep track of the player's place in the levl
- */
 int main(int, char**)
 {
     Renderer renderer;

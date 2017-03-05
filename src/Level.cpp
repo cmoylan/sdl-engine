@@ -111,7 +111,8 @@ RenderMap Level::renderData()
 
     // generate the clips first, rect is just the x,y and a clip id...or a gid
 
-    // FIXME: call this screenOffset?
+    // TODO: calculate the x and y for the sprite
+
     int renderOffsetX = screenOffsetX();
     int renderOffsetY = screenOffsetY();
 
@@ -135,10 +136,15 @@ RenderMap Level::renderData()
                 // make a rect for each of these
                 // then use the GID to use the right sprite
 
+                // ------------------------------------------------------------------ //
+                // tile is GID
+                // based on GID, get the sprite/layer
+                // calculate the offset based on the w/h of the layer
                 if (tile != 0) {
                     Rectangle rect = {};
                     rect.x = (col * PIXELS_PER_TILE_X) - renderOffsetX;
                     rect.y = (row * PIXELS_PER_TILE_Y) - renderOffsetY;
+
                     //rect.clipX = tileWidth;
                     //rect.clipY = tileHeight;
                     rectangles.push_front(rect);
