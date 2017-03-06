@@ -17,6 +17,7 @@
 #include "Asset.h"
 #include "Drawable.h"
 #include "Rectangle.h"
+#include "Body.h"
 
 
 struct Layer {
@@ -100,9 +101,14 @@ public:
      */
     bool isBlocked(int originX, int originY, int sizeW, int sizeH);
     bool isOpen(int originX, int originY, int sizeW, int sizeH);
+
+    /**
+     * Return a vector to the closest location that is not blocked
+     */
     Vector2D isOpenOrClosest(int originX, int originY,
                              int sizeW, int sizeH,
                              int velocityX, int velocityY);
+
 
     /**
        * Scroll by a pixel amount

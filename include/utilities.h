@@ -28,7 +28,9 @@ namespace Utilities {
     }
     
     /**
-     * 
+     * Given a number and a difference, return a number that is that distance towards the origin (default: 0)
+     * Ex: differenceToOrigin(5, 3) == 2
+     *     differenceToOrigin(-13, 7) == -6
      */
     inline int differenceToOrigin(int number, int difference, int origin = 0) 
     {

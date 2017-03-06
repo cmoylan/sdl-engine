@@ -5,6 +5,7 @@
 #include "Drawable.h"
 #include "Level.h"
 #include "Player.h"
+#include "World.h"
 
 
 struct Options {
@@ -20,15 +21,17 @@ class Game {
 
     Options options;
     Player player; // NOTE: the player is being created right here
+    World world;
 
     Point playerPositionOnMap;
     void updatePlayerPositionBy(int directionX, int directionY);
     void updatePlayerPositionTo(Point newPosition);
 
-
     // unused for the time being
     int playerInputX = 0;
     int playerInputY = 0;
+
+    size_t playerWorldId;
 
     DrawList gameObjects;
 

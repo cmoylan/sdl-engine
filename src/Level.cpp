@@ -153,8 +153,6 @@ RenderMap Level::renderData()
 
     // generate the clips first, rect is just the x,y and a clip id...or a gid
 
-    // TODO: calculate the x and y for the sprite
-
     int renderOffsetX = screenOffsetX();
     int renderOffsetY = screenOffsetY();
 

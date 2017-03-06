@@ -50,31 +50,20 @@ void Game::handleInput(int tick)
 
             // -- player movement
             case SDLK_w:
-                tryMovePlayer(0, -moveSize);
+                tryMovePlayer(0, 0);
                 break;
             case SDLK_a:
                 tryMovePlayer(-moveSize, 0);
                 break;
             case SDLK_s:
-                tryMovePlayer(0, moveSize);
+                //tryMovePlayer(0, 0);
                 //cout << "tick: " << tick << endl;
                 break;
             case SDLK_d:
                 tryMovePlayer(moveSize, 0);
                 break;
-
-            // -- scroll testing
-            case SDLK_UP:
-                level.offsetY += 1;
-                break;
-            case SDLK_DOWN:
-                level.offsetY -= 1;
-                break;
-            case SDLK_LEFT:
-                level.offsetX -= 1;
-                break;
-            case SDLK_RIGHT:
-                level.offsetX += 1;
+            case SDLK_SPACE:
+                tryMovePlayer(0, moveSize * 2);
                 break;
 
             default:
@@ -89,13 +78,10 @@ void Game::handleInput(int tick)
 // TODO: move to world
 void Game::tryMovePlayer(int directionX, int directionY)
 {
-    Vector2D velocity = level.isOpenOrClosest(playerPositionOnMap.x,
-                        playerPositionOnMap.y,
-                        PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y,
-                        directionX, directionY);
+    Vector2D velocity = world.tryMove(playerWorldId, directionX, directionY);
     updatePlayerPositionBy(velocity.x, velocity.y);
     if (!velocity.isZero()) {
-        cout << "velocity: " << velocity.x << ", " << velocity.y << endl;
+        //cout << "velocity: " << velocity.x << ", " << velocity.y << endl;
         tryScrollLevel(velocity.x, velocity.y);
     }
 }
@@ -105,11 +91,10 @@ void Game::tryMovePlayer(int directionX, int directionY)
 // NOTE: really more of "update player position and level scroll on screen"
 void Game::tryScrollLevel(int directionX, int directionY)
 {
-    int buffer = 25; // should be larger than move size
+    int buffer =
+        25; // should be larger than move size, also move into something configurable
     // Get the center of the screen for x/y
     // Attempt to scroll level if character is at that place on screen
-    // FIXME: do something like:
-    //          if ((meridian - buffer) < player.x() < (meridian + buffer))
 
     // FIXME: can store these instead of calculating every time
     int scrollMeridianX = (SCREEN_WIDTH / 2) - (PIXELS_PER_TILE_X / 2);
@@ -159,6 +144,11 @@ void Game::init()
     playerPositionOnMap.y = level.playerStartY;
 
     this->gameObjects.push_back(&player);
+
+    world.setMap(std::make_shared<Level>(level));
+
+    playerWorldId = world.addBody(level.playerStartX, level.playerStartY,
+                                  PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y);
     //level.renderData();
     //try {
     //    level->init();
@@ -190,6 +180,12 @@ void Game::teardown()
 void Game::update()
 {
     // gravity
+    //world.tick();
+    //updatePlayerPositionTo(world.getPosition(playerWorldId));
+
+    // FIXME: gravity for now...
+    tryMovePlayer(0, 10);
+
     // do character updates here
     // actually do all updatables updates here
     // enemies, random moving stuff
@@ -201,7 +197,7 @@ void Game::updatePlayerPositionBy(int directionX, int directionY)
 {
     playerPositionOnMap.x += directionX;
     playerPositionOnMap.y += directionY;
-    cout << "player position: " << playerPositionOnMap << endl;;
+    //cout << "player position: " << playerPositionOnMap << endl;;
 }
 
 

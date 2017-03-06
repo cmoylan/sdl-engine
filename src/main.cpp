@@ -8,9 +8,10 @@
  *   - actually draw it
  *   - consider using 64 px sprites, or even 128
  * - automate or fix anything that annoys you
- *   - fix struct debugger by telling a struct how to print itself
  * - better exceptions
  * - smoother movement, input handling
+ * - use Tiled for player sprites - set them with metadata... or somehow represent a player
+ * - move a bunch of physics logic to World
  */
 
 int main(int, char**)
