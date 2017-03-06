@@ -50,20 +50,19 @@ void Game::handleInput(int tick)
 
             // -- player movement
             case SDLK_w:
-                tryMovePlayer(0, 0);
+                tryMovePlayer(0, -20);
                 break;
             case SDLK_a:
                 tryMovePlayer(-moveSize, 0);
                 break;
             case SDLK_s:
                 //tryMovePlayer(0, 0);
-                //cout << "tick: " << tick << endl;
                 break;
             case SDLK_d:
                 tryMovePlayer(moveSize, 0);
                 break;
             case SDLK_SPACE:
-                tryMovePlayer(0, moveSize * 2);
+                tryMovePlayer(0, -moveSize * 2);
                 break;
 
             default:
@@ -180,11 +179,11 @@ void Game::teardown()
 void Game::update()
 {
     // gravity
-    //world.tick();
-    //updatePlayerPositionTo(world.getPosition(playerWorldId));
+    world.tick();
+    updatePlayerPositionTo(world.getPosition(playerWorldId));
 
     // FIXME: gravity for now...
-    tryMovePlayer(0, 10);
+    //tryMovePlayer(0, 10);
 
     // do character updates here
     // actually do all updatables updates here
