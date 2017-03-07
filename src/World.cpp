@@ -26,6 +26,19 @@ size_t World::addBody(int originX, int originY, int sizeW, int sizeH)
 }
 
 
+bool World::canFall(size_t id)
+{
+    Body& body = get(id);
+    return canFall(body);
+}
+
+bool World::canFall(const Body& body)
+{
+    return map->isOpen(body.location.x, body.location.y + 1,
+                       body.size.x, body.size.y);
+}
+
+
 Body& World::get(size_t id)
 {
     return bodies.at(id);
@@ -47,17 +60,21 @@ void World::setMap(shared_ptr<Level> level)
 
 void World::tick()
 {
-    int fallVelocity = -10;
+    int fallVelocity = 10;
     // try to make every body fall
     Vector2D newVelocity = {0, 0};
     for (auto& bodyPair : bodies) {
         auto& body = bodyPair.second;
-        newVelocity = map->isOpenOrClosest(body.location.x, body.location.y,
-                                           body.size.x, body.size.y,
-                                           0, fallVelocity);
-        cout << "trying to fall: " << newVelocity << endl;
-        body.location.x += newVelocity.x;
-        body.location.y += newVelocity.y;
+
+        if (canFall(body)) {
+            //cout << "trying to fall: " << newVelocity << endl;
+            newVelocity = map->isOpenOrClosest(body.location.x, body.location.y,
+                                               body.size.x, body.size.y,
+                                               0, fallVelocity);
+            body.location.x += newVelocity.x;
+            body.location.y += newVelocity.y;
+            cout << "body: " << body; // << endl;
+        }
     }
 }
 

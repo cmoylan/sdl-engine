@@ -179,8 +179,9 @@ void Game::teardown()
 void Game::update()
 {
     // gravity
-    // world.tick();
-    // updatePlayerPositionTo(world.getPosition(playerWorldId));
+    world.tick();
+    updatePlayerPositionTo(world.getPosition(playerWorldId));
+    cout << "pp: " << playerPositionOnMap.x << ", " << playerPositionOnMap.y << endl;
 
     // FIXME: gravity for now...
     //tryMovePlayer(0, 10);
@@ -209,9 +210,10 @@ void Game::updatePlayerPositionBy(Vector2D direction)
 void Game::updatePlayerPositionTo(Point newPosition)
 {
     //cout << "updating player position to: " << newPosition << endl;
-    int deltaX = playerPositionOnMap.x - newPosition.x;
-    int deltaY = playerPositionOnMap.y - newPosition.y;
+    int deltaX = newPosition.x - playerPositionOnMap.x;
+    int deltaY = newPosition.y - playerPositionOnMap.y;
 
+    //cout << "deltas: " << deltaX << " " << deltaY << endl;
     playerPositionOnMap.x = newPosition.x;
     playerPositionOnMap.y = newPosition.y;
 

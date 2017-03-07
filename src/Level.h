@@ -42,8 +42,7 @@ struct Tileset {
     int numCols;
     //float scaleFactorX;
     //float scaleFactorY;
-    void setCalculatedFields()
-    {
+    void setCalculatedFields() {
         lastGid = firstGid + (
                       (width / tileWidth) * (height / tileHeight)) - 1;
         numRows = height / tileHeight;

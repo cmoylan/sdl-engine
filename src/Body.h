@@ -8,4 +8,9 @@ struct Body {
     bool isFalling;
 };
 
-// TODO: override operator<<
+inline std::ostream& operator<<(std::ostream& os, const Body& body)
+{
+    os << "loc [" << body.location.x << ", " << body.location.y << "]  ";
+    return os;
+
+}
