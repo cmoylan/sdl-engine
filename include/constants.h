@@ -27,6 +27,14 @@ struct Vector2D {
     bool equals(Vector2D other) {
         return (x == other.x) && (y == other.y);
     }
+
+    Vector2D delta(Vector2D other) {
+        Vector2D difference = {
+            x - other.x,
+            y - other.y
+        };
+        return difference;
+    }
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Vector2D& object) {

@@ -208,6 +208,8 @@ void Game::updatePlayerPositionTo(Point newPosition)
 {
     if (playerPositionOnMap.equals(newPosition)) { return; }
 
+    // TODO: update to use the delta method
+
     //cout << "updating player position to: " << newPosition << endl;
     int deltaX = newPosition.x - playerPositionOnMap.x;
     int deltaY = newPosition.y - playerPositionOnMap.y;
