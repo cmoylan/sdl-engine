@@ -6,7 +6,7 @@
 //Screen attributes
 const int SCREEN_WIDTH  = 640;
 const int SCREEN_HEIGHT = 480;
-const int FPS = 2;
+const int FPS = 24;
 
 const int PIXELS_PER_TILE_X = 32;
 const int PIXELS_PER_TILE_Y = 32;
@@ -23,6 +23,10 @@ struct Vector2D {
     bool isZero() {
         return (x == 0) && (y == 0);
     }
+
+    bool equals(Vector2D other) {
+        return (x == other.x) && (y == other.y);
+    }
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Vector2D& object) {
@@ -30,15 +34,7 @@ inline std::ostream& operator<<(std::ostream& os, const Vector2D& object) {
     return os;
 }
 
-struct Point {
-    int x;
-    int y;
-};
-
-inline std::ostream& operator<<(std::ostream& os, const Point& object) {
-    os << "[" << object.x << ", " << object.y << "]";
-    return os;
-}
+typedef Vector2D Point;
 
 /* NOTES:
  * - use // *INDENT-OFF*

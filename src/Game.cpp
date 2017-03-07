@@ -100,8 +100,7 @@ void Game::tryScrollLevel(int directionX, int directionY)
     //cout << "scroll meridianX: " << scrollMeridianX;
     //cout << " | playerx: " << player.x() << endl;
     if (player.x() >= (scrollMeridianX - buffer) &&
-            (player.x() < (scrollMeridianX + buffer)))
-   {
+            (player.x() < (scrollMeridianX + buffer))) {
         if (!level.scrollByX(directionX)) {
             player.move(directionX, 0);
         }
@@ -114,8 +113,7 @@ void Game::tryScrollLevel(int directionX, int directionY)
     //cout << "scroll meridianYX: " << scrollMeridianY;
     //cout << " | playery: " << player.y() << endl;
     if (player.y() >= (scrollMeridianY - buffer) &&
-            player.y() < (scrollMeridianY + buffer))
-    {
+            player.y() < (scrollMeridianY + buffer)) {
         if (!level.scrollByY(directionY)) {
             player.move(0, directionY);
         }
@@ -181,7 +179,6 @@ void Game::update()
     // gravity
     world.tick();
     updatePlayerPositionTo(world.getPosition(playerWorldId));
-    cout << "pp: " << playerPositionOnMap.x << ", " << playerPositionOnMap.y << endl;
 
     // FIXME: gravity for now...
     //tryMovePlayer(0, 10);
@@ -209,6 +206,8 @@ void Game::updatePlayerPositionBy(Vector2D direction)
 
 void Game::updatePlayerPositionTo(Point newPosition)
 {
+    if (playerPositionOnMap.equals(newPosition)) { return; }
+
     //cout << "updating player position to: " << newPosition << endl;
     int deltaX = newPosition.x - playerPositionOnMap.x;
     int deltaY = newPosition.y - playerPositionOnMap.y;
