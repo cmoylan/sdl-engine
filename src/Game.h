@@ -24,7 +24,7 @@ class Game {
     World world;
 
     Point playerPositionOnMap;
-    void updatePlayerPositionBy(int directionX, int directionY);
+    void updatePlayerPositionBy(Vector2D direction);
     void updatePlayerPositionTo(Point newPosition);
 
     // unused for the time being

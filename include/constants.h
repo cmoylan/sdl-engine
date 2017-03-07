@@ -6,7 +6,7 @@
 //Screen attributes
 const int SCREEN_WIDTH  = 640;
 const int SCREEN_HEIGHT = 480;
-const int FPS = 30;
+const int FPS = 2;
 
 const int PIXELS_PER_TILE_X = 32;
 const int PIXELS_PER_TILE_Y = 32;

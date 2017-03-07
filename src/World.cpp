@@ -47,7 +47,7 @@ void World::setMap(shared_ptr<Level> level)
 
 void World::tick()
 {
-    int fallVelocity = 10;
+    int fallVelocity = -10;
     // try to make every body fall
     Vector2D newVelocity = {0, 0};
     for (auto& bodyPair : bodies) {
@@ -55,7 +55,7 @@ void World::tick()
         newVelocity = map->isOpenOrClosest(body.location.x, body.location.y,
                                            body.size.x, body.size.y,
                                            0, fallVelocity);
-        //cout <<
+        cout << "trying to fall: " << newVelocity << endl;
         body.location.x += newVelocity.x;
         body.location.y += newVelocity.y;
     }

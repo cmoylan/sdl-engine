@@ -50,19 +50,23 @@ void Game::handleInput(int tick)
 
             // -- player movement
             case SDLK_w:
-                tryMovePlayer(0, -20);
+                tryMovePlayer(0, -moveSize);
                 break;
             case SDLK_a:
                 tryMovePlayer(-moveSize, 0);
                 break;
             case SDLK_s:
-                //tryMovePlayer(0, 0);
+                tryMovePlayer(0, moveSize);
                 break;
             case SDLK_d:
                 tryMovePlayer(moveSize, 0);
                 break;
             case SDLK_SPACE:
                 tryMovePlayer(0, -moveSize * 2);
+                break;
+
+            case SDLK_i:
+                cout << "playerWorldId: " << playerWorldId << endl;
                 break;
 
             default:
@@ -78,11 +82,7 @@ void Game::handleInput(int tick)
 void Game::tryMovePlayer(int directionX, int directionY)
 {
     Vector2D velocity = world.tryMove(playerWorldId, directionX, directionY);
-    updatePlayerPositionBy(velocity.x, velocity.y);
-    if (!velocity.isZero()) {
-        //cout << "velocity: " << velocity.x << ", " << velocity.y << endl;
-        tryScrollLevel(velocity.x, velocity.y);
-    }
+    updatePlayerPositionBy(velocity);
 }
 
 
@@ -100,8 +100,8 @@ void Game::tryScrollLevel(int directionX, int directionY)
     //cout << "scroll meridianX: " << scrollMeridianX;
     //cout << " | playerx: " << player.x() << endl;
     if (player.x() >= (scrollMeridianX - buffer) &&
-            (player.x() < (scrollMeridianX + buffer))
-       ) {
+            (player.x() < (scrollMeridianX + buffer)))
+   {
         if (!level.scrollByX(directionX)) {
             player.move(directionX, 0);
         }
@@ -114,8 +114,8 @@ void Game::tryScrollLevel(int directionX, int directionY)
     //cout << "scroll meridianYX: " << scrollMeridianY;
     //cout << " | playery: " << player.y() << endl;
     if (player.y() >= (scrollMeridianY - buffer) &&
-            player.y() < (scrollMeridianY + buffer)) {
-        //if (player.y() >= scrollMeridianY) {
+            player.y() < (scrollMeridianY + buffer))
+    {
         if (!level.scrollByY(directionY)) {
             player.move(0, directionY);
         }
@@ -179,8 +179,8 @@ void Game::teardown()
 void Game::update()
 {
     // gravity
-    world.tick();
-    updatePlayerPositionTo(world.getPosition(playerWorldId));
+    // world.tick();
+    // updatePlayerPositionTo(world.getPosition(playerWorldId));
 
     // FIXME: gravity for now...
     //tryMovePlayer(0, 10);
@@ -192,16 +192,31 @@ void Game::update()
 
 
 
-void Game::updatePlayerPositionBy(int directionX, int directionY)
+void Game::updatePlayerPositionBy(Vector2D direction)
 {
-    playerPositionOnMap.x += directionX;
-    playerPositionOnMap.y += directionY;
+    playerPositionOnMap.x += direction.x;
+    playerPositionOnMap.y += direction.y;
     //cout << "player position: " << playerPositionOnMap << endl;;
+
+    if (!direction.isZero()) {
+        //cout << "direction: " << direction << endl;
+        tryScrollLevel(direction.x, direction.y);
+    }
+
 }
 
 
 void Game::updatePlayerPositionTo(Point newPosition)
 {
+    //cout << "updating player position to: " << newPosition << endl;
+    int deltaX = playerPositionOnMap.x - newPosition.x;
+    int deltaY = playerPositionOnMap.y - newPosition.y;
+
     playerPositionOnMap.x = newPosition.x;
     playerPositionOnMap.y = newPosition.y;
+
+    // if the position has changed
+    if ((deltaX != 0) || (deltaY != 0)) {
+        tryScrollLevel(deltaX, deltaY);
+    }
 }
