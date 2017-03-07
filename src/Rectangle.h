@@ -1,3 +1,5 @@
+#pragma once
+
 // FIXME: this name is not descriptive
 // it's the information to render one rectangle on screen
 struct Rectangle {
@@ -9,7 +11,9 @@ struct Rectangle {
     int clipY;
     int gid;
 };
+
 typedef std::forward_list<Rectangle> RectangleList;
+
 // string is the asset name, rect list is where to draw them
 typedef std::map<std::string, RectangleList> RenderMap;
 
@@ -21,4 +25,20 @@ inline std::ostream& operator<<(std::ostream& os, const Rectangle& rect)
     os << ", clipY: " << rect.clipY;
     os << ", gid: " << rect.gid << "]";
     return os;
+}
+
+// temp
+// TODO: move to namespace
+inline void printRenderData(RenderMap data)
+{
+    using namespace std;
+    for (const auto& mapPair : data) {
+        // mapPair.second - rectangles
+        size_t i = 0;
+        for (const auto& rectangle : mapPair.second) {
+            cout << i << ": ";
+            cout << "[" << rectangle.x << ", " << rectangle.y << "] " << endl;
+            i++;
+        }
+    }
 }

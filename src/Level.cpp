@@ -124,21 +124,6 @@ void Level::printPlatforms()
 }
 
 
-void printRenderData(RenderMap data)
-{
-    using namespace std;
-    for (const auto& mapPair : data) {
-        // mapPair.second - rectangles
-        size_t i = 0;
-        for (const auto& rectangle : mapPair.second) {
-            cout << i << ": ";
-            cout << "[" << rectangle.x << ", " << rectangle.y << "] " << endl;
-            i++;
-        }
-    }
-}
-
-
 // ----- Rendering methods ----- //
 RenderMap Level::renderData()
 {

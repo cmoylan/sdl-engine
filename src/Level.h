@@ -29,6 +29,8 @@ struct Layer {
 typedef std::map<std::string, Layer> LayerMap;
 
 
+// TODO:operator<< for Tileset
+// we will need a way to find the correct tileset by GID
 struct Tileset {
     // assume filename is relative to level respath
     std::string filename;
@@ -36,25 +38,20 @@ struct Tileset {
     int lastGid;
     int width;
     int height;
+    int tileCount;
     int tileWidth;
     int tileHeight;
     int numRows;
     int numCols;
-    //float scaleFactorX;
-    //float scaleFactorY;
-    void setCalculatedFields()
-    {
-        lastGid = firstGid + (
-                      (width / tileWidth) * (height / tileHeight)) - 1;
+
+    void setCalculatedFields() {
+        lastGid = firstGid + (tileCount - 1);
         numRows = height / tileHeight;
         numCols = width / tileWidth;
     };
 };
 typedef std::map<std::string, Tileset> TilesetMap;
 
-// temp
-// TODO: move to namespace
-void printRenderData(RenderMap data);
 
 class Level : private Drawable {
 

@@ -111,6 +111,7 @@ Level::loadTileset(const rapidjson::Value& data)
     tileset.height = data["imageheight"].GetInt();
     tileset.tileWidth = data["tilewidth"].GetInt();
     tileset.tileHeight = data["tileheight"].GetInt();
+    tileset.tileCount = data["tilecount"].GetInt();
     tileset.setCalculatedFields();
 
     tilesets[layername] = tileset;

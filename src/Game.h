@@ -12,6 +12,8 @@ struct Options {
     int levelNumber;
     int score;
     std::string levelFolder;
+
+    // DEPRECATED
     int screenBufferX;
     int screenBufferY;
 };
@@ -41,7 +43,7 @@ public:
     Level level; // acces to this should be readonly
 
     // Getters
-    std::string resPath() const { return level.resPath ;}
+    std::string resPath() const { return level.resPath; }
     bool running() const { return _running; }
 
     Game();
