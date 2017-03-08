@@ -22,6 +22,8 @@ size_t World::addBody(int originX, int originY, int sizeW, int sizeH)
     Vector2D velocity = {0, 0};
     body.velocity = velocity;
 
+    body.isJumping = false;
+
     return addBody(body);
 }
 
@@ -58,31 +60,74 @@ void World::setMap(shared_ptr<Level> level)
 }
 
 
+// external
 void World::tick()
 {
-    int fallVelocity = 10;
-    Vector2D newVelocity = {0, 0};
-
     // try to make every body fall
     for (auto& bodyPair : bodies) {
         auto& body = bodyPair.second;
 
-        if (canFall(body)) {
-            cout << "trying to fall" << endl;
-            newVelocity = map->isOpenOrClosest(body.location.x, body.location.y,
-                                               body.size.x, body.size.y,
-                                               0, fallVelocity);
-            body.location.x += newVelocity.x;
-            body.location.y += newVelocity.y;
+        if (body.isJumping) {
+            handleJump(body);
+        }
+        else {
+            handleFall(body);
         }
     }
 }
 
 
+void World::handleFall(Body& body)
+{
+    // TODO: move this out
+    // TODO: should use acceleration
+    int fallVelocity = 10;
+
+    if (canFall(body)) {
+        // cout << "trying to fall" << endl;
+        Vector2D newVelocity = map->isOpenOrClosest(body.location.x, body.location.y,
+                               body.size.x, body.size.y,
+                               0, fallVelocity);
+        body.location.x += newVelocity.x;
+        body.location.y += newVelocity.y;
+    }
+}
+
+
+// external
+void World::tryJump(size_t id)
+{
+    Body& body = get(id);
+    body.isJumping = true;
+    body.jumpVelocity = 10; // FIXME: magic number
+    //Vector2D velocity = {0,0};
+    //return velocity;
+}
+
+
+void World::handleJump(Body& body)
+{
+    if (body.jumpVelocity > 0) {
+        body.jumpVelocity -= jumpDecay;
+        Vector2D newVelocity = map->isOpenOrClosest(body.location.x, body.location.y,
+                               body.size.x, body.size.y,
+                               0, body.jumpVelocity);
+        body.location.y -= body.jumpVelocity;
+
+        // LEFT OFF HERE
+    }
+    if (body.jumpVelocity == 0) {
+        body.isJumping = false;
+    }
+}
+
+
+// external
 Vector2D World::tryMove(size_t id, Vector2D velocity)
 {
     return tryMove(id, velocity.x, velocity.y);
 }
+
 
 Vector2D World::tryMove(size_t id, int velocityX, int velocityY)
 {

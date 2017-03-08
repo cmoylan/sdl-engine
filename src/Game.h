@@ -30,8 +30,8 @@ class Game {
     void updatePlayerPositionTo(Point newPosition);
 
     // unused for the time being
-    int playerInputX = 0;
-    int playerInputY = 0;
+    // int playerInputX = 0;
+    // int playerInputY = 0;
 
     size_t playerWorldId;
 
@@ -54,11 +54,13 @@ public:
     void init();
     void teardown();
     void update();
-    void handleInput(int tick);
+    void handleInput();
     void quit();
 
+    // player input handlers
+    void tryJumpPlayer();
     void tryMovePlayer(int directionX, int directionY);
     void tryScrollLevel(int directionX, int directionY);
-    DrawList getGameObjects();
 
+    DrawList getGameObjects();
 };

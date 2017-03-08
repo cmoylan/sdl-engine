@@ -26,7 +26,7 @@ DrawList Game::getGameObjects()
 // }
 
 
-void Game::handleInput(int tick)
+void Game::handleInput()
 {
     // ----- this is being called twice. WHY?
 
@@ -62,7 +62,7 @@ void Game::handleInput(int tick)
                 tryMovePlayer(moveSize, 0);
                 break;
             case SDLK_SPACE:
-                tryMovePlayer(0, -moveSize * 2);
+                tryJumpPlayer();
                 break;
 
             case SDLK_i:
@@ -78,7 +78,14 @@ void Game::handleInput(int tick)
 }
 
 
-// TODO: move to world
+// FIXME: remove this if it doesn't need to do anything else
+void Game::tryJumpPlayer()
+{
+    world.tryJump(playerWorldId);
+    //updatePlayerPositionBy(velocity);
+}
+
+
 void Game::tryMovePlayer(int directionX, int directionY)
 {
     Vector2D velocity = world.tryMove(playerWorldId, directionX, directionY);

@@ -27,7 +27,6 @@ inline std::ostream& operator<<(std::ostream& os, const Rectangle& rect)
     return os;
 }
 
-// temp
 // TODO: move to namespace
 inline void printRenderData(RenderMap data)
 {

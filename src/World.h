@@ -8,24 +8,40 @@
 #include "Level.h"
 
 
+// TODO: need to clearly separate public and private methods so the interface
+//       confusing as hell
 class World {
 
     std::map<int, Body> bodies;
-    int nextKey;
+    int nextKey = 1;
 
     std::shared_ptr<Level> map;
 
     Vector2D gravity;
     int acceleration;
 
+    int jumpTerminalVelocity;
+    int jumpDecay; // how much does the jump deccelerate
+
+    int fallAcceleration;
+    int fallTerminalVelocity;
+
 public:
+
+    // TODO: allow all of this to be configured
     World()
     {
         gravity.x = 0;
         gravity.y = -10;
-        acceleration = 1;
-        nextKey = 0;
+
+        jumpTerminalVelocity = 10;
+        jumpDecay = 1;
+        fallAcceleration = 1;
+        fallTerminalVelocity = 5;
+
+        acceleration = 1; // not used
     };
+
     ~World() {};
 
     /**
@@ -51,10 +67,9 @@ public:
     Point getPosition(size_t id);
 
     /**
-     * Determine if a given Body can fall
+     * Try to jump
      */
-    bool canFall(size_t id);
-    bool canFall(const Body& body);
+    void tryJump(size_t id);
 
     /**
      * Try to move by a given velocity
@@ -63,4 +78,22 @@ public:
      */
     Vector2D tryMove(size_t id, Vector2D velocity);
     Vector2D tryMove(size_t id, int velocityX, int velocityY);
+
+private:
+
+    /**
+     * Determine if a given Body can fall
+     */
+    bool canFall(size_t id);
+    bool canFall(const Body& body);
+
+    /**
+     * Attempt to handle a jump, if the body is jumping
+     */
+    void handleJump(Body& body);
+
+    /**
+     * Attempt to handle a fall if the body is falling
+     */
+    void handleFall(Body& body);
 };

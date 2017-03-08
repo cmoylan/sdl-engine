@@ -5,7 +5,13 @@ struct Body {
     Vector2D size;
     Vector2D velocity;
 
-    bool isFalling;
+    // Should be able to do all of this with just velocity and gravity
+    // but prototype it with explicit logic
+    // bool isFalling;
+    bool isJumping;
+
+    int fallVelocity;
+    int jumpVelocity;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Body& body)

@@ -177,7 +177,7 @@ void Renderer::run()
 
         startTime = SDL_GetTicks();
 
-        this->game.handleInput(tick);
+        this->game.handleInput();
         this->game.update();
 
         // draw
