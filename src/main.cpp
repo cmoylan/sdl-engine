@@ -4,14 +4,13 @@
 #include "Renderer.h"
 
 /* TODO:
- * - jumping
+ * - smoother movement, input handling
  * - store stuff in a json file so you don't have to recompile
  * - draw a level
  *   - actually draw it
  *   - consider using 64 px sprites, or even 128
  * - automate or fix anything that annoys you
  * - better exceptions
- * - smoother movement, input handling
  * - use Tiled for player sprites - set them with metadata... or somehow represent a player
  */
 

@@ -34,10 +34,10 @@ public:
         gravity.x = 0;
         gravity.y = -10;
 
-        jumpTerminalVelocity = 10;
+        jumpTerminalVelocity = 20;
         jumpDecay = 1;
         fallAcceleration = 1;
-        fallTerminalVelocity = 5;
+        fallTerminalVelocity = 10;
 
         acceleration = 1; // not used
     };

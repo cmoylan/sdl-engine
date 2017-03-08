@@ -1,5 +1,6 @@
 #include "World.h"
 
+// external
 size_t World::addBody(Body body)
 {
     int key = nextKey;
@@ -9,6 +10,7 @@ size_t World::addBody(Body body)
 }
 
 
+// external
 size_t World::addBody(int originX, int originY, int sizeW, int sizeH)
 {
     Body body = {};
@@ -47,6 +49,7 @@ Body& World::get(size_t id)
 }
 
 
+// external
 Point World::getPosition(size_t id)
 {
     Body body = get(id);
@@ -54,6 +57,7 @@ Point World::getPosition(size_t id)
 }
 
 
+// external
 void World::setMap(shared_ptr<Level> level)
 {
     map = level;
@@ -79,17 +83,32 @@ void World::tick()
 
 void World::handleFall(Body& body)
 {
-    // TODO: move this out
-    // TODO: should use acceleration
-    int fallVelocity = 10;
-
     if (canFall(body)) {
         // cout << "trying to fall" << endl;
+        if (body.fallVelocity < fallTerminalVelocity) {
+            body.fallVelocity += fallAcceleration;
+        }
         Vector2D newVelocity = map->isOpenOrClosest(body.location.x, body.location.y,
                                body.size.x, body.size.y,
-                               0, fallVelocity);
+                               0, body.fallVelocity);
         body.location.x += newVelocity.x;
         body.location.y += newVelocity.y;
+    }
+}
+
+
+void World::handleJump(Body& body)
+{
+    if (body.jumpVelocity > 0) {
+        body.jumpVelocity -= jumpDecay;
+        Vector2D newVelocity = map->isOpenOrClosest(body.location.x, body.location.y,
+                               body.size.x, body.size.y,
+                               0, body.jumpVelocity);
+        body.location.y -= body.jumpVelocity;
+    }
+    if (body.jumpVelocity == 0) {
+        body.isJumping = false;
+        body.fallVelocity = 0;
     }
 }
 
@@ -102,23 +121,6 @@ void World::tryJump(size_t id)
     body.jumpVelocity = 10; // FIXME: magic number
     //Vector2D velocity = {0,0};
     //return velocity;
-}
-
-
-void World::handleJump(Body& body)
-{
-    if (body.jumpVelocity > 0) {
-        body.jumpVelocity -= jumpDecay;
-        Vector2D newVelocity = map->isOpenOrClosest(body.location.x, body.location.y,
-                               body.size.x, body.size.y,
-                               0, body.jumpVelocity);
-        body.location.y -= body.jumpVelocity;
-
-        // LEFT OFF HERE
-    }
-    if (body.jumpVelocity == 0) {
-        body.isJumping = false;
-    }
 }
 
 
