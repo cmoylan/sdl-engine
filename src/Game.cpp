@@ -34,7 +34,7 @@ void Game::handleInput()
     // FIXME: need to allow keys to be remapped
     SDL_Event e;
     //int moveSize = 16;
-    int moveSize = 20;
+    int moveSize = 5;
 
     //Event Polling
     while (SDL_PollEvent(&e)) {
@@ -88,8 +88,9 @@ void Game::tryJumpPlayer()
 
 void Game::tryMovePlayer(int directionX, int directionY)
 {
-    Vector2D velocity = world.tryMove(playerWorldId, directionX, directionY);
-    updatePlayerPositionBy(velocity);
+    //Vector2D velocity =
+    world.tryMove(playerWorldId, directionX, directionY);
+    //updatePlayerPositionBy(velocity);
 }
 
 

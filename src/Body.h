@@ -1,9 +1,10 @@
 #pragma once
 
 struct Body {
-    Point location;
-    Vector2D size;
-    Vector2D velocity;
+    Point location = {0, 0};
+    Vector2D size = {0, 0};
+    Vector2D velocity = {0, 0};
+    Vector2D acceleration = {0, 0};
 
     // Should be able to do all of this with just velocity and gravity
     // but prototype it with explicit logic
@@ -12,6 +13,11 @@ struct Body {
 
     int fallVelocity;
     int jumpVelocity;
+
+    bool isMoving()
+    {
+        return velocity.x != 0 || acceleration.x != 0;
+    };
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Body& body)

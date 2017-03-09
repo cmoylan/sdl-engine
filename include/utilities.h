@@ -43,4 +43,19 @@ namespace Utilities {
         return number;
     }
     
+    /**
+     * Given 2 numbers, return a number that is the sum away from the origin (default: 0)
+     * Ex: sumFromOrigin(1,2) == 3
+     *     sumFromOrigin(-3, 2) == -5
+     */
+    inline int sumFromOrigin(int number, int toAdd, int origin=0)
+    {
+        if (number >= origin) {
+            return number + toAdd;
+        }
+        else if (number < origin) {
+            return number - toAdd;
+        }
+        return number;
+    }
 }

@@ -71,6 +71,10 @@ void World::tick()
     for (auto& bodyPair : bodies) {
         auto& body = bodyPair.second;
 
+        if (body.isMoving()) {
+            handleMove(body);
+        }
+
         if (body.isJumping) {
             handleJump(body);
         }
@@ -113,6 +117,31 @@ void World::handleJump(Body& body)
 }
 
 
+// FIXME: some weird quirks in here
+// smooth out keyboard input first
+void World::handleMove(Body& body)
+{
+    // TODO: separate function?
+    int newVelocityX = body.velocity.x;
+    if (body.acceleration.x != 0) {
+        // FIXME: magic number!
+        newVelocityX = Utilities::sumFromOrigin(newVelocityX, 2);
+        body.acceleration.x = Utilities::differenceToOrigin(body.acceleration.x, 1);
+    }
+
+
+
+    Vector2D velocity = map->isOpenOrClosest(body.location.x, body.location.y,
+                        body.size.x, body.size.y,
+                        newVelocityX, 0);
+
+    body.velocity.x = velocity.x;
+    body.location.x += body.velocity.x;
+
+    body.velocity.x = Utilities::differenceToOrigin(body.velocity.x, friction);
+}
+
+
 // external
 void World::tryJump(size_t id)
 {
@@ -125,20 +154,27 @@ void World::tryJump(size_t id)
 
 
 // external
-Vector2D World::tryMove(size_t id, Vector2D velocity)
+void World::tryMove(size_t id, Vector2D velocity)
 {
-    return tryMove(id, velocity.x, velocity.y);
+    tryMove(id, velocity.x, velocity.y);
 }
 
 
-Vector2D World::tryMove(size_t id, int velocityX, int velocityY)
+void World::tryMove(size_t id, int velocityX, int velocityY)
 {
+    // FIXME: magic numbers
     Body& body = get(id);
+    body.acceleration.x = velocityX;
+
+    if (body.velocity.x == 0) {
+        body.velocity.x = (velocityX >= 0) ? 1 : -1;
+    }
+}
+/*
     Vector2D velocity = map->isOpenOrClosest(body.location.x, body.location.y,
                         body.size.x, body.size.y,
                         velocityX, velocityY);
     body.location.x += velocity.x;
     body.location.y += velocity.y;
 
-    return velocity;
-}
+    return velocity;*/

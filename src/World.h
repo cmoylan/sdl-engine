@@ -19,6 +19,7 @@ class World {
 
     Vector2D gravity;
     int acceleration;
+    int friction;
 
     int jumpTerminalVelocity;
     int jumpDecay; // how much does the jump deccelerate
@@ -39,7 +40,8 @@ public:
         fallAcceleration = 1;
         fallTerminalVelocity = 10;
 
-        acceleration = 1; // not used
+        friction = 1;
+        //acceleration = 1; // not used
     };
 
     ~World() {};
@@ -76,8 +78,8 @@ public:
      *
      * @return a Vector2D of the velocity the body moved
      */
-    Vector2D tryMove(size_t id, Vector2D velocity);
-    Vector2D tryMove(size_t id, int velocityX, int velocityY);
+    void tryMove(size_t id, Vector2D velocity);
+    void tryMove(size_t id, int velocityX, int velocityY);
 
 private:
 
@@ -96,4 +98,9 @@ private:
      * Attempt to handle a fall if the body is falling
      */
     void handleFall(Body& body);
+
+    /**
+     * Attempt to handle a move if the body is moving
+     */
+    void handleMove(Body& body);
 };
