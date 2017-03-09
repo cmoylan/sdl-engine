@@ -4,6 +4,7 @@
 
 #include "constants.h"
 #include "Drawable.h"
+#include "Vector2D.h"
 
 
 class Player : public Drawable {

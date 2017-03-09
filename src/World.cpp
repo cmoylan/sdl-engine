@@ -164,7 +164,7 @@ void World::tryMove(size_t id, int velocityX, int velocityY)
 {
     // FIXME: magic numbers
     Body& body = get(id);
-    body.acceleration.x = velocityX;
+    body.acceleration.x = 3;
 
     if (body.velocity.x == 0) {
         body.velocity.x = (velocityX >= 0) ? 1 : -1;

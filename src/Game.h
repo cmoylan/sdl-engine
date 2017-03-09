@@ -11,7 +11,8 @@
 struct Options {
     int levelNumber;
     int score;
-    std::string levelFolder;
+    string levelFolder;
+    //string configFile = "config.json";
 
     // DEPRECATED
     int screenBufferX;

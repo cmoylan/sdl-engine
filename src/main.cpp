@@ -19,9 +19,6 @@ int main(int, char**)
     Renderer renderer;
 
     Game game;
-    //std::cout << "screen w/h: " << SCREEN_WIDTH << " - " << SCREEN_HEIGHT << ": ";
-    //std::cout << "tile w/h: " << SCREEN_WIDTH / 20 << " - " << SCREEN_HEIGHT / 20 <<
-    //          std::endl;
 
     Options opts;
     opts.levelNumber = 1;

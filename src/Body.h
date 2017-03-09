@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Vector2D.h"
+
 struct Body {
     Point location = {0, 0};
     Vector2D size = {0, 0};

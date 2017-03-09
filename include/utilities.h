@@ -50,12 +50,12 @@ namespace Utilities {
      */
     inline int sumFromOrigin(int number, int toAdd, int origin=0)
     {
-        if (number >= origin) {
+        if (number > origin) {
             return number + toAdd;
         }
         else if (number < origin) {
             return number - toAdd;
         }
-        return number;
+        return origin;
     }
 }

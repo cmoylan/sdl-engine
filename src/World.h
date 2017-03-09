@@ -6,6 +6,7 @@
 #include "constants.h"
 #include "Body.h"
 #include "Level.h"
+#include "Vector2D.h"
 
 
 // TODO: need to clearly separate public and private methods so the interface
