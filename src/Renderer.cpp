@@ -1,16 +1,13 @@
 #include "Renderer.h"
 
-// FIXME: font object should be stored, rather than reopened every draw cycle
 void Renderer::displayDebugInfo()
 {
     //Color is in RGBA format
     SDL_Color color = { 255, 255, 255, 255 };
     TTF_Font* font = fonts.get("sample.ttf", 32);
-    
-    cout << "just about to call it" <<endl;
-    SDL_Texture *image = renderText("TTF fonts are cool!", 
+
+    SDL_Texture *image = renderText(game.debugInfo(),
                                     font, color, renderer);
-    cout << "called it" << endl;
     if (image == nullptr) {
         cleanup(renderer, window);
         TTF_Quit();
@@ -105,10 +102,10 @@ void Renderer::init(Game game)
             this->registerAsset(asset);
         }
     }
-    
+
     // load fonts
     fonts.setFontPath(getResourcePath("fonts"));
-    fonts.load("sample.ttf", 32);
+    //fonts.load("sample.ttf", 32);
 }
 
 

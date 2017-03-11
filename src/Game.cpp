@@ -12,6 +12,14 @@ Game::~Game()
 }
 
 
+const string Game::debugInfo()
+{
+    string message = "player: [" + to_string(player.x()) + ", " + to_string(
+                         player.y()) + "]";
+    return message;
+}
+
+
 DrawList Game::getGameObjects()
 {
     return this->gameObjects;

@@ -63,4 +63,6 @@ public:
     void tryScrollLevel(int directionX, int directionY);
 
     DrawList getGameObjects();
+
+    const string debugInfo();
 };

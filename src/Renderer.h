@@ -19,7 +19,7 @@ class Renderer {
     SpriteMap sprites;
 
     FontManager fonts;
-    
+
     SDL_Renderer *renderer;
     SDL_Window *window;
 
