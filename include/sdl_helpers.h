@@ -41,15 +41,9 @@ inline SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren){
 * @param renderer The renderer to load the texture in
 * @return An SDL_Texture containing the rendered message, or nullptr if something went wrong
 */
-inline SDL_Texture* renderText(const std::string &message, const std::string &fontFile,
-	SDL_Color color, int fontSize, SDL_Renderer *renderer)
+inline SDL_Texture* renderText(const std::string &message, TTF_Font* font,
+	SDL_Color color, SDL_Renderer *renderer)
 {
-	//Open the font
-	TTF_Font *font = TTF_OpenFont(fontFile.c_str(), fontSize);
-	if (font == nullptr){
-		logSDLError(std::cout, "TTF_OpenFont");
-		return nullptr;
-	}
 	//We need to first render to a surface as that's what TTF_RenderText
 	//returns, then load that surface into a texture
 	SDL_Surface *surf = TTF_RenderText_Blended(font, message.c_str(), color);
@@ -64,7 +58,6 @@ inline SDL_Texture* renderText(const std::string &message, const std::string &fo
 	}
 	//Clean up the surface and font
 	SDL_FreeSurface(surf);
-	TTF_CloseFont(font);
 	return texture;
 }
 

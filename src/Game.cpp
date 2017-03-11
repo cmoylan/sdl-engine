@@ -62,7 +62,7 @@ void Game::handleInput()
                 tryMovePlayer(moveSize, 0);
                 break;
             case SDLK_SPACE:
-                tryJumpPlayer();
+                world.tryJump(playerWorldId);
                 break;
 
             case SDLK_i:
@@ -75,14 +75,6 @@ void Game::handleInput()
         }
 
     }
-}
-
-
-// FIXME: remove this if it doesn't need to do anything else
-void Game::tryJumpPlayer()
-{
-    world.tryJump(playerWorldId);
-    //updatePlayerPositionBy(velocity);
 }
 
 

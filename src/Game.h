@@ -59,7 +59,6 @@ public:
     void quit();
 
     // player input handlers
-    void tryJumpPlayer();
     void tryMovePlayer(int directionX, int directionY);
     void tryScrollLevel(int directionX, int directionY);
 

@@ -3,12 +3,14 @@
 // FIXME: font object should be stored, rather than reopened every draw cycle
 void Renderer::displayDebugInfo()
 {
-    const std::string resPath = getResourcePath("fonts");
     //Color is in RGBA format
     SDL_Color color = { 255, 255, 255, 255 };
-
-    SDL_Texture *image = renderText("TTF fonts are cool!", resPath + "sample.ttf",
-                                    color, 16, renderer);
+    TTF_Font* font = fonts.get("sample.ttf", 32);
+    
+    cout << "just about to call it" <<endl;
+    SDL_Texture *image = renderText("TTF fonts are cool!", 
+                                    font, color, renderer);
+    cout << "called it" << endl;
     if (image == nullptr) {
         cleanup(renderer, window);
         TTF_Quit();
@@ -80,6 +82,7 @@ void Renderer::drawLevel()
 
         }
     }
+    displayDebugInfo();
 }
 
 
@@ -102,6 +105,10 @@ void Renderer::init(Game game)
             this->registerAsset(asset);
         }
     }
+    
+    // load fonts
+    fonts.setFontPath(getResourcePath("fonts"));
+    fonts.load("sample.ttf", 32);
 }
 
 

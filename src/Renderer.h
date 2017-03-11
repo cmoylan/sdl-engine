@@ -8,6 +8,7 @@
 #include "sdl_helpers.h"
 #include "cleanup.h"
 
+#include "FontManager.h"
 #include "Game.h"
 #include "Sprite.h"
 
@@ -17,6 +18,8 @@ class Renderer {
     Game game;
     SpriteMap sprites;
 
+    FontManager fonts;
+    
     SDL_Renderer *renderer;
     SDL_Window *window;
 
