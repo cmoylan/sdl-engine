@@ -14,8 +14,12 @@ Game::~Game()
 
 const string Game::debugInfo()
 {
-    string message = "player: [" + to_string(player.x()) + ", " + to_string(
-                         player.y()) + "]";
+    string message = "player: [" + to_string(player.x()) +
+                     ", " + to_string(player.y()) + "]\n";
+
+    message += "level - offset: [" + to_string(level.offsetX) +
+               ", " + to_string(level.offsetY) + "]";
+
     return message;
 }
 

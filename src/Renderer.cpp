@@ -1,29 +1,34 @@
 #include "Renderer.h"
 
+// TODO: make generic?
 void Renderer::displayDebugInfo()
 {
     //Color is in RGBA format
     SDL_Color color = { 255, 255, 255, 255 };
-    TTF_Font* font = fonts.get("sample.ttf", 32);
+    TTF_Font* font = fonts.get("sample.ttf", 24);
 
-    SDL_Texture *image = renderText(game.debugInfo(),
-                                    font, color, renderer);
-    if (image == nullptr) {
-        cleanup(renderer, window);
-        TTF_Quit();
-        SDL_Quit();
-        // FIXME: do something bad here
-        //return 1;
-    }
-    //Get the texture w/h so we can center it in the screen
-    //int iW, iH;
-    //SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
-    //int x = SCREEN_WIDTH / 2 - iW / 2;
-    //int y = SCREEN_HEIGHT / 2 - iH / 2;
     int x = 10;
     int y = 10;
 
-    renderTexture(image, renderer, x, y);
+    // for each line of the debug info,
+    // make a new text texture
+    stringstream message(game.debugInfo());
+    string line;
+
+    while (getline(message, line)) {
+        SDL_Texture *image = renderText(line, font, color, renderer);
+
+        if (image == nullptr) {
+            cleanup(renderer, window);
+            TTF_Quit();
+            SDL_Quit();
+            // FIXME: do something bad here
+            //return 1;
+        }
+
+        renderTexture(image, renderer, x, y);
+        y += 24;
+    }
 }
 
 

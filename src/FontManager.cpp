@@ -11,9 +11,10 @@ FontManager::~FontManager()
     fonts.clear();
 }
 
+
 TTF_Font* FontManager::get(string name, int size)
 {
-    // modify to load if it is not found
+    // load the font if it is not found
     auto font = fonts.find(keyFor(name, size));
     if (font == fonts.end()) {
         load(name, size);
@@ -43,6 +44,7 @@ bool FontManager::load(string name, int size)
     cout << "loaded font: " << name << "->" << size << endl;
     return true;
 }
+
 
 void FontManager::setFontPath(string path)
 {
