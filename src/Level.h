@@ -15,9 +15,10 @@
 #include "utilities.h"
 
 #include "Asset.h"
+#include "Body.h"
 #include "Drawable.h"
 #include "Rectangle.h"
-#include "Body.h"
+#include "TilesetManager.h"
 
 
 struct Layer {
@@ -27,31 +28,6 @@ struct Layer {
     int height;
 };
 typedef std::map<std::string, Layer> LayerMap;
-
-
-// TODO:operator<< for Tileset
-// we will need a way to find the correct tileset by GID
-struct Tileset {
-    // assume filename is relative to level respath
-    std::string filename;
-    int firstGid;
-    int lastGid;
-    int width;
-    int height;
-    int tileCount;
-    int tileWidth;
-    int tileHeight;
-    int numRows;
-    int numCols;
-
-    void setCalculatedFields()
-    {
-        lastGid = firstGid + (tileCount - 1);
-        numRows = height / tileHeight;
-        numCols = width / tileWidth;
-    };
-};
-typedef std::map<std::string, Tileset> TilesetMap;
 
 
 class Level : private Drawable {
@@ -69,7 +45,8 @@ public:
 
     // other data - mostly for rendering
     LayerMap layers;
-    TilesetMap tilesets;
+    //TilesetMap tilesets;
+    TilesetManager tilesets;
 
 
     std::string resPath;  // FIXME: what sets this?
@@ -106,7 +83,6 @@ public:
     Vector2D isOpenOrClosest(int originX, int originY,
                              int sizeW, int sizeH,
                              int velocityX, int velocityY);
-
 
     /**
        * Scroll by a pixel amount

@@ -12,7 +12,7 @@ AssetList Level::assetData()
 {
     AssetList assets;
     // load assets from tilesets
-    for (auto& tilesetPair : this->tilesets) {
+    for (auto& tilesetPair : this->tilesets.all()) {
         // load into an asset, append to asset list
         Tileset& tileset = tilesetPair.second;
 
@@ -169,7 +169,7 @@ RenderMap Level::renderData()
                     Rectangle rect = {};
                     rect.x = (col * PIXELS_PER_TILE_X) - renderOffsetX;
                     rect.y = (row * PIXELS_PER_TILE_Y) - renderOffsetY;
-
+                    rect.gid = tile;
                     //rect.clipX = tileWidth;
                     //rect.clipY = tileHeight;
                     rectangles.push_front(rect);

@@ -57,6 +57,7 @@ void Renderer::drawLevel()
     SDL_Rect clip = {};
     clip.x = 0; // TODO: this is the position on the sprite sheet.
     clip.y = 0;
+    //Point& tileCoords;
     clip.w = PIXELS_PER_TILE_X;
     clip.h = PIXELS_PER_TILE_Y;
 
@@ -77,6 +78,11 @@ void Renderer::drawLevel()
         for (const auto& rect : renderPair.second) {
             dstn.x = rect.x;
             dstn.y = rect.y;
+
+            auto tileCoords = game.level.tilesets.coordinatesFor(rect.gid);
+            clip.x = tileCoords.x;
+            clip.y = tileCoords.y;
+
             //renderColoredRect(renderer, &dstn, r, g, b, 0);
 
             renderTexture(sprite.texture, renderer,
@@ -84,7 +90,6 @@ void Renderer::drawLevel()
 
         }
     }
-    displayDebugInfo();
 }
 
 
@@ -194,6 +199,7 @@ void Renderer::run()
         // draw level first
         this->drawLevel();
         this->drawGameObjects();
+        this->displayDebugInfo();
 
         //displayDebugInfo();
         //Update the screen

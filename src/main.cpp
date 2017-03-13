@@ -9,6 +9,7 @@
  * - draw a level
  *   - actually draw it
  *   - consider using 64 px sprites, or even 128
+ *   - tileset.coordsforgid doesn't quite work
  * - automate or fix anything that annoys you
  * - better exceptions
  * - use Tiled for player sprites - set them with metadata... or somehow represent a player

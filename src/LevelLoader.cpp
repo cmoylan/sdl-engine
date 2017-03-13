@@ -114,7 +114,9 @@ Level::loadTileset(const rapidjson::Value& data)
     tileset.tileCount = data["tilecount"].GetInt();
     tileset.setCalculatedFields();
 
-    tilesets[layername] = tileset;
+    //tilesets[layername] = tileset;
+    tilesets.add(layername, tileset);
+
 
     return true; // TODO: actually check something was loaded
 }
