@@ -5,6 +5,8 @@ Level::Level()
 {
     offsetX = 0;
     offsetY = 0;
+    _tilesOnScreenX = 0;
+    _tilesOnScreenY = 0;
 }
 
 
@@ -157,24 +159,44 @@ RenderMap Level::renderData()
 
             //for (const auto& tile : layer.tiles) {
             for (auto index : this->layerIndicesOnScreen()) {
-                const auto& tile = layer.tiles[index];
-                // make a rect for each of these
-                // then use the GID to use the right sprite
+                // FIXME: reading off the end of tiles
 
-                // ------------------------------------------------------------------ //
-                // tile is GID
-                // based on GID, get the sprite/layer
-                // calculate the offset based on the w/h of the layer
-                if (tile != 0) {
-                    Rectangle rect = {};
-                    rect.x = (col * PIXELS_PER_TILE_X) - renderOffsetX;
-                    rect.y = (row * PIXELS_PER_TILE_Y) - renderOffsetY;
-                    rect.gid = tile;
-                    //rect.clipX = tileWidth;
-                    //rect.clipY = tileHeight;
-                    rectangles.push_front(rect);
+                //
+                // BUG
+                // layerIndicesOnScreen is returning values higher than tiles.size()
+                //
+
+                //const auto& tile = layer.tiles[index];
+                try {
+                    const auto& tile = layer.tiles.at(index);
+
+                    // make a rect for each of these
+                    // then use the GID to use the right sprite
+
+                    // ------------------------------------------------------------------ //
+                    // tile is GID
+                    // based on GID, get the sprite/layer
+                    // calculate the offset based on the w/h of the layer
+                    if (tile != 0) {
+                        Rectangle rect = {};
+                        rect.x = (col * PIXELS_PER_TILE_X) - renderOffsetX;
+                        rect.y = (row * PIXELS_PER_TILE_Y) - renderOffsetY;
+                        rect.gid = tile;
+                        //rect.clipX = tileWidth;
+                        //rect.clipY = tileHeight;
+                        rectangles.push_front(rect);
+                    }
                 }
+                catch (...) {
+                    cout  << "bad index: " << index << endl;
+                    cout << "indices on screen: ";
 
+                    for (auto i : layerIndicesOnScreen()) {
+                        cout << i << ", ";
+                    }
+                    cout << endl;
+                    throw - 1;
+                }
                 col++;
                 // it's never the end of row
                 // TODO: abstract into a descriptive method
@@ -262,8 +284,15 @@ list<int> Level::layerIndicesOnScreen()
             // for each col
             indices.push_back(index);
             index += 1;
+            // FIXME: stop adding if we are over the map size
+
+
+
         }
         index += (mapWidth - (tilesOnScreenX() + tilePrefetch));
+        if (index > maxMapIndex) {
+            break;
+        }
     }
     //Utilities::printCollection(indices);
     return indices;
@@ -319,7 +348,7 @@ int Level::valueAt(int x, int y, std::string layer)
     int col = x / PIXELS_PER_TILE_X;
     int index = (row * mapWidth) + col;
 
-    vector<int>& tiles = layers.at(layer).tiles;
+    vector<long>& tiles = layers.at(layer).tiles;
     int tile = tiles.at(index);
     return tile;
 }

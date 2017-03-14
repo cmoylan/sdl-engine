@@ -53,10 +53,12 @@ bool
 Level::loadMetadata(const rapidjson::Value& data)
 {
     // using scope this->
+    // TODO: write a function to accept width/height and calculate max index
     assert(data.HasMember("width"));
     mapWidth = data["width"].GetInt();
     assert(data.HasMember("height"));
     mapHeight = data["height"].GetInt();
+    maxMapIndex = (mapHeight * mapWidth) - 1; // zero-indexed
 
     textureTileWidth = data["tilewidth"].GetInt();
     textureTileHeight = data["tileheight"].GetInt();
@@ -112,6 +114,8 @@ Level::loadTileset(const rapidjson::Value& data)
     tileset.tileWidth = data["tilewidth"].GetInt();
     tileset.tileHeight = data["tileheight"].GetInt();
     tileset.tileCount = data["tilecount"].GetInt();
+
+
     tileset.setCalculatedFields();
 
     //tilesets[layername] = tileset;

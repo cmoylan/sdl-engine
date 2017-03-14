@@ -78,10 +78,17 @@ void Renderer::drawLevel()
         for (const auto& rect : renderPair.second) {
             dstn.x = rect.x;
             dstn.y = rect.y;
+            try {
+                auto tileCoords = game.level.tilesets.coordinatesFor(rect.gid);
+                clip.x = tileCoords.x;
+                clip.y = tileCoords.y;
+            }
+            catch (...) {
+                cout << "got rekt: " << rect << endl;
+                throw - 1;
+            }
 
-            auto tileCoords = game.level.tilesets.coordinatesFor(rect.gid);
-            clip.x = tileCoords.x;
-            clip.y = tileCoords.y;
+            //cout << "got tile coords: " << tileCoords << endl;
 
             //renderColoredRect(renderer, &dstn, r, g, b, 0);
 

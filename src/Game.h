@@ -30,7 +30,6 @@ class Game {
     void updatePlayerPositionBy(Vector2D direction);
     void updatePlayerPositionTo(Point newPosition);
 
-    // unused for the time being
     int playerInputX = 0;
     int playerInputY = 0;
 

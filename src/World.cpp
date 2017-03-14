@@ -161,6 +161,7 @@ void World::tryMove(size_t id, Vector2D velocity)
 }
 
 
+// FIXME: rewrite this
 void World::tryMove(size_t id, int velocityX, int velocityY)
 {
     // FIXME: magic numbers

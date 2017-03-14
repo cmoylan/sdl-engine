@@ -34,7 +34,7 @@ Tileset& TilesetManager::findByGid(int gid)
             return tileset;
         }
     }
-    cout << "fuck" << endl;
+    cout << "fuck: " << gid << endl;
     throw - 1;
 }
 

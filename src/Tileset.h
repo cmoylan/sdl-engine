@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <map>
 #include <string>
 #include "Vector2D.h"
@@ -13,28 +14,38 @@ struct Tileset {
     string filename;
     int firstGid;
     int lastGid;
-    int width;
+    int width; // this is tile width/height
     int height;
     int tileCount;
     int tileWidth;
     int tileHeight;
     int numRows;
     int numCols;
+    int imageWidth;
+    int imageHeight;
 
     void setCalculatedFields()
     {
+
         lastGid = firstGid + (tileCount - 1);
         numRows = height / tileHeight;
         numCols = width / tileWidth;
+        cout << "numcols: ";
+        cout << numCols << " = " << width << " / " << tileWidth << endl;
+        cout << "numrows: " << numRows << " = " << height << "/" << tileHeight << endl;
     };
 
     // TODO: cache this
     // FIXME: test this
     Vector2D coordinatesFor(int gid)
     {
+        int normalizedGid = gid - firstGid;
         Vector2D coordinates;
-        coordinates.x = (gid / numCols) * tileWidth;
-        coordinates.y = (gid / numRows) * tileHeight;
+        coordinates.x = (normalizedGid % numCols) * tileWidth;
+        coordinates.y = (normalizedGid / numCols) * tileHeight;
+        //cout << "gid: " << normalizedGid << " - ";
+        //cout << coordinates << endl;
+        //cout << "coordsfor: (" << normalizedGid << " / " << numRows << " -1) * " << tileHeight << endl;
         return coordinates;
     };
 };

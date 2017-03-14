@@ -23,7 +23,7 @@
 
 struct Layer {
     int tileCount;
-    std::vector<int> tiles;
+    std::vector<long> tiles;
     int width;
     int height;
 };
@@ -38,6 +38,7 @@ public:
     // data about the overall map from level.json
     int mapWidth;
     int mapHeight;
+    int maxMapIndex;
     int textureTileWidth;
     int textureTileHeight;
     int playerStartX;
@@ -151,7 +152,7 @@ private:
     bool isEndOfRow(size_t index, int sectorWidth = 0);
 
     // When the resolution is updated, _tilesOnScreenX/Y should be cleared
-    int _tilesOnScreenX = 0;
-    int _tilesOnScreenY = 0;
+    int _tilesOnScreenX;// = 0;
+    int _tilesOnScreenY;// = 0;
 
 };
