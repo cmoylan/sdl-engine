@@ -30,9 +30,6 @@ struct Tileset {
         lastGid = firstGid + (tileCount - 1);
         numRows = height / tileHeight;
         numCols = width / tileWidth;
-        cout << "numcols: ";
-        cout << numCols << " = " << width << " / " << tileWidth << endl;
-        cout << "numrows: " << numRows << " = " << height << "/" << tileHeight << endl;
     };
 
     // TODO: cache this
@@ -43,9 +40,6 @@ struct Tileset {
         Vector2D coordinates;
         coordinates.x = (normalizedGid % numCols) * tileWidth;
         coordinates.y = (normalizedGid / numCols) * tileHeight;
-        //cout << "gid: " << normalizedGid << " - ";
-        //cout << coordinates << endl;
-        //cout << "coordsfor: (" << normalizedGid << " / " << numRows << " -1) * " << tileHeight << endl;
         return coordinates;
     };
 };
