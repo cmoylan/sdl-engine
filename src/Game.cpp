@@ -46,7 +46,7 @@ void Game::handleInput()
     // FIXME: need to allow keys to be remapped
     SDL_Event e;
     //int moveSize = 16;
-    int moveSize = 5;
+    int moveSize = 10;
 
     //Event Polling
     while (SDL_PollEvent(&e)) {
@@ -54,6 +54,7 @@ void Game::handleInput()
         if (e.type == SDL_QUIT) {
             _running = false;
         }
+
         if (e.type == SDL_KEYDOWN) {
             switch (e.key.keysym.sym) {
             case SDLK_ESCAPE:
@@ -62,16 +63,20 @@ void Game::handleInput()
 
             // -- player movement
             case SDLK_w:
-                tryMovePlayer(0, -moveSize);
+                playerInputY = -moveSize;
+                //tryMovePlayer(0, -moveSize);
                 break;
             case SDLK_a:
-                tryMovePlayer(-moveSize, 0);
+                playerInputX = -moveSize;
+                //tryMovePlayer(-moveSize, 0);
                 break;
             case SDLK_s:
-                tryMovePlayer(0, moveSize);
+                playerInputY = moveSize;
+                //tryMovePlayer(0, moveSize);
                 break;
             case SDLK_d:
-                tryMovePlayer(moveSize, 0);
+                playerInputX = moveSize;
+                //tryMovePlayer(moveSize, 0);
                 break;
             case SDLK_SPACE:
                 world.tryJump(playerWorldId);
@@ -86,7 +91,20 @@ void Game::handleInput()
             }
         }
 
+        if (e.type == SDL_KEYUP) {
+            switch (e.key.keysym.sym) {
+            case SDLK_w:
+            case SDLK_s:
+                playerInputY = 0;
+                break;
+            case SDLK_a:
+            case SDLK_d:
+                playerInputX = 0;
+                break;
+            }
+        }
     }
+
 }
 
 
@@ -189,6 +207,12 @@ void Game::teardown()
 void Game::update()
 {
     // gravity
+
+    // move player if input is not 0
+    //world.tryMove();
+    world.tryMove(playerWorldId, playerInputX, playerInputY);
+
+
     world.tick();
     updatePlayerPositionTo(world.getPosition(playerWorldId));
 

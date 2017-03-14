@@ -29,6 +29,7 @@ struct Tileset {
     };
 
     // TODO: cache this
+    // FIXME: test this
     Vector2D coordinatesFor(int gid)
     {
         Vector2D coordinates;

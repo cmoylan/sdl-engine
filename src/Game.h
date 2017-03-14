@@ -31,8 +31,8 @@ class Game {
     void updatePlayerPositionTo(Point newPosition);
 
     // unused for the time being
-    // int playerInputX = 0;
-    // int playerInputY = 0;
+    int playerInputX = 0;
+    int playerInputY = 0;
 
     size_t playerWorldId;
 

@@ -36,6 +36,7 @@ bool World::canFall(size_t id)
     return canFall(body);
 }
 
+
 bool World::canFall(const Body& body)
 {
     return map->isOpen(body.location.x, body.location.y + 1,
@@ -164,17 +165,18 @@ void World::tryMove(size_t id, int velocityX, int velocityY)
 {
     // FIXME: magic numbers
     Body& body = get(id);
-    body.acceleration.x = 3;
+//     body.acceleration.x = 2;
+//
+//     if (body.velocity.x == 0) {
+//         body.velocity.x = (velocityX >= 0) ? 1 : -1;
+//     }
 
-    if (body.velocity.x == 0) {
-        body.velocity.x = (velocityX >= 0) ? 1 : -1;
-    }
-}
-/*
+
     Vector2D velocity = map->isOpenOrClosest(body.location.x, body.location.y,
                         body.size.x, body.size.y,
                         velocityX, velocityY);
     body.location.x += velocity.x;
     body.location.y += velocity.y;
 
-    return velocity;*/
+    //return velocity;
+}
