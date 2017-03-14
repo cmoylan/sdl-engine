@@ -1,0 +1,22 @@
+CXX = g++
+# Update these paths to match your installation
+# You may also need to update the linker option rpath, which sets where to look for
+# the SDL2 libraries at runtime to match your install
+#SDL_LIB = -L/usr/local/lib -lSDL2 -Wl,-rpath=/usr/local/lib -lSDL2_image
+# NOTE: remember to run `ldconfig` as root after installing new libs
+# FIXME: should use sdl2-config --cflags and sdl2-config --libs
+SDL_LIB = -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf
+SDL_INCLUDE = -I/usr/local/include -I./include
+# You may need to change -std=c++11 to -std=c++0x if your compiler is a bit older
+CXXFLAGS = -W -Wall -Wextra -c -std=c++17 -g $(SDL_INCLUDE)
+LDFLAGS = $(SDL_LIB)
+EXE = engine
+
+SUBDIRS = src
+BUILD_DIR = build
+
+# compile each .cpp file into a .o
+: foreach $(SUBDIRS)/*.cpp |> $(CXX) $(CXXFLAGS) -c %f -o %o |> $(BUILD_DIR)/%B.o
+
+# compile and link all .o into the main executable
+: $(BUILD_DIR)/*.o |> $(CXX) %f -o %o $(LDFLAGS) |> $(EXE)
