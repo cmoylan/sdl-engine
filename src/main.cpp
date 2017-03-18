@@ -22,7 +22,7 @@ int main(int, char**)
     Options opts;
     opts.levelNumber = 1;
     opts.score = 0;
-    opts.levelFolder = "Test Level 2";
+    opts.levelFolder = "Level 3";
     opts.screenBufferX = 64;
     opts.screenBufferY = 64;
 

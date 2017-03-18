@@ -65,7 +65,15 @@ void Renderer::drawLevel()
     dstn.w = PIXELS_PER_TILE_X;
     dstn.h = PIXELS_PER_TILE_Y;
 
+    cout << "sprites? ";
+    for (auto s : this->sprites) {
+        cout << s.first << endl; //" => " << s.second << endl;
+    }
+    cout << "---" << endl;
 
+    //throw -5;
+    
+    
     if (!RENDER_DATA_PRINTED) {
         printRenderData(game.level.renderData());
         cout << "tiles on screen X: " << game.level.tilesOnScreenX() << endl;
@@ -75,6 +83,9 @@ void Renderer::drawLevel()
 
     for (const auto& renderPair : game.level.renderData()) {
         // renderPair.first; // will be the sprite name
+        //auto sprite = this->sprites.at(renderPair.first);
+        cout << renderPair.first << endl;
+        
         for (const auto& rect : renderPair.second) {
             dstn.x = rect.x;
             dstn.y = rect.y;
@@ -97,6 +108,7 @@ void Renderer::drawLevel()
 
         }
     }
+    throw -1;
 }
 
 
