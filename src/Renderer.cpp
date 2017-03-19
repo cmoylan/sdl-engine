@@ -52,7 +52,8 @@ void Renderer::drawGameObjects()
 void Renderer::drawLevel()
 {
     //auto sprite = this->sprites["test-pattern-tileset.png"];
-    auto sprite = this->sprites["grass-tiles-2-small.png"];
+    //auto sprite = this->sprites["grass-tiles-2-small.png"];
+    auto sprite = this->sprites.cbegin()->second;
 
     SDL_Rect clip = {};
     clip.x = 0; // TODO: this is the position on the sprite sheet.
@@ -65,11 +66,11 @@ void Renderer::drawLevel()
     dstn.w = PIXELS_PER_TILE_X;
     dstn.h = PIXELS_PER_TILE_Y;
 
-    cout << "sprites? ";
-    for (auto s : this->sprites) {
-        cout << s.first << endl; //" => " << s.second << endl;
-    }
-    cout << "---" << endl;
+    //cout << "sprites? ";
+    //for (auto s : this->sprites) {
+    //    cout << s.first << endl; //" => " << s.second << endl;
+    // }
+    //cout << "---" << endl;
 
     //throw -5;
     
@@ -82,9 +83,9 @@ void Renderer::drawLevel()
     }
 
     for (const auto& renderPair : game.level.renderData()) {
-        // renderPair.first; // will be the sprite name
+        // renderPair.first; // will be the tileset name
         //auto sprite = this->sprites.at(renderPair.first);
-        cout << renderPair.first << endl;
+        //cout << renderPair.first << endl;
         
         for (const auto& rect : renderPair.second) {
             dstn.x = rect.x;
@@ -108,7 +109,7 @@ void Renderer::drawLevel()
 
         }
     }
-    throw -1;
+    //throw -1;
 }
 
 
