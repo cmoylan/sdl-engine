@@ -53,7 +53,7 @@ bool
 Level::loadMetadata(const rapidjson::Value& data)
 {
     // using scope this->
-    
+
     // TODO: try/catch this as it comes from external data
     // TODO: write a function to accept width/height and calculate max index
     assert(data.HasMember("width"));
@@ -64,7 +64,7 @@ Level::loadMetadata(const rapidjson::Value& data)
 
     textureTileWidth = data["tilewidth"].GetInt();
     textureTileHeight = data["tileheight"].GetInt();
-    
+
     playerStartX = stoi(data["properties"]["PlayerStartX"].GetString());
     playerStartY = stoi(data["properties"]["PlayerStartY"].GetString());
 

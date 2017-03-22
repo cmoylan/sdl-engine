@@ -149,67 +149,67 @@ RenderMap Level::renderData()
     for (const auto& layerPair : layers) {
         // only do platforms for now...remove this later
         //if (layerPair.first == "platforms") {
-            // assume only one asset for now
+        // assume only one asset for now
 
-            // keep track of which gids have clips generated, so you don't keep generating them
+        // keep track of which gids have clips generated, so you don't keep generating them
 
-            const auto& layer = layerPair.second;
-            RectangleList rectangles;
+        const auto& layer = layerPair.second;
+        RectangleList rectangles;
 
-            size_t i = 0; // TODO: better way to do this?
-            int col = 0;
-            int row = 0;
+        size_t i = 0; // TODO: better way to do this?
+        int col = 0;
+        int row = 0;
 
-            //for (const auto& tile : layer.tiles) {
-            for (auto index : this->layerIndicesOnScreen()) {
-                // FIXME: reading off the end of tiles
+        //for (const auto& tile : layer.tiles) {
+        for (auto index : this->layerIndicesOnScreen()) {
+            // FIXME: reading off the end of tiles
 
-                //
-                // BUG
-                // layerIndicesOnScreen is returning values higher than tiles.size()
-                //
+            //
+            // BUG
+            // layerIndicesOnScreen is returning values higher than tiles.size()
+            //
 
-                //const auto& tile = layer.tiles[index];
-                try {
-                    const auto& tile = layer.tiles.at(index);
+            //const auto& tile = layer.tiles[index];
+            try {
+                const auto& tile = layer.tiles.at(index);
 
-                    // make a rect for each of these
-                    // then use the GID to use the right sprite
+                // make a rect for each of these
+                // then use the GID to use the right sprite
 
-                    // ------------------------------------------------------------------ //
-                    // tile is GID
-                    // based on GID, get the sprite/layer
-                    // calculate the offset based on the w/h of the layer
-                    if (tile != 0) {
-                        Rectangle rect = {};
-                        rect.x = (col * PIXELS_PER_TILE_X) - renderOffsetX;
-                        rect.y = (row * PIXELS_PER_TILE_Y) - renderOffsetY;
-                        rect.gid = tile;
-                        //rect.clipX = tileWidth;
-                        //rect.clipY = tileHeight;
-                        rectangles.push_front(rect);
-                    }
+                // ------------------------------------------------------------------ //
+                // tile is GID
+                // based on GID, get the sprite/layer
+                // calculate the offset based on the w/h of the layer
+                if (tile != 0) {
+                    Rectangle rect = {};
+                    rect.x = (col * PIXELS_PER_TILE_X) - renderOffsetX;
+                    rect.y = (row * PIXELS_PER_TILE_Y) - renderOffsetY;
+                    rect.gid = tile;
+                    //rect.clipX = tileWidth;
+                    //rect.clipY = tileHeight;
+                    rectangles.push_front(rect);
                 }
-                catch (...) {
-                    cout  << "bad index: " << index << endl;
-                    cout << "indices on screen: ";
-
-                    for (auto i : layerIndicesOnScreen()) {
-                        cout << i << ", ";
-                    }
-                    cout << endl;
-                    throw - 1;
-                }
-                col++;
-                // it's never the end of row
-                // TODO: abstract into a descriptive method
-                if (this->isEndOfRow(i, tilesOnScreenX() + this->tilePrefetch)) {
-                    row++;
-                    col = 0;
-                }
-                i++;
             }
-            map[layerPair.first] = rectangles;
+            catch (...) {
+                cout  << "bad index: " << index << endl;
+                cout << "indices on screen: ";
+
+                for (auto i : layerIndicesOnScreen()) {
+                    cout << i << ", ";
+                }
+                cout << endl;
+                throw - 1;
+            }
+            col++;
+            // it's never the end of row
+            // TODO: abstract into a descriptive method
+            if (this->isEndOfRow(i, tilesOnScreenX() + this->tilePrefetch)) {
+                row++;
+                col = 0;
+            }
+            i++;
+        }
+        map[layerPair.first] = rectangles;
         //}
     };
     return map;
