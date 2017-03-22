@@ -25,8 +25,8 @@ string TilesetManager::assetNameFor(int gid)
         // second is tileset
         const auto& tileset = tilesetPair.second;
         if (tileset.firstGid <= gid && tileset.lastGid >= gid) {
-            cout << "gid, fgid, lgid: " << gid << ", " << tileset.firstGid
-                 << ", " << tileset.lastGid << endl;
+            //cout << "gid, fgid, lgid: " << gid << ", " << tileset.firstGid
+            //     << ", " << tileset.lastGid << endl;
             //_assetByGidCache[gid] = tileset.filename;
             //_assetByGidCache.insert(pair<int, string>(gid, tileset.filename));
             return tileset.filename;

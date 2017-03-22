@@ -134,10 +134,6 @@ RenderMap Level::renderData()
 {
     RenderMap map;
 
-    // for each asset
-    // for each square to render
-    // assume 1:1 LayerMap to Tileset
-
     // should start with the top layer, keep track of the positions on the screen that are filled
     // and skip them in the lower layers if they are filled by top layers
 
@@ -145,11 +141,12 @@ RenderMap Level::renderData()
 
     int renderOffsetX = screenOffsetX();
     int renderOffsetY = screenOffsetY();
+    
+    // TODO: remove when no longer needed below
+    int _badX = SCREEN_WIDTH + PIXELS_PER_TILE_X;
+    int _badY = SCREEN_HEIGHT + PIXELS_PER_TILE_Y;
 
     for (const auto& layerPair : layers) {
-        // only do platforms for now...remove this later
-        //if (layerPair.first == "platforms") {
-        // assume only one asset for now
 
         // keep track of which gids have clips generated, so you don't keep generating them
 
@@ -172,18 +169,22 @@ RenderMap Level::renderData()
             //const auto& tile = layer.tiles[index];
             try {
                 const auto& tile = layer.tiles.at(index);
-
-                // make a rect for each of these
-                // then use the GID to use the right sprite
-
                 // ------------------------------------------------------------------ //
                 // tile is GID
                 // based on GID, get the sprite/layer
                 // calculate the offset based on the w/h of the layer
-                if (tile != 0) {
+                if ( tile != 0) {
                     Rectangle rect = {};
                     rect.x = (col * PIXELS_PER_TILE_X) - renderOffsetX;
                     rect.y = (row * PIXELS_PER_TILE_Y) - renderOffsetY;
+                    
+                    // HACK too lazy to fix this properly
+                    //      the tile just off the screen is not right, so ifnore it
+                    if  (rect.x == _badX && rect.y == _badY) {
+                        continue;
+                    }
+                    // END HACK
+                    
                     rect.gid = tile;
                     //rect.clipX = tileWidth;
                     //rect.clipY = tileHeight;
@@ -210,7 +211,6 @@ RenderMap Level::renderData()
             i++;
         }
         map[layerPair.first] = rectangles;
-        //}
     };
     return map;
 }

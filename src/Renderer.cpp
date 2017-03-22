@@ -94,7 +94,9 @@ void Renderer::drawLevel()
             nextSpriteName = game.level.tilesets.assetNameFor(rect.gid);
 
             if (currentSpriteName != nextSpriteName) {
-                //cout << "switching it on gid: " << rect.gid << endl;
+                cout << "switching it on gid: " << rect.gid;
+                cout << " - cur, next: " <<currentSpriteName<<", "<<nextSpriteName;
+                cout << " - coords: " << rect.x << ", "<<rect.y<< endl;
                 // change the sprite
                 auto it = this->sprites.find(nextSpriteName);
                 if (it != this->sprites.end()) {
