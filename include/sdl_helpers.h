@@ -6,6 +6,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "constants.h"
 
 /**
  * Log an SDL error with some error message to the output stream of our choice
@@ -111,4 +112,10 @@ inline void renderColoredRect(SDL_Renderer *ren, SDL_Rect *rectangle, int r, int
     SDL_RenderFillRect(ren, rectangle);
     SDL_SetRenderDrawColor(ren, 0,0,0,0); // TODO: better way to clear color?
 
+}
+
+inline void renderColoredRect(SDL_Renderer *ren, int x, int y, int w, int h, Color color)
+{
+    SDL_Rect coords = {x,y,w,h};
+    renderColoredRect(ren, &coords, color.r, color.g, color.b, color.a);
 }

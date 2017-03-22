@@ -19,9 +19,9 @@ AssetList Player::assetData()
 
     Asset asset;
     asset.spriteFilename = "player.png";
-    asset.name = "player";
+    asset.name = "player.png";
     assets.push_back(asset);
-    this->assetName = "player";
+    this->assetName = "player.png";
 
     return assets;
 }

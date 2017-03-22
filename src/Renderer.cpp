@@ -74,7 +74,6 @@ void Renderer::drawLevel()
 
     //throw -5;
     
-    
     if (!RENDER_DATA_PRINTED) {
         printRenderData(game.level.renderData());
         cout << "tiles on screen X: " << game.level.tilesOnScreenX() << endl;
@@ -82,6 +81,9 @@ void Renderer::drawLevel()
         RENDER_DATA_PRINTED = true;
     }
 
+    // do background first
+    renderColoredRect(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, game.level.backgroundColor);
+    
     for (const auto& renderPair : game.level.renderData()) {
         // renderPair.first; // will be the tileset name
         //auto sprite = this->sprites.at(renderPair.first);
@@ -91,6 +93,9 @@ void Renderer::drawLevel()
             dstn.x = rect.x;
             dstn.y = rect.y;
             try {
+                
+                // need sprite by gid
+                
                 auto tileCoords = game.level.tilesets.coordinatesFor(rect.gid);
                 clip.x = tileCoords.x;
                 clip.y = tileCoords.y;

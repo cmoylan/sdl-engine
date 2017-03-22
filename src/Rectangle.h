@@ -1,5 +1,8 @@
 #pragma once
 
+#include <iostream>
+
+
 // FIXME: this name is not descriptive
 // it's the information to render one rectangle on screen
 struct Rectangle {

@@ -20,3 +20,10 @@ const std::string WINDOW_TITLE = "Game";
  *       // *INDENT_ON*
  *   to turn off formatting. Can also use *NOPAD* for single lines.
  */
+
+struct Color {
+    int r;
+    int g;
+    int b;
+    int a;
+};

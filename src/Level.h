@@ -43,6 +43,7 @@ public:
     int textureTileHeight;
     int playerStartX;
     int playerStartY;
+    Color backgroundColor;
 
     // other data - mostly for rendering
     LayerMap layers;

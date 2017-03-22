@@ -7,6 +7,9 @@ Level::Level()
     offsetY = 0;
     _tilesOnScreenX = 0;
     _tilesOnScreenY = 0;
+    Color color = {15, 90, 120, 0};
+    // nice brown -> RGB: 82, 23, 0
+    backgroundColor = color;
 }
 
 
@@ -145,7 +148,7 @@ RenderMap Level::renderData()
 
     for (const auto& layerPair : layers) {
         // only do platforms for now...remove this later
-        if (layerPair.first == "platforms") {
+        //if (layerPair.first == "platforms") {
             // assume only one asset for now
 
             // keep track of which gids have clips generated, so you don't keep generating them
@@ -207,7 +210,7 @@ RenderMap Level::renderData()
                 i++;
             }
             map[layerPair.first] = rectangles;
-        }
+        //}
     };
     return map;
 }
