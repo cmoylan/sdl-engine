@@ -11,7 +11,7 @@ using namespace std;
 class TilesetManager {
 
     map<string, Tileset> tilesets;
-
+    map<int, string> _assetByGidCache;
 
 public:
     TilesetManager() {};
@@ -22,5 +22,6 @@ public:
     void add(const string name, Tileset tileset);
     Tileset& get(const string name);
     Point coordinatesFor(int gid);
+    string assetNameFor(int gid);
 
 };

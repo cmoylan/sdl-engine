@@ -49,11 +49,12 @@ void Renderer::drawGameObjects()
 }
 
 
+// FIXME: should be handled in drawGameObjects
 void Renderer::drawLevel()
 {
-    //auto sprite = this->sprites["test-pattern-tileset.png"];
-    //auto sprite = this->sprites["grass-tiles-2-small.png"];
-    auto sprite = this->sprites.cbegin()->second;
+    auto spritePair = this->sprites.cbegin();
+    string currentSpriteName = spritePair->first;
+    Sprite sprite = spritePair->second;
 
     SDL_Rect clip = {};
     clip.x = 0; // TODO: this is the position on the sprite sheet.
@@ -66,14 +67,6 @@ void Renderer::drawLevel()
     dstn.w = PIXELS_PER_TILE_X;
     dstn.h = PIXELS_PER_TILE_Y;
 
-    //cout << "sprites? ";
-    //for (auto s : this->sprites) {
-    //    cout << s.first << endl; //" => " << s.second << endl;
-    // }
-    //cout << "---" << endl;
-
-    //throw -5;
-
     if (!RENDER_DATA_PRINTED) {
         printRenderData(game.level.renderData());
         cout << "tiles on screen X: " << game.level.tilesOnScreenX() << endl;
@@ -85,31 +78,42 @@ void Renderer::drawLevel()
     renderColoredRect(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT,
                       game.level.backgroundColor);
 
+    string nextSpriteName;
+
     for (const auto& renderPair : game.level.renderData()) {
         // renderPair.first; // will be the tileset name
-        //auto sprite = this->sprites.at(renderPair.first);
-        //cout << renderPair.first << endl;
-
         for (const auto& rect : renderPair.second) {
             dstn.x = rect.x;
             dstn.y = rect.y;
-            try {
+            //try {
 
-                // need sprite by gid
+            // --- sprite switching
+            // LEFT OFF HERE
+            // FIXME: not really sure why this isn't working...
+            // only switch if the asset has changed
+            nextSpriteName = game.level.tilesets.assetNameFor(rect.gid);
 
-                auto tileCoords = game.level.tilesets.coordinatesFor(rect.gid);
-                clip.x = tileCoords.x;
-                clip.y = tileCoords.y;
+            if (currentSpriteName != nextSpriteName) {
+                //cout << "switching it on gid: " << rect.gid << endl;
+                // change the sprite
+                auto it = this->sprites.find(nextSpriteName);
+                if (it != this->sprites.end()) {
+                    //cout << "switching it" << endl;
+                    sprite = it->second;
+                }
+                else {
+                    cout << "should not get here" << endl;
+                }
             }
-            catch (...) {
-                cout << "got rekt: " << rect << endl;
-                throw - 1;
-            }
 
-            //cout << "got tile coords: " << tileCoords << endl;
-
-            //renderColoredRect(renderer, &dstn, r, g, b, 0);
-
+            auto tileCoords = game.level.tilesets.coordinatesFor(rect.gid);
+            clip.x = tileCoords.x;
+            clip.y = tileCoords.y;
+            //}
+            //catch (...) {
+            //    cout << "got rekt: " << rect << endl;
+            //    throw - 1;
+            //}
             renderTexture(sprite.texture, renderer,
                           dstn.x, dstn.y, &clip);
 

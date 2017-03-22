@@ -12,6 +12,31 @@ TilesetMap& TilesetManager::all()
 }
 
 
+// FIXME: exception if gid not found???
+string TilesetManager::assetNameFor(int gid)
+{
+    //auto cached = _assetByGidCache.find(gid);
+    //if (cached !=_assetByGidCache.cend()) {
+    //    return cached->second;
+    //}
+
+    for (const auto& tilesetPair : tilesets) {
+        // first is tileset name
+        // second is tileset
+        const auto& tileset = tilesetPair.second;
+        if (tileset.firstGid <= gid && tileset.lastGid >= gid) {
+            cout << "gid, fgid, lgid: " << gid << ", " << tileset.firstGid
+                 << ", " << tileset.lastGid << endl;
+            //_assetByGidCache[gid] = tileset.filename;
+            //_assetByGidCache.insert(pair<int, string>(gid, tileset.filename));
+            return tileset.filename;
+        }
+    }
+    // default to first thing
+    return tilesets.begin()->second.filename;
+}
+
+
 Point TilesetManager::coordinatesFor(int gid)
 {
     auto& tileset = findByGid(gid);
