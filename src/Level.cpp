@@ -141,7 +141,7 @@ RenderMap Level::renderData()
 
     int renderOffsetX = screenOffsetX();
     int renderOffsetY = screenOffsetY();
-    
+
     // TODO: remove when no longer needed below
     int _badX = SCREEN_WIDTH + PIXELS_PER_TILE_X;
     int _badY = SCREEN_HEIGHT + PIXELS_PER_TILE_Y;
@@ -173,18 +173,18 @@ RenderMap Level::renderData()
                 // tile is GID
                 // based on GID, get the sprite/layer
                 // calculate the offset based on the w/h of the layer
-                if ( tile != 0) {
+                if (tile != 0) {
                     Rectangle rect = {};
                     rect.x = (col * PIXELS_PER_TILE_X) - renderOffsetX;
                     rect.y = (row * PIXELS_PER_TILE_Y) - renderOffsetY;
-                    
+
                     // HACK too lazy to fix this properly
                     //      the tile just off the screen is not right, so ifnore it
-                    if  (rect.x == _badX && rect.y == _badY) {
+                    if (rect.x == _badX && rect.y == _badY) {
                         continue;
                     }
                     // END HACK
-                    
+
                     rect.gid = tile;
                     //rect.clipX = tileWidth;
                     //rect.clipY = tileHeight;

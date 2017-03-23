@@ -6,6 +6,7 @@
 //Screen attributes
 const int SCREEN_WIDTH  = 640;
 const int SCREEN_HEIGHT = 480;
+// TODO: need to increase this without affecting the physics
 const int FPS = 30;
 
 const int PIXELS_PER_TILE_X = 32;

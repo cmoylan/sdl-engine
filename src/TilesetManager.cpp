@@ -15,10 +15,10 @@ TilesetMap& TilesetManager::all()
 // FIXME: exception if gid not found???
 string TilesetManager::assetNameFor(int gid)
 {
-    //auto cached = _assetByGidCache.find(gid);
-    //if (cached !=_assetByGidCache.cend()) {
-    //    return cached->second;
-    //}
+    auto cached = _assetByGidCache.find(gid);
+    if (cached != _assetByGidCache.cend()) {
+        return cached->second;
+    }
 
     for (const auto& tilesetPair : tilesets) {
         // first is tileset name

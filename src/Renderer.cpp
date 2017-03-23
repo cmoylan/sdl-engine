@@ -59,7 +59,6 @@ void Renderer::drawLevel()
     SDL_Rect clip = {};
     clip.x = 0; // TODO: this is the position on the sprite sheet.
     clip.y = 0;
-    //Point& tileCoords;
     clip.w = PIXELS_PER_TILE_X;
     clip.h = PIXELS_PER_TILE_Y;
 
@@ -85,37 +84,28 @@ void Renderer::drawLevel()
         for (const auto& rect : renderPair.second) {
             dstn.x = rect.x;
             dstn.y = rect.y;
-            //try {
 
             // --- sprite switching
-            // LEFT OFF HERE
-            // FIXME: not really sure why this isn't working...
             // only switch if the asset has changed
             nextSpriteName = game.level.tilesets.assetNameFor(rect.gid);
 
             if (currentSpriteName != nextSpriteName) {
-                cout << "switching it on gid: " << rect.gid;
-                cout << " - cur, next: " <<currentSpriteName<<", "<<nextSpriteName;
-                cout << " - coords: " << rect.x << ", "<<rect.y<< endl;
                 // change the sprite
                 auto it = this->sprites.find(nextSpriteName);
                 if (it != this->sprites.end()) {
-                    //cout << "switching it" << endl;
                     sprite = it->second;
+                    currentSpriteName = nextSpriteName;
+
                 }
-                else {
-                    cout << "should not get here" << endl;
-                }
+                //else {
+                //    this should raise an error, a sprite has not been loaded
+                //}
             }
 
             auto tileCoords = game.level.tilesets.coordinatesFor(rect.gid);
             clip.x = tileCoords.x;
             clip.y = tileCoords.y;
-            //}
-            //catch (...) {
-            //    cout << "got rekt: " << rect << endl;
-            //    throw - 1;
-            //}
+
             renderTexture(sprite.texture, renderer,
                           dstn.x, dstn.y, &clip);
 
