@@ -36,15 +36,15 @@ void Renderer::drawGameObjects()
 {
     for (Drawable* object : game.getGameObjects()) {
         auto sprite = this->sprites[object->assetName];
-        // TODO: maybe Drawable can return a clip, or we can write a
-        // render texture that accepts a generic struct with x,y,w,h - Vector2D
-        SDL_Rect clip = {};
-        clip.x = 0;
-        clip.y = 0;
-        clip.w = object->spriteOffsetX;
-        clip.h = object->spriteOffsetY;
-        renderTexture(sprite.texture, renderer,
-                      object->x(), object->y(), &clip);
+
+        renderTexture(sprite.texture, 
+                      renderer,
+                      object->x(), // position on screen
+                      object->y(), 
+                      0, // clipping data
+                      0, 
+                      object->spriteOffsetX, 
+                      object->spriteOffsetY);
     }
 }
 
@@ -95,7 +95,6 @@ void Renderer::drawLevel()
                 if (it != this->sprites.end()) {
                     sprite = it->second;
                     currentSpriteName = nextSpriteName;
-
                 }
                 //else {
                 //    this should raise an error, a sprite has not been loaded

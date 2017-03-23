@@ -106,6 +106,12 @@ inline void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, SDL
 }
 
 
+inline void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int clipX, int clipY, int clipW, int clipH) {
+    SDL_Rect clip = {clipX, clipY, clipW, clipH};
+    renderTexture(tex, ren, x, y, &clip);
+}
+
+
 inline void renderColoredRect(SDL_Renderer *ren, SDL_Rect *rectangle, int r, int g, int b, int a)
 {
     SDL_SetRenderDrawColor(ren, r, g, b, a);
@@ -113,6 +119,7 @@ inline void renderColoredRect(SDL_Renderer *ren, SDL_Rect *rectangle, int r, int
     SDL_SetRenderDrawColor(ren, 0,0,0,0); // TODO: better way to clear color?
 
 }
+
 
 inline void renderColoredRect(SDL_Renderer *ren, int x, int y, int w, int h, Color color)
 {
