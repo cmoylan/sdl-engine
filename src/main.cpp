@@ -4,13 +4,15 @@
 #include "Renderer.h"
 
 /* TODO:
- * - draw a level
- *   - consider using 64 px sprites, or even 128
- *   - tileset.coordsforgid doesn't quite work
  * - automate or fix anything that annoys you
  * - better exceptions
  * - use Tiled for player sprites - set them with metadata... or somehow represent a player
  * - store stuff in a json file so you don't have to recompile
+ * - enemies
+ * - death by falling off the screen
+ * - acceleration and friction when walking
+ * - don't jump through blocks
+ * - GUILE
  */
 
 int main(int, char**)

@@ -5,7 +5,8 @@ void Renderer::displayDebugInfo()
 {
     //Color is in RGBA format
     SDL_Color color = { 255, 255, 255, 255 };
-    TTF_Font* font = fonts.get("sample.ttf", 24);
+    int fontSize = 24;
+    TTF_Font* font = fonts.get("sample.ttf", fontSize);
 
     int x = 10;
     int y = 10;
@@ -27,7 +28,7 @@ void Renderer::displayDebugInfo()
         }
 
         renderTexture(image, renderer, x, y);
-        y += 24;
+        y += fontSize;
     }
 }
 
