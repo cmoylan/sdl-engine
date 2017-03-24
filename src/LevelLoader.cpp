@@ -113,9 +113,10 @@ void Level::loadObjectLayer(const string& layerName,
         // if they are visible, add them to the background tile layer?
         if (object.visible) {
             int index = indexFor(object.position);
-            //cout << "index, gid of exit is: " << index << ", " << object.gid << endl;
+            cout << "index, gid of exit is: " << index << ", " << object.gid << endl;
             // FIXME: make sure this layer and index exist
             Layer& background = layers["background"];
+            // FIXME: this is inserting them one row lower than they should be
             background.tiles[index] = object.gid;
         }
     }

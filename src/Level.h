@@ -63,7 +63,6 @@ public:
     Level();
     ~Level() {};
 
-    // TODO: make a class method that can construct a level object
     bool loadFromJson(const std::string& filename);
     static Level constructFromJson(const std::string& filename);
 

@@ -4,6 +4,7 @@
 #include "Renderer.h"
 
 /* TODO:
+ * - object coordinates are off by one row
  * - automate or fix anything that annoys you
  * - better exceptions
  * - use Tiled for player sprites - set them with metadata... or somehow represent a player
