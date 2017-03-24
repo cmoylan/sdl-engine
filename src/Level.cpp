@@ -217,6 +217,7 @@ RenderMap Level::renderData()
 // ----- END Rendering methods ----- //
 
 
+// TODO: this should be in World or Scene, not level
 // FIXME: I don't like how this method works
 // I don't think it works
 bool Level::scrollBy(int x, int y)
@@ -288,9 +289,6 @@ list<int> Level::layerIndicesOnScreen()
             indices.push_back(index);
             index += 1;
             // FIXME: stop adding if we are over the map size
-
-
-
         }
         index += (mapWidth - (tilesOnScreenX() + tilePrefetch));
         if (index > maxMapIndex) {
@@ -344,13 +342,25 @@ int Level::tilesOnScreenY()
 }
 
 
-int Level::valueAt(int x, int y, std::string layer)
+int Level::indexFor(Vector2D coordinates)
+{
+    return indexFor(coordinates.x, coordinates.y);
+}
+
+
+int Level::indexFor(int x, int y)
 {
     // Divide by tile size to get row, col
     int row = y / PIXELS_PER_TILE_Y;
     int col = x / PIXELS_PER_TILE_X;
     int index = (row * mapWidth) + col;
+    return index;
+}
 
+
+int Level::valueAt(int x, int y, std::string layer)
+{
+    int index = indexFor(x, y);
     vector<long>& tiles = layers.at(layer).tiles;
     int tile = tiles.at(index);
     return tile;

@@ -19,6 +19,7 @@
 #include "Drawable.h"
 #include "Rectangle.h"
 #include "TilesetManager.h"
+#include "Level/LevelObject.h"
 
 
 struct Layer {
@@ -47,8 +48,8 @@ public:
 
     // other data - mostly for rendering
     LayerMap layers;
-    //TilesetMap tilesets;
     TilesetManager tilesets;
+    LevelObjectMap levelObjects;
 
 
     std::string resPath;  // FIXME: what sets this?
@@ -118,6 +119,7 @@ public:
      */
     RenderMap renderData();
 
+    // TODO: does this belong in World??
     /**
      * Provide the offsets for rendering
      * @return an integer indicating how much the rendered level should be offset on screen
@@ -143,7 +145,10 @@ public:
 
 private:
 
-    bool loadLayer(const std::string& layerName, const rapidjson::Value& data);
+    // TODO: throw exceptions if the level can't be loaded
+    void loadObjectLayer(const std::string& layerName,
+                         const rapidjson::Value& data);
+    bool loadTileLayer(const std::string& layerName, const rapidjson::Value& data);
     bool loadMetadata(const rapidjson::Value& data);
     bool loadTileset(const rapidjson::Value& data);
 
@@ -151,6 +156,10 @@ private:
      * Determine if a tile index is the end of the level row
      */
     bool isEndOfRow(size_t index, int sectorWidth = 0);
+
+    // Get the layer index for a given position on the level
+    int indexFor(int x, int y);
+    int indexFor(Vector2D coordinates);
 
     // When the resolution is updated, _tilesOnScreenX/Y should be cleared
     int _tilesOnScreenX;// = 0;

@@ -38,13 +38,13 @@ void Renderer::drawGameObjects()
     for (Drawable* object : game.getGameObjects()) {
         auto sprite = this->sprites[object->assetName];
 
-        renderTexture(sprite.texture, 
+        renderTexture(sprite.texture,
                       renderer,
                       object->x(), // position on screen
-                      object->y(), 
+                      object->y(),
                       0, // clipping data
-                      0, 
-                      object->spriteOffsetX, 
+                      0,
+                      object->spriteOffsetX,
                       object->spriteOffsetY);
     }
 }

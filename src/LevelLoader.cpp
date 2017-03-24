@@ -22,9 +22,17 @@ Level::loadFromJson(const std::string& folder)
     // FIXME: these should raise exceptions, or give a more helpful error
     const Value& layers = document["layers"];
     for (i = 0; i < layers.Size(); i++) {
-        std::string layerName = layers[i]["name"].GetString();
-        if (!this->loadLayer(layerName, layers[i]["data"])) {
-            return false;
+        string layerName = layers[i]["name"].GetString();
+        string type = layers[i]["type"].GetString();
+
+        if (type == "tilelayer") {
+            if (!this->loadTileLayer(layerName, layers[i]["data"])) {
+                return false;
+            }
+        }
+
+        if (type == "objectgroup") {
+            this->loadObjectLayer(layerName, layers[i]["objects"]);
         }
     }
 
@@ -65,6 +73,7 @@ Level::loadMetadata(const rapidjson::Value& data)
     textureTileWidth = data["tilewidth"].GetInt();
     textureTileHeight = data["tileheight"].GetInt();
 
+    // TODO: do this with the meta object layer
     playerStartX = stoi(data["properties"]["PlayerStartX"].GetString());
     playerStartY = stoi(data["properties"]["PlayerStartY"].GetString());
 
@@ -72,8 +81,49 @@ Level::loadMetadata(const rapidjson::Value& data)
 }
 
 
+
+void Level::loadObjectLayer(const string& layerName,
+                            const rapidjson::Value& data)
+{
+    // "objects":[
+    //     {
+    //         "gid":4,
+    //         "height":32,
+    //         "id":5,
+    //         "name":"exit",
+    //         "properties": {},
+    //         "rotation":0,
+    //         "type":"",
+    //         "visible":true,
+    //         "width":32,
+    //         "x":3104,
+    //         "y":160
+    //     }],
+
+    for (size_t i = 0; i < data.Size(); i++) {
+        LevelObject object;
+        object.position = { data[i]["x"].GetInt(), data[i]["y"].GetInt() };
+        object.size = { data[i]["width"].GetInt(), data[i]["height"].GetInt() };
+        object.gid = data[i]["gid"].GetInt();
+        object.name = data[i]["name"].GetString();
+        object.visible = data[i]["visible"].GetBool();
+
+        this->levelObjects[object.name] = object;
+
+        // if they are visible, add them to the background tile layer?
+        if (object.visible) {
+            int index = indexFor(object.position);
+            //cout << "index, gid of exit is: " << index << ", " << object.gid << endl;
+            // FIXME: make sure this layer and index exist
+            Layer& background = layers["background"];
+            background.tiles[index] = object.gid;
+        }
+    }
+}
+
+
 bool
-Level::loadLayer(const std::string& layerName, const rapidjson::Value& data)
+Level::loadTileLayer(const std::string& layerName, const rapidjson::Value& data)
 {
     int count = 0;
     Layer layer;

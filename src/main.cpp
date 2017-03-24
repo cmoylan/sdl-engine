@@ -15,6 +15,11 @@
  * - GUILE
  */
 
+/* FIXME:
+ * - level crashes if you get all the way to the lower right corner
+ *
+ */
+
 int main(int, char**)
 {
     Renderer renderer;
