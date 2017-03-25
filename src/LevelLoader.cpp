@@ -100,12 +100,9 @@ void LevelLoader::loadObjectLayer(Level& level, const string& layerName,
 
             // if they are visible, add them to the background tile layer?
             if (object.visible) {
-                int index = level.indexFor(object.position);
-                cout << "position is: " << object.position << endl;
-                cout << "index, gid of exit is: " << index << ", " << object.gid << endl;
-                // FIXME: make sure this layer and index exist
+                // subtracting one from y because Tiled positions this thing at the very edge of its cell
+                int index = level.indexFor(object.position.x, object.position.y - 1);
                 Layer& background = level.layers["background"];
-                // FIXME: this is inserting them one row lower than they should be
                 background.tiles[index] = object.gid;
             }
         }
