@@ -1,89 +1,76 @@
-#include "Level.h"
+#include "Level/LevelLoader.h"
 
 
-bool
-Level::loadFromJson(const std::string& folder)
+Level
+LevelLoader::loadFromJson(const string& folder)
 {
     using namespace rapidjson;
 
     SizeType i;
     Document document;
+    Level level;
 
-    this->resPath = getResourcePath(folder);
-    std::string filename = this->resPath + "level.json";
+    level.resPath = getResourcePath(folder);
+
+    std::string filename = level.resPath + "level.json";
     std::string jsonString = FileHelpers::loadStringFromFile(filename);
 
     document.Parse(jsonString.c_str());
     assert(document.IsObject());
 
-    this->loadMetadata(document);
+    LevelLoader::loadMetadata(level, document);
 
-    // TODO: possibly abstract
-    // FIXME: these should raise exceptions, or give a more helpful error
     const Value& layers = document["layers"];
+
     for (i = 0; i < layers.Size(); i++) {
         string layerName = layers[i]["name"].GetString();
         string type = layers[i]["type"].GetString();
 
         if (type == "tilelayer") {
-            if (!this->loadTileLayer(layerName, layers[i]["data"])) {
-                return false;
-            }
+            LevelLoader::loadTileLayer(level, layerName, layers[i]["data"]);
         }
 
         if (type == "objectgroup") {
-            this->loadObjectLayer(layerName, layers[i]["objects"]);
+            LevelLoader::loadObjectLayer(level, layerName, layers[i]["objects"]);
         }
     }
 
     // load tilesets
     const Value& tilesets = document["tilesets"];
     for (i = 0; i < tilesets.Size(); i++) {
-        if (!this->loadTileset(tilesets[i])) {
-            return false;
-        }
+        LevelLoader::loadTileset(level, tilesets[i]);
     }
 
-    return true;
+    return level;
 }
 
 
-Level
-Level::constructFromJson(const std::string& filename)
-{
-    Level newLevel;
-    newLevel.loadFromJson(filename);
-    return newLevel;
-}
-
-
-bool
-Level::loadMetadata(const rapidjson::Value& data)
+void LevelLoader::loadMetadata(Level& level, const rapidjson::Value& data)
 {
     // using scope this->
 
-    // TODO: try/catch this as it comes from external data
     // TODO: write a function to accept width/height and calculate max index
-    assert(data.HasMember("width"));
-    mapWidth = data["width"].GetInt();
-    assert(data.HasMember("height"));
-    mapHeight = data["height"].GetInt();
-    maxMapIndex = (mapHeight * mapWidth) - 1; // zero-indexed
+    try {
+        level.mapWidth = data["width"].GetInt();
+        level.mapHeight = data["height"].GetInt();
+        level.maxMapIndex = (level.mapHeight * level.mapWidth) - 1; // zero-indexed
 
-    textureTileWidth = data["tilewidth"].GetInt();
-    textureTileHeight = data["tileheight"].GetInt();
+        level.textureTileWidth = data["tilewidth"].GetInt();
+        level.textureTileHeight = data["tileheight"].GetInt();
 
-    // TODO: do this with the meta object layer
-    playerStartX = stoi(data["properties"]["PlayerStartX"].GetString());
-    playerStartY = stoi(data["properties"]["PlayerStartY"].GetString());
-
-    return true;
+        // TODO: do this with the meta object layer
+        level.playerStartX = stoi(data["properties"]["PlayerStartX"].GetString());
+        level.playerStartY = stoi(data["properties"]["PlayerStartY"].GetString());
+    }
+    catch (...) {
+        throw "error loading level metadata";
+    }
 }
 
 
 
-void Level::loadObjectLayer(const string& layerName,
-                            const rapidjson::Value& data)
+void LevelLoader::loadObjectLayer(Level& level, const string& layerName,
+                                  const rapidjson::Value& data)
 {
     // "objects":[
     //     {
@@ -100,31 +87,38 @@ void Level::loadObjectLayer(const string& layerName,
     //         "y":160
     //     }],
 
-    for (size_t i = 0; i < data.Size(); i++) {
-        LevelObject object;
-        object.position = { data[i]["x"].GetInt(), data[i]["y"].GetInt() };
-        object.size = { data[i]["width"].GetInt(), data[i]["height"].GetInt() };
-        object.gid = data[i]["gid"].GetInt();
-        object.name = data[i]["name"].GetString();
-        object.visible = data[i]["visible"].GetBool();
+    try {
+        for (size_t i = 0; i < data.Size(); i++) {
+            LevelObject object;
+            object.position = { data[i]["x"].GetInt(), data[i]["y"].GetInt() };
+            object.size = { data[i]["width"].GetInt(), data[i]["height"].GetInt() };
+            object.gid = data[i]["gid"].GetInt();
+            object.name = data[i]["name"].GetString();
+            object.visible = data[i]["visible"].GetBool();
 
-        this->levelObjects[object.name] = object;
+            level.levelObjects[object.name] = object;
 
-        // if they are visible, add them to the background tile layer?
-        if (object.visible) {
-            int index = indexFor(object.position);
-            cout << "index, gid of exit is: " << index << ", " << object.gid << endl;
-            // FIXME: make sure this layer and index exist
-            Layer& background = layers["background"];
-            // FIXME: this is inserting them one row lower than they should be
-            background.tiles[index] = object.gid;
+            // if they are visible, add them to the background tile layer?
+            if (object.visible) {
+                int index = level.indexFor(object.position);
+                cout << "position is: " << object.position << endl;
+                cout << "index, gid of exit is: " << index << ", " << object.gid << endl;
+                // FIXME: make sure this layer and index exist
+                Layer& background = level.layers["background"];
+                // FIXME: this is inserting them one row lower than they should be
+                background.tiles[index] = object.gid;
+            }
         }
+    }
+    catch (...) {
+        throw "error loading level object layer";
     }
 }
 
 
-bool
-Level::loadTileLayer(const std::string& layerName, const rapidjson::Value& data)
+
+void LevelLoader::loadTileLayer(Level& level, const std::string& layerName,
+                                const rapidjson::Value& data)
 {
     int count = 0;
     Layer layer;
@@ -139,15 +133,11 @@ Level::loadTileLayer(const std::string& layerName, const rapidjson::Value& data)
     }
 
     layer.tileCount = count;
-    layers[layerName] = layer;
-
-    // TODO: actually check that something was loaded
-    return true;
+    level.layers[layerName] = layer;
 }
 
 
-bool
-Level::loadTileset(const rapidjson::Value& data)
+void LevelLoader::loadTileset(Level& level, const rapidjson::Value& data)
 {
     // TODO: assume the filename is in the working directory, cut off the first part of the path
     using namespace rapidjson;
@@ -155,25 +145,28 @@ Level::loadTileset(const rapidjson::Value& data)
     std::string filename = data["image"].GetString();
     std::string layername = data["name"].GetString();
     if (filename.empty() || layername.empty()) {
-        return false;
+        throw "could not determind layername or filename while loading tileset";
     }
-    filename = FileHelpers::filenameFromPath(filename);
 
-    Tileset tileset = {};
-    tileset.filename = filename;
-    tileset.firstGid = data["firstgid"].GetInt();
-    tileset.width = data["imagewidth"].GetInt();
-    tileset.height = data["imageheight"].GetInt();
-    tileset.tileWidth = data["tilewidth"].GetInt();
-    tileset.tileHeight = data["tileheight"].GetInt();
-    tileset.tileCount = data["tilecount"].GetInt();
+    try {
+        filename = FileHelpers::filenameFromPath(filename);
 
-
-    tileset.setCalculatedFields();
-
-    //tilesets[layername] = tileset;
-    tilesets.add(layername, tileset);
+        Tileset tileset = {};
+        tileset.filename = filename;
+        tileset.firstGid = data["firstgid"].GetInt();
+        tileset.width = data["imagewidth"].GetInt();
+        tileset.height = data["imageheight"].GetInt();
+        tileset.tileWidth = data["tilewidth"].GetInt();
+        tileset.tileHeight = data["tileheight"].GetInt();
+        tileset.tileCount = data["tilecount"].GetInt();
 
 
-    return true; // TODO: actually check something was loaded
+        tileset.setCalculatedFields();
+
+        //tilesets[layername] = tileset;
+        level.tilesets.add(layername, tileset);
+    }
+    catch (...) {
+        throw "error loading tileset";
+    }
 }

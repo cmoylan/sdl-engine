@@ -5,10 +5,6 @@
 #include <map>
 #include <string>
 
-#include "rapidjson/document.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
-
 #include "file_helpers.h"
 #include "res_path.h"
 #include "sdl_helpers.h"
@@ -63,8 +59,7 @@ public:
     Level();
     ~Level() {};
 
-    bool loadFromJson(const std::string& filename);
-    static Level constructFromJson(const std::string& filename);
+    virtual AssetList assetData();
 
     // NOTE: this blows up if run before `loadFromJson`
     void printPlatforms();
@@ -101,9 +96,8 @@ public:
      * @return a list of indices whose tiles should be rendered
      */
     std::list<int> layerIndicesOnScreen();
-    //std::list<int> tilesOnScreen();
 
-    virtual AssetList assetData();
+
 
     /**
      * Return a bunch of render data
@@ -142,23 +136,17 @@ public:
      */
     int valueAt(int x, int y, std::string layer = "platforms");
 
-private:
+    // Get the layer index for a given position on the level
+    int indexFor(int x, int y);
+    int indexFor(Vector2D coordinates);
 
-    // TODO: throw exceptions if the level can't be loaded
-    void loadObjectLayer(const std::string& layerName,
-                         const rapidjson::Value& data);
-    bool loadTileLayer(const std::string& layerName, const rapidjson::Value& data);
-    bool loadMetadata(const rapidjson::Value& data);
-    bool loadTileset(const rapidjson::Value& data);
+private:
 
     /**
      * Determine if a tile index is the end of the level row
      */
     bool isEndOfRow(size_t index, int sectorWidth = 0);
 
-    // Get the layer index for a given position on the level
-    int indexFor(int x, int y);
-    int indexFor(Vector2D coordinates);
 
     // When the resolution is updated, _tilesOnScreenX/Y should be cleared
     int _tilesOnScreenX;// = 0;

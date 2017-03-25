@@ -45,7 +45,7 @@ tidy:
 # http://astyle.sourceforge.net/astyle.html
 style:
 	@astyle --options=.astylerc \
-	`ls src/*.h src/*.cpp test/*.cpp`
+	`ls src/*.h src/*.cpp test/*.cpp ls src/Level/*`
 
 .PHONY: test
 TEST_CXXFLAGS = -std=c++14 $(SDL_INCLUDE) -I./src

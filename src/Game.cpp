@@ -157,9 +157,7 @@ void Game::tryScrollLevel(int directionX, int directionY)
 
 void Game::init()
 {
-    if (level.loadFromJson(this->options.levelFolder) == false) {
-        throw 2;
-    }
+    level = LevelLoader::loadFromJson(options.levelFolder);
 
     // have just loaded level
     // -- move player where level says it should be
