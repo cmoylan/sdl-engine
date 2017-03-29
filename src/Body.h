@@ -13,6 +13,7 @@ struct Body {
     // bool isFalling;
     bool isJumping;
 
+    // FIXME: this is positive, it should not be
     int fallVelocity;
     int jumpVelocity;
 

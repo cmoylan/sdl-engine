@@ -73,16 +73,13 @@ void World::tick()
         auto& body = bodyPair.second;
 
         if (body.isMoving()) {
-            cout << "handling move" << endl;
             handleMove(body);
         }
 
         if (body.isJumping) {
-            cout << "handling jump" << endl;
             handleJump(body);
         }
         else {
-            cout << "handling fall" << endl;
             handleFall(body);
         }
     }
@@ -105,19 +102,18 @@ void World::handleFall(Body& body)
 }
 
 
+// FIXME: don't do this negation stuff, fix jumpVelocity
 void World::handleJump(Body& body)
 {
     if (body.jumpVelocity > 0) {
         body.jumpVelocity -= jumpDecay;
-        cout << "jump velocity " << body.jumpVelocity << endl;
+        //cout << "jump velocity " << body.jumpVelocity << endl;
         Vector2D newVelocity = map->isOpenOrClosest(body.location.x,
                                body.location.y - 4,
                                body.size.x, body.size.y,
-                               0, body.jumpVelocity);
-        //body.location.y -= body.jumpVelocity;
-        cout << "new velocity " << newVelocity.y << endl;
+                               0, -body.jumpVelocity);
 
-        body.jumpVelocity = newVelocity.y;
+        body.jumpVelocity = -newVelocity.y;
         body.location.y -= body.jumpVelocity;
 
     }
@@ -160,8 +156,6 @@ void World::tryJump(size_t id)
     Body& body = get(id);
     body.isJumping = true;
     body.jumpVelocity = 10; // FIXME: magic number
-    cout << "jumping" << endl;
-    cout << "jump velocities: " << body.velocity << endl;
 
     //Vector2D velocity = {0,0};
     //return velocity;

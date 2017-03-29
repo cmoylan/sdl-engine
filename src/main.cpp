@@ -4,6 +4,7 @@
 #include "Renderer.h"
 
 /* TODO:
+ * - exit the level
  * - automate or fix anything that annoys you
  * - better exceptions
  * - use Tiled for player sprites - set them with metadata... or somehow represent a player
@@ -12,12 +13,11 @@
  * - death by falling off the screen
  * - acceleration and friction when walking
  * - GUILE
- * - exit the level
  * - move camera stuff to a Scene class
  */
 
 /* FIXME:
- * - don't jump through blocks
+ *
  */
 
 int main(int, char**)
