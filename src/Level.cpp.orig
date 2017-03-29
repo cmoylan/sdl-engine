@@ -88,8 +88,7 @@ Level::isOpenOrClosest(int originX, int originY,
                 newVelocity.x = velocityX;
                 newVelocity.y = velocityY;
                 break;
-            }
-            else {
+            } else {
                 cout << "not open" << endl;
             }
 

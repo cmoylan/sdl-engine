@@ -57,6 +57,6 @@ TEST_OBJECTS = $(patsubst build/main.o, , $(wildcard build/*.o))
 # test: build $(TEST_OBJECTS)
 test:
 	tup
-	$(CXX) $(TEST_CXXFLAGS) test/level_test.cpp $(TEST_OBJECTS) -o run_tests $(LDFLAGS)
+	$(CXX) $(TEST_CXXFLAGS) test/utilities_test.cpp $(TEST_OBJECTS) -o run_tests $(LDFLAGS)
 	./run_tests
 

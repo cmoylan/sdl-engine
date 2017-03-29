@@ -110,8 +110,7 @@ void World::handleJump(Body& body)
     if (body.jumpVelocity > 0) {
         body.jumpVelocity -= jumpDecay;
         cout << "jump velocity " << body.jumpVelocity << endl;
-        Vector2D newVelocity = map->isOpenOrClosest(body.location.x,
-                               body.location.y - 4,
+        Vector2D newVelocity = map->isOpenOrClosest(body.location.x, body.location.y-4,
                                body.size.x, body.size.y,
                                0, body.jumpVelocity);
         //body.location.y -= body.jumpVelocity;
@@ -158,8 +157,8 @@ void World::handleMove(Body& body)
 void World::tryJump(size_t id)
 {
     Body& body = get(id);
-    body.isJumping = true;
-    body.jumpVelocity = 10; // FIXME: magic number
+body.isJumping = true;
+body.jumpVelocity = 10; // FIXME: magic number
     cout << "jumping" << endl;
     cout << "jump velocities: " << body.velocity << endl;
 

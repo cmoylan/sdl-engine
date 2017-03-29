@@ -40,7 +40,8 @@ namespace Utilities {
         else if (number > origin) {
             return number - difference;
         }
-        return number;
+        // otherwise the number is origin
+        return origin;
     }
     
     /**

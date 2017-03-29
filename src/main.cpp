@@ -11,14 +11,13 @@
  * - enemies
  * - death by falling off the screen
  * - acceleration and friction when walking
- * - don't jump through blocks
  * - GUILE
  * - exit the level
  * - move camera stuff to a Scene class
  */
 
 /* FIXME:
- *
+ * - don't jump through blocks
  */
 
 int main(int, char**)
