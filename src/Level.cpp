@@ -288,13 +288,17 @@ list<int> Level::layerIndicesOnScreen()
             // for each col
             indices.push_back(index);
             index += 1;
-            // FIXME: stop adding if we are over the map size
+            // stop adding if we are over the map size
+            if (index > maxMapIndex) {
+                goto overMaxIndex;
+            }
         }
         index += (mapWidth - (tilesOnScreenX() + tilePrefetch));
         if (index > maxMapIndex) {
-            break;
+            goto overMaxIndex;
         }
     }
+overMaxIndex:
     //Utilities::printCollection(indices);
     return indices;
 }

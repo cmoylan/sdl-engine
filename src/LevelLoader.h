@@ -8,9 +8,7 @@
 
 #include "file_helpers.h"
 #include "res_path.h"
-
-// TODO: fix the include path to include all subfolders
-#include "../Level.h"
+#include "Level.h"
 
 // TMX format loader
 namespace LevelLoader

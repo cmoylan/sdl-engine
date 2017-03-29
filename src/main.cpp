@@ -4,7 +4,6 @@
 #include "Renderer.h"
 
 /* TODO:
- * - object coordinates are off by one row
  * - automate or fix anything that annoys you
  * - better exceptions
  * - use Tiled for player sprites - set them with metadata... or somehow represent a player
@@ -14,10 +13,11 @@
  * - acceleration and friction when walking
  * - don't jump through blocks
  * - GUILE
+ * - exit the level
+ * - move camera stuff to a Scene class
  */
 
 /* FIXME:
- * - level crashes if you get all the way to the lower right corner
  *
  */
 

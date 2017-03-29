@@ -18,6 +18,7 @@ BUILD_DIR = build
 SOURCES = $(patsubst src/%,%,$(wildcard src/*.cpp))
 OBJECTS = $(patsubst %.cpp,%,$(SOURCES))
 
+.PHONY: test
 
 all: $(EXE)
 
@@ -47,9 +48,15 @@ style:
 	@astyle --options=.astylerc \
 	`ls src/*.h src/*.cpp test/*.cpp ls src/Level/*`
 
-.PHONY: test
+
+
 TEST_CXXFLAGS = -std=c++14 $(SDL_INCLUDE) -I./src
+TEST_OBJECTS = $(patsubst build/main.o, , $(wildcard build/*.o))
+
+# If you don't use tup:
+# test: build $(TEST_OBJECTS)
 test:
-	$(CXX) $(TEST_CXXFLAGS) test/level_test.cpp build/Level.o build/LevelLoader.o -o run_tests $(LDFLAGS)
+	tup
+	$(CXX) $(TEST_CXXFLAGS) test/level_test.cpp $(TEST_OBJECTS) -o run_tests $(LDFLAGS)
 	./run_tests
 

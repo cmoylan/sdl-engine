@@ -15,7 +15,7 @@
 #include "Drawable.h"
 #include "Rectangle.h"
 #include "TilesetManager.h"
-#include "Level/LevelObject.h"
+#include "LevelObject.h"
 
 
 struct Layer {

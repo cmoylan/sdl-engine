@@ -110,6 +110,10 @@ void World::handleJump(Body& body)
                                body.size.x, body.size.y,
                                0, body.jumpVelocity);
         body.location.y -= body.jumpVelocity;
+
+        //body.jumpVelocity = newVelocity.y;
+        //body.location.y -= body.jumpVelocity;
+
     }
     if (body.jumpVelocity == 0) {
         body.isJumping = false;
