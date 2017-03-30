@@ -77,22 +77,17 @@ Level::isOpenOrClosest(int originX, int originY,
     // if it's not, figure it out
     else {
         // FIXME: this bit is running even if we can't go velocity + 1, so check that first
-        //cout << "------------------------------------------------->" << endl;
         // start subtracting from the velocities until it's open
         while (velocityX != 0 || velocityY != 0) {
             velocityX = differenceToOrigin(velocityX, 1);
             velocityY = differenceToOrigin(velocityY, 1);
-            cout << "velocities: " << velocityX << ", " << velocityY << endl;
+            //cout << "velocities: " << velocityX << ", " << velocityY << endl;
 
             if (isOpen((originX + velocityX), (originY + velocityY), sizeW, sizeH)) {
                 newVelocity.x = velocityX;
                 newVelocity.y = velocityY;
                 break;
             }
-            else {
-                cout << "not open" << endl;
-            }
-
         }
     }
     return newVelocity;

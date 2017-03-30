@@ -3,7 +3,7 @@
 
 #include "catch.hpp"
 
-#include "MessageCentre.h"
+#include "MessageBus.h"
 
 using namespace std;
 
@@ -24,7 +24,7 @@ TEST_CASE("it calls back", "[MessageCentre]")
 {
     using namespace placeholders; // adds visibility of _1, _2, _3,...
 
-    MessageCentre messageBus;
+    MessageBus messageBus;
     TestMessageReceiver receiver;
 
     //messageBus.subscribe("toast", receiver.callback);

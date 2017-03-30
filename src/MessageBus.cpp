@@ -1,7 +1,7 @@
 #include "MessageCentre.h"
 
 
-void MessageCentre::clear(string eventName)
+void MessageBus::clear(string eventName)
 {
     vector<Message>& queue = messageQueue.at(eventName);
     queue.clear();
@@ -9,7 +9,7 @@ void MessageCentre::clear(string eventName)
 }
 
 
-void MessageCentre::flush(string eventName)
+void MessageBus::flush(string eventName)
 {
     vector<Message>& queue = messageQueue.at(eventName);
     vector<ListenerCallback>& callbacks = listeners[eventName];
@@ -24,7 +24,7 @@ void MessageCentre::flush(string eventName)
 }
 
 
-void MessageCentre::notify()
+void MessageBus::notify()
 {
     for (auto queuePair : messageQueue) {
         auto eventName = queuePair.first;
@@ -33,14 +33,14 @@ void MessageCentre::notify()
 }
 
 
-void MessageCentre::publish(string eventName, Message message)
+void MessageBus::publish(string eventName, Message message)
 {
     vector<Message>& channel = messageQueue[eventName];
     channel.push_back(message);
 }
 
 
-void MessageCentre::purge()
+void MessageBus::purge()
 {
     for (auto queuePair : messageQueue) {
         auto eventName = queuePair.first;
@@ -49,7 +49,7 @@ void MessageCentre::purge()
 }
 
 
-void MessageCentre::subscribe(string eventName, ListenerCallback callback)
+void MessageBus::subscribe(string eventName, ListenerCallback callback)
 {
     vector<ListenerCallback>& callbacks = listeners[eventName];
     callbacks.push_back(callback);

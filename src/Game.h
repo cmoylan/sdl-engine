@@ -9,7 +9,6 @@
 #include "World.h"
 
 
-
 struct Options {
     int levelNumber;
     int score;
