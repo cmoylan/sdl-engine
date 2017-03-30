@@ -51,7 +51,7 @@ style:
 
 
 
-TEST_CXXFLAGS = -std=c++14 $(SDL_INCLUDE) -I./src
+TEST_CXXFLAGS = -std=c++17 $(SDL_INCLUDE) -I./src
 TEST_OBJECTS = $(patsubst build/main.o, , $(wildcard build/*.o))
 TEST_SOURCES = $(wildcard test/*.cpp)
 
