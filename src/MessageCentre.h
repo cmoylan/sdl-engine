@@ -44,21 +44,37 @@ public:
      *
      * messageBus.subscribe("my event", bind(&Receiver::callback, &receiver, placeholders::_1))
      *
+     * @todo create a helper so consuming code isn't littered with bind/placeholder
      */
     void subscribe(string eventName, ListenerCallback callback);
     // unsubscribe [?]
 
-    void publish(string eventName, Message body);
+    /**
+     * Publish an event
+     * @param evenName the name of the event
+     * @param message the message you would like to publish
+     */
+    void publish(string eventName, Message message);
 
-    // will go through a queue and send all messages
+    /**
+     * Send all queued messages for a single event
+     * @param eventName the name of the event
+     */
     void flush(string eventName);
 
-    // will empty a queue
+    /**
+     * Empty a single queue, without notifying subscribers
+     * @param evenName the event you with to clear
+     */
     void clear(string eventName);
 
-    // flush all published messages
+    /**
+     * Flush all published messages, notify any subscribers
+     */
     void notify();
 
-    // clear all published messages
+    /**
+     * Clear all published messages
+     */
     void purge();
 };
