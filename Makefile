@@ -41,22 +41,24 @@ clean:
 #find . -name'*orig' | xargs rm
 
 tidy:
-	@find ./src/ -name '*orig' | xargs rm
+	@find ./src ./test -name '*orig' | xargs rm
+	
 
 # http://astyle.sourceforge.net/astyle.html
 style:
 	@astyle --options=.astylerc \
-	`ls src/*.h src/*.cpp test/*.cpp ls src/Level/*`
+	`ls src/*.h src/*.cpp test/*.cpp`
 
 
 
 TEST_CXXFLAGS = -std=c++14 $(SDL_INCLUDE) -I./src
 TEST_OBJECTS = $(patsubst build/main.o, , $(wildcard build/*.o))
+TEST_SOURCES = $(wildcard test/*.cpp)
 
 # If you don't use tup:
 # test: build $(TEST_OBJECTS)
 test:
 	tup
-	$(CXX) $(TEST_CXXFLAGS) test/utilities_test.cpp $(TEST_OBJECTS) -o run_tests $(LDFLAGS)
+	$(CXX) $(TEST_CXXFLAGS) $(TEST_SOURCES) $(TEST_OBJECTS) -o run_tests $(LDFLAGS)
 	./run_tests
 

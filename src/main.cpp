@@ -5,6 +5,8 @@
 
 /* TODO:
  * - exit the level
+ * - scroll to anywhere on level, for player setup
+ * - message center singleton?
  * - automate or fix anything that annoys you
  * - better exceptions
  * - use Tiled for player sprites - set them with metadata... or somehow represent a player
