@@ -42,6 +42,22 @@
                  "width":32,
                  "x":3104,
                  "y":160
+                }, 
+                {
+                 "gid":65,
+                 "height":32,
+                 "id":8,
+                 "name":"thing",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":320,
+                 "y":160
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -50,11 +66,11 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":8,
+ "nextobjectid":10,
  "orientation":"orthogonal",
  "properties":
     {
-     "PlayerStartX":"64",
+     "PlayerStartX":"192",
      "PlayerStartY":"64"
     },
  "renderorder":"right-down",

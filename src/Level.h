@@ -13,6 +13,7 @@
 #include "Asset.h"
 #include "Body.h"
 #include "Drawable.h"
+#include "MessageCentre.h"
 #include "Rectangle.h"
 #include "TilesetManager.h"
 #include "LevelObject.h"
@@ -140,6 +141,9 @@ public:
     int indexFor(int x, int y);
     int indexFor(Vector2D coordinates);
 
+    // need to return all collisionable objects to they can be registered with the level
+    DrawList entities();
+    
 private:
 
     /**

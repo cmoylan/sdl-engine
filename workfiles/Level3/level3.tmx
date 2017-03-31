@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" nextobjectid="8">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" nextobjectid="10">
  <properties>
-  <property name="PlayerStartX" value="64"/>
+  <property name="PlayerStartX" value="192"/>
   <property name="PlayerStartY" value="64"/>
  </properties>
  <tileset firstgid="1" name="goodly-2x" tilewidth="32" tileheight="32" tilecount="256">
@@ -80,5 +80,6 @@
  </layer>
  <objectgroup name="meta">
   <object id="5" name="exit" gid="4" x="3104" y="160" width="32" height="32"/>
+  <object id="8" name="thing" gid="65" x="320" y="160" width="32" height="32"/>
  </objectgroup>
 </map>

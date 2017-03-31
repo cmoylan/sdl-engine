@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <map>
 
 #include "constants.h"
 #include "Body.h"
@@ -13,6 +12,7 @@
 //       confusing as hell
 class World {
 
+    //BodyMap
     std::map<int, Body> bodies;
     int nextKey = 1;
 
@@ -82,6 +82,9 @@ public:
     void tryMove(size_t id, Vector2D velocity);
     void tryMove(size_t id, int velocityX, int velocityY);
 
+    void checkCollisions();
+    bool isCollision(Body& a, Body& b);
+    
 private:
 
     /**

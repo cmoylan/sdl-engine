@@ -13,6 +13,7 @@ struct LevelObject {
     string name;
     // enum type
     bool visible;
+    int _world_id;
 };
 
 typedef map<string, LevelObject> LevelObjectMap;

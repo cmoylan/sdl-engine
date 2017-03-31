@@ -158,7 +158,7 @@ void Game::tryScrollLevel(int directionX, int directionY)
 void Game::init()
 {
     level = LevelLoader::loadFromJson(options.levelFolder);
-
+    
     // have just loaded level
     // -- move player where level says it should be
     // FIXME: feels kind of bad to do this
@@ -174,6 +174,18 @@ void Game::init()
 
     playerWorldId = world.addBody(level.playerStartX, level.playerStartY,
                                   PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y);
+    
+    //
+    //
+    // something, something...this->gameObjects
+    //
+    //
+    //
+    for (auto& entity : level.entities()) {
+        
+    }
+    
+    
     //level.renderData();
     //try {
     //    level->init();
