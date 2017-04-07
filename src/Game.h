@@ -36,12 +36,14 @@ class Game {
 
     size_t playerWorldId;
 
-    DrawableList entities;
 
+
+    LevelBundle levelBundle; // why not
 public:
     bool _running = true;
 
     Level level; // acces to this should be readonly
+    DrawableList entities;
 
     // Getters
     std::string resPath() const { return level.resPath; }

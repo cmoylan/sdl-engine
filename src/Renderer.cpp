@@ -35,7 +35,16 @@ void Renderer::displayDebugInfo()
 
 void Renderer::drawEntities()
 {
-    for (Drawable* entity : game.getEntities()) {
+    for (Drawable* entity : game.entities) {
+        //cout << "rendering " << entity->assetName << endl;
+
+        if (entity->assetName.size() == 0) {
+            entity->assetName = game.level.tilesets.assetNameFor(entity->gid);
+        }
+
+
+
+
         // IF the object is to be centered on
         // OR the screen position aligns with the level offset
         //if (object->centerOn ||

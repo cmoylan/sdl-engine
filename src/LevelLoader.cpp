@@ -104,9 +104,19 @@ forward_list<Entity> LevelLoader::loadObjectLayer(Level& level,
 
             Entity entity;
             entity.levelSetPosition(data[i]["x"].GetInt(), data[i]["y"].GetInt());
+            //
+            //
+            // set screen pos here
+            // figure it out
+            // maybe  screen pos is negative if the thing isn't on screen
+            // then we update it when it gets on screen
+            // we can figure this out with entity.levelPos - level.offset
+            //
+            //
             entity.setSize(data[i]["width"].GetInt(), data[i]["height"].GetInt());
             entity.gid = data[i]["gid"].GetInt();
             entity.name = data[i]["name"].GetString();
+            //entity.assetName = entity.name;
             entity.visible = data[i]["visible"].GetBool();
 
 

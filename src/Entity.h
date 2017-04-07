@@ -13,7 +13,7 @@ public:
 //     LevelObject() {};
 //     ~LevelObject() {};
 
-    int gid = 0;
+    //int gid = 0;
     string name;
     // enum type
     bool visible;

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <forward_list>
 #include <string>
+#include <forward_list>
 
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"

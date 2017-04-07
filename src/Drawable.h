@@ -25,6 +25,7 @@ public:
     int _screenY = 0;
     int _w = 0;
     int _h = 0;
+    int gid = 0;
 
     bool centerOn = false;
     //
@@ -56,7 +57,6 @@ public:
     int screenY() { return _screenY; }
     int w() { return _w;}
     int h() { return _h; }
-    //Vector2D getPos();
 
     // should return x, y, renderable asset, clips [if any]
     // for objects that have multiple assets to draw [level]

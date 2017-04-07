@@ -159,7 +159,7 @@ void Game::scrollLevelOrMovePlayer(int directionX, int directionY)
 
 void Game::init()
 {
-    LevelBundle levelBundle = LevelLoader::loadFromJson(options.levelFolder);
+    levelBundle = LevelLoader::loadFromJson(options.levelFolder);
 
     level = levelBundle.level;
     world.setMap(std::make_shared<Level>(level));
@@ -176,10 +176,17 @@ void Game::init()
 
     // add entities to world
     //levelBundle.entities
-    for (Entity entity : levelBundle.entities) {
-//         int entityId = world.addBody(entity.levelX(), entity.levelY(),
-//             entity.w(), entity.h());
-        //entities.push_back(&entity);
+    //forward_list<Entity> levelEntities = levelBundle.entities;
+    for (Entity& entity : levelBundle.entities) {
+        int entityId = world.addBody(entity.levelX(), entity.levelY(),
+                                     entity.w(), entity.h());
+        //
+        // THIS IS NOT WORKING FOR SOME REASON
+        //
+        //
+        entities.push_back(&entity);
+        //
+        //
     }
 
     //
@@ -199,6 +206,7 @@ void Game::init()
     //catch (int e) {
     //    throw 1;
     //}
+    cout << "got here" << endl;
 }
 
 
