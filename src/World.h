@@ -84,7 +84,7 @@ public:
 
     void checkCollisions();
     bool isCollision(Body& a, Body& b);
-    
+
 private:
 
     /**

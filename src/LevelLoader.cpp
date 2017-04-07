@@ -99,6 +99,7 @@ void LevelLoader::loadObjectLayer(Level& level, const string& layerName,
             level.levelObjects[object.name] = object;
 
             // if they are visible, add them to the background tile layer?
+            // TODO: no, don't have to do this. they will be resitered as level entities
             if (object.visible) {
                 // subtracting one from y because Tiled positions this thing at the very edge of its cell
                 int index = level.indexFor(object.position.x, object.position.y - 1);

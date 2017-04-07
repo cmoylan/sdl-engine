@@ -14,8 +14,8 @@ Game::~Game()
 
 const string Game::debugInfo()
 {
-    string message = "player: [" + to_string(player.x()) +
-                     ", " + to_string(player.y()) + "]\n";
+    string message = "player: [" + to_string(player.screenX()) +
+                     ", " + to_string(player.screenY()) + "]\n";
 
     message += "level - offset: [" + to_string(level.offsetX) +
                ", " + to_string(level.offsetY) + "]";
@@ -118,7 +118,7 @@ void Game::tryMovePlayer(int directionX, int directionY)
 
 // TODO: should become a Camera class
 // NOTE: really more of "update player position and level scroll on screen"
-void Game::tryScrollLevel(int directionX, int directionY)
+void Game::scrollLevelOrMovePlayer(int directionX, int directionY)
 {
     int buffer =
         25; // should be larger than move size, also move into something configurable
@@ -129,27 +129,32 @@ void Game::tryScrollLevel(int directionX, int directionY)
     int scrollMeridianX = (SCREEN_WIDTH / 2) - (PIXELS_PER_TILE_X / 2);
     //cout << "scroll meridianX: " << scrollMeridianX;
     //cout << " | playerx: " << player.x() << endl;
-    if (player.x() >= (scrollMeridianX - buffer) &&
-            (player.x() < (scrollMeridianX + buffer))) {
+    if (player.screenX() >= (scrollMeridianX - buffer) &&
+            (player.screenX() < (scrollMeridianX + buffer))) {
+        //player.move();
         if (!level.scrollByX(directionX)) {
-            player.move(directionX, 0);
+
+
+
+
+            player.screenMove(directionX, 0);
         }
     }
     else {
-        player.move(directionX, 0);
+        player.screenMove(directionX, 0);
     }
 
     int scrollMeridianY = (SCREEN_HEIGHT / 2) - (PIXELS_PER_TILE_Y / 2);
     //cout << "scroll meridianYX: " << scrollMeridianY;
     //cout << " | playery: " << player.y() << endl;
-    if (player.y() >= (scrollMeridianY - buffer) &&
-            player.y() < (scrollMeridianY + buffer)) {
+    if (player.screenY() >= (scrollMeridianY - buffer) &&
+            player.screenY() < (scrollMeridianY + buffer)) {
         if (!level.scrollByY(directionY)) {
-            player.move(0, directionY);
+            player.screenMove(0, directionY);
         }
     }
     else {
-        player.move(0, directionY);
+        player.screenMove(0, directionY);
     }
 
 }
@@ -158,12 +163,14 @@ void Game::tryScrollLevel(int directionX, int directionY)
 void Game::init()
 {
     level = LevelLoader::loadFromJson(options.levelFolder);
-    
+
     // have just loaded level
     // -- move player where level says it should be
     // FIXME: feels kind of bad to do this
     // might have to do something like this for other game drawables
     // what if it's off screen??? the following assumes it is on screen
+    // player is just another map gameObject, so eventuall this goes away
+    player.screenMove(level.playerStartX, level.playerStartY);
     player.move(level.playerStartX, level.playerStartY);
     playerPositionOnMap.x = level.playerStartX;
     playerPositionOnMap.y = level.playerStartY;
@@ -174,18 +181,17 @@ void Game::init()
 
     playerWorldId = world.addBody(level.playerStartX, level.playerStartY,
                                   PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y);
-    
+
     //
     //
     // something, something...this->gameObjects
     //
     //
     //
-    for (auto& entity : level.entities()) {
-        
-    }
-    
-    
+    //for (auto& entity : level.entities()) {
+    //}
+
+
     //level.renderData();
     //try {
     //    level->init();
@@ -244,7 +250,7 @@ void Game::updatePlayerPositionBy(Vector2D direction)
 
     if (!direction.isZero()) {
         //cout << "direction: " << direction << endl;
-        tryScrollLevel(direction.x, direction.y);
+        scrollLevelOrMovePlayer(direction.x, direction.y);
     }
 
 }
@@ -253,7 +259,6 @@ void Game::updatePlayerPositionBy(Vector2D direction)
 void Game::updatePlayerPositionTo(Point newPosition)
 {
     if (playerPositionOnMap.equals(newPosition)) { return; }
-
     // TODO: update to use the delta method
 
     //cout << "updating player position to: " << newPosition << endl;
@@ -266,6 +271,6 @@ void Game::updatePlayerPositionTo(Point newPosition)
 
     // if the position has changed
     if ((deltaX != 0) || (deltaY != 0)) {
-        tryScrollLevel(deltaX, deltaY);
+        scrollLevelOrMovePlayer(deltaX, deltaY);
     }
 }

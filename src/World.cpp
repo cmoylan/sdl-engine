@@ -49,32 +49,32 @@ void World::checkCollisions()
 
 //     for (auto it = mymap.cbegin(); it != mymap.cend(); ++it)
 //     std::cout << " [" << (*it).first << ':' << (*it).second << ']';
-//     
+//
     // runs once per clock cycle
     for (auto bodyPair : bodies) {
         // bodyPair.first; // is the body id
         Body& body = bodyPair.second;
-        
+
         BodyMap::iterator comparator = bodies.find(bodyPair.first);
         comparator++;
-        if (comparator == bodies.end()) return;
-        
-        for (;comparator != bodies.end(); ++comparator) {
+        if (comparator == bodies.end()) { return; }
+
+        for (; comparator != bodies.end(); ++comparator) {
             if (isCollision(body, comparator->second)) {
                 cout << "collision!" << endl;
-                // collision! 
+                // collision!
                 // do something!
             }
         }
-        
+
     }
-    
+
 //     for (auto it = bodies.cbegin(); it != bodies.cend();) {
 //         auto first = it;
 //         auto second = ++it;
-//         
+//
 //         *it.second; // first element
-//         
+//
 //     }
 }
 
@@ -118,8 +118,8 @@ void World::tick()
             handleFall(body);
         }
     }
-    
-    checkCollisions();
+
+    //checkCollisions();
 }
 
 
@@ -191,7 +191,7 @@ bool World::isCollision(Body& a, Body& b)
 {
     a.calculateCollisionBox();
     b.calculateCollisionBox();
-    
+
 //     left1 = object1->x + object1->col_x_offset;
 //     left2 = object2->x + object2->col_x_offset;
 //     right1 = left1 + object1->col_width;
@@ -200,21 +200,21 @@ bool World::isCollision(Body& a, Body& b)
 //     top2 = object2->y + object1->col_y_offset;
 //     bottom1 = top1 + object1->col_height;
 //     bottom2 = top2 + object2->col_height;
-// 
+//
 //     if (bottom1 < top2) return(0);
 //     if (top1 > bottom2) return(0);
-//   
+//
 //     if (right1 < left2) return(0);
 //     if (left1 > right2) return(0);
-    
+
     if (
-        ((a.x1 < b.x2) || (a.x2 > b.x1)) 
+        ((a.x1 < b.x2) || (a.x2 > b.x1))
         &&
         ((a.y1 < b.y2) || (a.y2 > b.y1))
     ) {
         return true;
     }
-    
+
     return false;
 }
 

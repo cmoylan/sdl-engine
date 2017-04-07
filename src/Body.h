@@ -16,7 +16,7 @@ struct Body {
     // but prototype it with explicit logic
     // bool isFalling;
     bool isJumping;
-    
+
     // ----------
     //
     //  x1--x2
@@ -37,8 +37,8 @@ struct Body {
     {
         return velocity.x != 0 || acceleration.x != 0;
     };
-    
-    void calculateCollisionBox() 
+
+    void calculateCollisionBox()
     {
         x1 = location.x;
         x2 = location.x + size.x;

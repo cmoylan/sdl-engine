@@ -60,7 +60,7 @@ public:
 
     // player input handlers
     void tryMovePlayer(int directionX, int directionY);
-    void tryScrollLevel(int directionX, int directionY);
+    void scrollLevelOrMovePlayer(int directionX, int directionY);
 
     DrawList getGameObjects();
 

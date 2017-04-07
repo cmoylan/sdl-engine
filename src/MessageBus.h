@@ -9,7 +9,7 @@
 
 using namespace std;
 
-// this needs to be flexible 
+// this needs to be flexible
 // i'm not sure what kind of information callback functions will want
 struct Message {
     int test;

@@ -14,6 +14,23 @@ class Drawable {
 
 public:
 
+    //
+    //
+    // should have level and screen positions
+    //
+    //
+    int _levelX = 0 ;
+    int _levelY = 0;
+    int _screenX = 0;
+    int _screenY = 0;
+
+    bool centerOn = false;
+    //
+    // May need to keep track of screen and level position
+    // now that this includes level objects, they can be off screen
+    // unlike the player which is always on screen
+    //
+
     std::string assetName;
 
     int _x = 0;
@@ -22,8 +39,8 @@ public:
     int spriteOffsetX = 32;
     int spriteOffsetY = 32;
 
-    int x() { return _x; }
-    int y() { return _y; }
+    int screenX() { return _screenX; }
+    int screenY() { return _screenY; }
     //Vector2D getPos();
 
     // should return x, y, renderable asset, clips [if any]
@@ -38,6 +55,21 @@ public:
      *
      */
     virtual AssetList assetData() =0; // *NOPAD*
+
+    void move(int x, int y)
+    {
+        // and then always update level pox
+        this->_levelX += x;
+        this->_levelY += y;
+    };
+
+    void screenMove(int x, int y)
+    {
+
+        // and on the screen
+        this->_screenX += x;
+        this->_screenY += y;
+    }
 };
 
 // TODO: use the safe pointer

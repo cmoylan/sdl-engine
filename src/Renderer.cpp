@@ -36,12 +36,16 @@ void Renderer::displayDebugInfo()
 void Renderer::drawGameObjects()
 {
     for (Drawable* object : game.getGameObjects()) {
+        // IF the object is to be centered on
+        // OR the screen position aligns with the level offset
+        //if (object->centerOn ||
+        //    (object->x())
         auto sprite = this->sprites[object->assetName];
 
         renderTexture(sprite.texture,
                       renderer,
-                      object->x(), // position on screen
-                      object->y(),
+                      object->screenX(), // position on screen
+                      object->screenY(),
                       0, // clipping data
                       0,
                       object->spriteOffsetX,

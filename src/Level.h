@@ -143,7 +143,7 @@ public:
 
     // need to return all collisionable objects to they can be registered with the level
     DrawList entities();
-    
+
 private:
 
     /**
