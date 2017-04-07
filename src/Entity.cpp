@@ -1,7 +1,7 @@
-#include "LevelObject.h"
+#include "Entity.h"
 
 // TODO: fill in later
-AssetList LevelObject::assetData()
+AssetList Entity::assetData()
 {
     AssetList data;
     return data;

@@ -7,14 +7,13 @@
 
 using namespace std;
 
-class LevelObject : public Drawable {
+// this is entity. if we need level objects we'll make them
+class Entity : public Drawable {
 public:
 //     LevelObject() {};
 //     ~LevelObject() {};
 
-    Vector2D position;
-    Vector2D size;
-    int gid;
+    int gid = 0;
     string name;
     // enum type
     bool visible;
@@ -23,7 +22,7 @@ public:
     virtual AssetList assetData();
 };
 
-typedef map<string, LevelObject> LevelObjectMap;
+typedef map<string, Entity> LevelObjectMap;
 
 // TODO: override operator<<
 

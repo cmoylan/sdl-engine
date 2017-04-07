@@ -36,7 +36,7 @@ class Game {
 
     size_t playerWorldId;
 
-    DrawList gameObjects;
+    DrawableList entities;
 
 public:
     bool _running = true;
@@ -62,7 +62,7 @@ public:
     void tryMovePlayer(int directionX, int directionY);
     void scrollLevelOrMovePlayer(int directionX, int directionY);
 
-    DrawList getGameObjects();
+    DrawableList& getEntities();
 
     const string debugInfo();
 };

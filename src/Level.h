@@ -16,7 +16,7 @@
 #include "MessageCentre.h"
 #include "Rectangle.h"
 #include "TilesetManager.h"
-#include "LevelObject.h"
+#include "Entity.h"
 
 
 struct Layer {

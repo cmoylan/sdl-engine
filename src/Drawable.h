@@ -23,6 +23,8 @@ public:
     int _levelY = 0;
     int _screenX = 0;
     int _screenY = 0;
+    int _w = 0;
+    int _h = 0;
 
     bool centerOn = false;
     //
@@ -39,10 +41,21 @@ public:
     int spriteOffsetX = 32;
     int spriteOffsetY = 32;
 
+    // Copy constructor
+    // Drawable(const Drawable& d);// {
+//     num = a.num;   // Number of elements in "array"
+//     array = new int[num];
+//     for (int i = 0; i < num; i++) {
+//         array[i] = a.array[i];
+//     }
+    //}
+
     int levelX() { return _levelX; }
     int levelY() { return _levelY; }
     int screenX() { return _screenX; }
     int screenY() { return _screenY; }
+    int w() { return _w;}
+    int h() { return _h; }
     //Vector2D getPos();
 
     // should return x, y, renderable asset, clips [if any]
@@ -83,13 +96,20 @@ public:
         this->_screenX += x;
         this->_screenY += y;
     }
+
     void screenSetPosition(int x, int y)
     {
         _screenX = x;
         _screenY = y;
     }
+
+    void setSize(int w, int h)
+    {
+        _w = w;
+        _h = h;
+    }
 };
 
 // TODO: use the safe pointer
 //typedef std::vector<std::unique_ptr<Drawable>> DrawList;
-typedef std::vector<Drawable*> DrawList;
+typedef std::vector<Drawable*> DrawableList;

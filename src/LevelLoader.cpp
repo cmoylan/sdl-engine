@@ -1,7 +1,7 @@
 #include "LevelLoader.h"
 
 
-Level
+LevelBundle
 LevelLoader::loadFromJson(const string& folder)
 {
     using namespace rapidjson;
@@ -9,6 +9,7 @@ LevelLoader::loadFromJson(const string& folder)
     SizeType i;
     Document document;
     Level level;
+    LevelBundle bundle;
 
     level.resPath = getResourcePath(folder);
 
@@ -31,7 +32,8 @@ LevelLoader::loadFromJson(const string& folder)
         }
 
         if (type == "objectgroup") {
-            LevelLoader::loadObjectLayer(level, layerName, layers[i]["objects"]);
+            bundle.entities = LevelLoader::loadObjectLayer(level, layerName,
+                              layers[i]["objects"]);
         }
     }
 
@@ -41,7 +43,9 @@ LevelLoader::loadFromJson(const string& folder)
         LevelLoader::loadTileset(level, tilesets[i]);
     }
 
-    return level;
+    bundle.level = level;
+
+    return bundle;
 }
 
 
@@ -69,8 +73,10 @@ void LevelLoader::loadMetadata(Level& level, const rapidjson::Value& data)
 
 
 
-void LevelLoader::loadObjectLayer(Level& level, const string& layerName,
-                                  const rapidjson::Value& data)
+// this is going to have to return entities
+forward_list<Entity> LevelLoader::loadObjectLayer(Level& level,
+        const string& layerName,
+        const rapidjson::Value& data)
 {
     // "objects":[
     //     {
@@ -87,30 +93,41 @@ void LevelLoader::loadObjectLayer(Level& level, const string& layerName,
     //         "y":160
     //     }],
 
+    forward_list<Entity> entities;
+
     try {
         for (size_t i = 0; i < data.Size(); i++) {
-            LevelObject object;
-            object.position = { data[i]["x"].GetInt(), data[i]["y"].GetInt() };
-            object.size = { data[i]["width"].GetInt(), data[i]["height"].GetInt() };
-            object.gid = data[i]["gid"].GetInt();
-            object.name = data[i]["name"].GetString();
-            object.visible = data[i]["visible"].GetBool();
 
-            level.levelObjects[object.name] = object;
+            // level object is drawable
+            // as is entity
+
+
+            Entity entity;
+            entity.levelSetPosition(data[i]["x"].GetInt(), data[i]["y"].GetInt());
+            entity.setSize(data[i]["width"].GetInt(), data[i]["height"].GetInt());
+            entity.gid = data[i]["gid"].GetInt();
+            entity.name = data[i]["name"].GetString();
+            entity.visible = data[i]["visible"].GetBool();
+
+
+            //level.levelObjects[object.name] = object;
+            entities.push_front(entity);
 
             // if they are visible, add them to the background tile layer?
             // TODO: no, don't have to do this. they will be resitered as level entities
-            if (object.visible) {
-                // subtracting one from y because Tiled positions this thing at the very edge of its cell
-                int index = level.indexFor(object.position.x, object.position.y - 1);
-                Layer& background = level.layers["background"];
-                background.tiles[index] = object.gid;
-            }
+            //if (object.visible) {
+            //    // subtracting one from y because Tiled positions this thing at the very edge of its cell
+            //    int index = level.indexFor(object.levelX(), object.levelY() - 1);
+            //    Layer& background = level.layers["background"];
+            //    background.tiles[index] = object.gid;
+            // }
         }
     }
     catch (...) {
         throw "error loading level object layer";
     }
+
+    return entities;
 }
 
 

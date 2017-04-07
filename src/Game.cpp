@@ -25,9 +25,9 @@ const string Game::debugInfo()
 }
 
 
-DrawList Game::getGameObjects()
+DrawableList& Game::getEntities()
 {
-    return this->gameObjects;
+    return this->entities;
 }
 
 
@@ -159,26 +159,28 @@ void Game::scrollLevelOrMovePlayer(int directionX, int directionY)
 
 void Game::init()
 {
-    level = LevelLoader::loadFromJson(options.levelFolder);
+    LevelBundle levelBundle = LevelLoader::loadFromJson(options.levelFolder);
 
-    // have just loaded level
-    // -- move player where level says it should be
-    // FIXME: feels kind of bad to do this
-    // might have to do something like this for other game drawables
-    // what if it's off screen??? the following assumes it is on screen
-    // player is just another map gameObject, so eventuall this goes away
-
-    player.screenSetPosition(level.playerStartX, level.playerStartY);
-    player.levelSetPosition(level.playerStartX, level.playerStartY);
-    //playerPositionOnMap.x = level.playerStartX;
-    //playerPositionOnMap.y = level.playerStartY;
-
-    this->gameObjects.push_back(&player);
-
+    level = levelBundle.level;
     world.setMap(std::make_shared<Level>(level));
 
-    playerWorldId = world.addBody(level.playerStartX, level.playerStartY,
-                                  PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y);
+    // set player position from level
+    player.screenSetPosition(level.playerStartX, level.playerStartY);
+    player.levelSetPosition(level.playerStartX, level.playerStartY);
+    player.setSize(PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y);
+
+    // add player to world
+    playerWorldId = world.addBody(player.levelX(), player.levelY(),
+                                  player.w(), player.h());
+    this->entities.push_back(&player);
+
+    // add entities to world
+    //levelBundle.entities
+    for (Entity entity : levelBundle.entities) {
+//         int entityId = world.addBody(entity.levelX(), entity.levelY(),
+//             entity.w(), entity.h());
+        //entities.push_back(&entity);
+    }
 
     //
     //

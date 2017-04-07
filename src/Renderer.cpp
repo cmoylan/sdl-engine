@@ -33,23 +33,23 @@ void Renderer::displayDebugInfo()
 }
 
 
-void Renderer::drawGameObjects()
+void Renderer::drawEntities()
 {
-    for (Drawable* object : game.getGameObjects()) {
+    for (Drawable* entity : game.getEntities()) {
         // IF the object is to be centered on
         // OR the screen position aligns with the level offset
         //if (object->centerOn ||
         //    (object->x())
-        auto sprite = this->sprites[object->assetName];
+        auto sprite = this->sprites[entity->assetName];
 
         renderTexture(sprite.texture,
                       renderer,
-                      object->screenX(), // position on screen
-                      object->screenY(),
+                      entity->screenX(), // position on screen
+                      entity->screenY(),
                       0, // clipping data
                       0,
-                      object->spriteOffsetX,
-                      object->spriteOffsetY);
+                      entity->spriteOffsetX,
+                      entity->spriteOffsetY);
     }
 }
 
@@ -132,8 +132,8 @@ void Renderer::init(Game game)
     }
 
     // load assets
-    for (Drawable* object : this->game.getGameObjects()) {
-        for (Asset& asset : object->assetData()) {
+    for (Drawable* entity : this->game.getEntities()) {
+        for (Asset& asset : entity->assetData()) {
             // TODO: do something bad if any return false
             this->registerAsset(asset);
         }
@@ -224,7 +224,7 @@ void Renderer::run()
         SDL_RenderClear(renderer);
         // draw level first
         this->drawLevel();
-        this->drawGameObjects();
+        this->drawEntities();
         this->displayDebugInfo();
 
         //displayDebugInfo();

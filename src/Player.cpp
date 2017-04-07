@@ -2,8 +2,6 @@
 
 Player::Player()
 {
-    //_screenX = 0;
-    //_screenY = 0;
 }
 
 

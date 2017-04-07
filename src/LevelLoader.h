@@ -1,5 +1,6 @@
 #pragma once
 
+#include <forward_list>
 #include <string>
 
 #include "rapidjson/document.h"
@@ -8,7 +9,13 @@
 
 #include "file_helpers.h"
 #include "res_path.h"
+#include "Entity.h"
 #include "Level.h"
+
+struct LevelBundle {
+    Level level;
+    forward_list<Entity> entities;
+};
 
 // TMX format loader
 namespace LevelLoader
@@ -18,14 +25,14 @@ namespace LevelLoader
      * @param filename a string specifying the filename of the json map
      * @returns a level constructed according to the TMX json
      */
-    Level loadFromJson(const std::string& filename);
+    LevelBundle loadFromJson(const std::string& filename);
 
     void loadMetadata(Level& level,
                       const rapidjson::Value& data);
 
-    void loadObjectLayer(Level& level,
-                         const std::string& layerName,
-                         const rapidjson::Value& data);
+    forward_list<Entity> loadObjectLayer(Level& level,
+                                         const std::string& layerName,
+                                         const rapidjson::Value& data);
 
     void loadTileLayer(Level& level,
                        const std::string& layerName,

@@ -42,7 +42,8 @@ public:
     bool registerAsset(Asset& asset);
 
     void drawLevel();
-    void drawGameObjects();
+    void drawEntities();
+    //void drawPlayer(); // TODO see if you can do without this - just make player an entity
     void displayDebugInfo();
 
 private:
