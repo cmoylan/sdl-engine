@@ -34,13 +34,13 @@ public:
 
     std::string levelFileName;
     // data about the overall map from level.json
-    int mapWidth;
-    int mapHeight;
-    int maxMapIndex;
-    int textureTileWidth;
-    int textureTileHeight;
-    int playerStartX;
-    int playerStartY;
+    int mapWidth = 0;
+    int mapHeight = 0;
+    int maxMapIndex = 0;
+    int textureTileWidth = 0;
+    int textureTileHeight = 0;
+    int playerStartX = 0;
+    int playerStartY = 0;
     Color backgroundColor;
 
     // other data - mostly for rendering
@@ -142,7 +142,7 @@ public:
     int indexFor(Vector2D coordinates);
 
     // need to return all collisionable objects to they can be registered with the level
-    DrawList entities();
+    //DrawList entities();
 
 private:
 

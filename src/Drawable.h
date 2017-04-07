@@ -39,6 +39,8 @@ public:
     int spriteOffsetX = 32;
     int spriteOffsetY = 32;
 
+    int levelX() { return _levelX; }
+    int levelY() { return _levelY; }
     int screenX() { return _screenX; }
     int screenY() { return _screenY; }
     //Vector2D getPos();
@@ -56,12 +58,23 @@ public:
      */
     virtual AssetList assetData() =0; // *NOPAD*
 
-    void move(int x, int y)
+    void levelMove(int x, int y)
     {
         // and then always update level pox
         this->_levelX += x;
         this->_levelY += y;
     };
+
+    void levelSetPosition(int x, int y)
+    {
+        _levelX = x;
+        _levelY = y;
+    };
+
+    bool levelPositionEquals(int x, int y)
+    {
+        return _levelX == x && _levelY == y;
+    }
 
     void screenMove(int x, int y)
     {
@@ -69,6 +82,11 @@ public:
         // and on the screen
         this->_screenX += x;
         this->_screenY += y;
+    }
+    void screenSetPosition(int x, int y)
+    {
+        _screenX = x;
+        _screenY = y;
     }
 };
 

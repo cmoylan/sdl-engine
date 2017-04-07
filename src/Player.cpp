@@ -26,25 +26,3 @@ AssetList Player::assetData()
     return assets;
 }
 
-
-// TODO: move this into drawable
-// void Player::move(int x, int y)
-// {
-//     // if is player
-//     this->screenX += x;
-//     this ->screenY += y;
-//     // and then always update level pox
-//     this->levelX += x;
-//     this->levelY += y;
-//
-//     //
-//     // DO THIS
-//     // this updates screen pos and level pos
-//     //
-// }
-//
-//
-// void Player::move(Vector2D direction)
-// {
-//     move(direction.x, direction.y);
-// }

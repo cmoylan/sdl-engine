@@ -27,7 +27,7 @@ class Game {
     Player player; // NOTE: the player is being created right here
     World world;
 
-    Point playerPositionOnMap;
+    //Point playerPositionOnMap;
     void updatePlayerPositionBy(Vector2D direction);
     void updatePlayerPositionTo(Point newPosition);
 

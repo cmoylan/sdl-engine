@@ -14,6 +14,7 @@ Game::~Game()
 
 const string Game::debugInfo()
 {
+    //cout << "inside debug info " << player.screenX() << " " << player.screenY() << endl;
     string message = "player: [" + to_string(player.screenX()) +
                      ", " + to_string(player.screenY()) + "]\n";
 
@@ -133,10 +134,6 @@ void Game::scrollLevelOrMovePlayer(int directionX, int directionY)
             (player.screenX() < (scrollMeridianX + buffer))) {
         //player.move();
         if (!level.scrollByX(directionX)) {
-
-
-
-
             player.screenMove(directionX, 0);
         }
     }
@@ -170,10 +167,11 @@ void Game::init()
     // might have to do something like this for other game drawables
     // what if it's off screen??? the following assumes it is on screen
     // player is just another map gameObject, so eventuall this goes away
-    player.screenMove(level.playerStartX, level.playerStartY);
-    player.move(level.playerStartX, level.playerStartY);
-    playerPositionOnMap.x = level.playerStartX;
-    playerPositionOnMap.y = level.playerStartY;
+
+    player.screenSetPosition(level.playerStartX, level.playerStartY);
+    player.levelSetPosition(level.playerStartX, level.playerStartY);
+    //playerPositionOnMap.x = level.playerStartX;
+    //playerPositionOnMap.y = level.playerStartY;
 
     this->gameObjects.push_back(&player);
 
@@ -244,8 +242,9 @@ void Game::update()
 
 void Game::updatePlayerPositionBy(Vector2D direction)
 {
-    playerPositionOnMap.x += direction.x;
-    playerPositionOnMap.y += direction.y;
+    player.levelMove(direction.x, direction.y);
+    //playerPositionOnMap.x += direction.x;
+    //playerPositionOnMap.y += direction.y;
     //cout << "player position: " << playerPositionOnMap << endl;;
 
     if (!direction.isZero()) {
@@ -258,16 +257,20 @@ void Game::updatePlayerPositionBy(Vector2D direction)
 
 void Game::updatePlayerPositionTo(Point newPosition)
 {
-    if (playerPositionOnMap.equals(newPosition)) { return; }
+    //if (playerPositionOnMap.equals(newPosition)) { return; }
+    if (player.levelPositionEquals(newPosition.x, newPosition.y)) { return; }
     // TODO: update to use the delta method
 
     //cout << "updating player position to: " << newPosition << endl;
-    int deltaX = newPosition.x - playerPositionOnMap.x;
-    int deltaY = newPosition.y - playerPositionOnMap.y;
+    //int deltaX = newPosition.x - playerPositionOnMap.x;
+    //int deltaY = newPosition.y - playerPositionOnMap.y;
+    int deltaX = newPosition.x - player.levelX();
+    int deltaY = newPosition.y - player.levelY();
 
     //cout << "deltas: " << deltaX << " " << deltaY << endl;
-    playerPositionOnMap.x = newPosition.x;
-    playerPositionOnMap.y = newPosition.y;
+    //playerPositionOnMap.x = newPosition.x;
+    //playerPositionOnMap.y = newPosition.y;
+    player.levelSetPosition(newPosition.x, newPosition.y);
 
     // if the position has changed
     if ((deltaX != 0) || (deltaY != 0)) {
