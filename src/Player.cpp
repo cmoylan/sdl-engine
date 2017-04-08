@@ -2,6 +2,9 @@
 
 Player::Player()
 {
+    messageCentre().subscribe("collision", bind(
+                                  &Player::handleCollisionEvent, this, placeholders::_1)
+                             );
 }
 
 
@@ -22,6 +25,12 @@ AssetList Player::assetData()
     this->assetName = "player.png";
 
     return assets;
+}
+
+
+void Player::handleCollisionEvent(Message message)
+{
+    cout << "collision from player!" << endl;
 }
 
 

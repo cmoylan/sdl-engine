@@ -4,6 +4,7 @@
 
 #include "constants.h"
 #include "Drawable.h"
+#include "MessageCentre.h"
 #include "Vector2D.h"
 
 
@@ -22,4 +23,6 @@ public:
     // Point spriteClips()
 
     AssetList assetData();
+
+    void handleCollisionEvent(Message message);
 };

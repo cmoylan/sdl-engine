@@ -36,9 +36,7 @@ void Renderer::displayDebugInfo()
 void Renderer::drawEntities()
 {
     for (Drawable* entity : game.entities) {
-        //cout << "rendering " << entity->assetName << endl;
 
-        // if on screen
         if (game.level.isOnScreen(entity->levelX(), entity->levelY(), entity->w(),
                                   entity->h())) {
             // lookup asset name if not already set
@@ -46,15 +44,13 @@ void Renderer::drawEntities()
                 entity->assetName = game.level.tilesets.assetNameFor(entity->gid);
             }
 
-            entity->setScreenPositionFromOffset(game.level.offsetX, game.level.offsetY);
             auto sprite = this->sprites[entity->assetName];
 
-
-            //
             // llok up sprite offset
-            //
-
             Point spriteClipCoords = game.level.tilesets.coordinatesFor(entity->gid);
+
+            // calculate scren pos from level pos and offset
+            entity->setScreenPositionFromOffset(game.level.offsetX, game.level.offsetY);
 
             renderTexture(sprite.texture,
                           renderer,

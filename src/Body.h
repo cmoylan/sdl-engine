@@ -7,7 +7,7 @@
 using namespace std;
 
 struct Body {
-    Point location = {0, 0};
+    Point mapLocation = {0, 0};
     Vector2D size = {0, 0};
     Vector2D velocity = {0, 0};
     Vector2D acceleration = {0, 0};
@@ -17,6 +17,8 @@ struct Body {
     // bool isFalling;
     bool isJumping;
 
+    int worldId = 0;
+
     // ----------
     //
     //  x1--x2
@@ -24,14 +26,34 @@ struct Body {
     //  y1--y2
     //
     // because top left corner is closest to origin
-    int x1;
-    int x2;
-    int y1;
-    int y2;
+    int upperLeft;
+    int upperRight;
+    int lowerLeft;
+    int lowerRight;
 
     // FIXME: this is positive, it should not be
     int fallVelocity;
     int jumpVelocity;
+
+    int x()
+    {
+        return mapLocation.x;
+    };
+
+    int y()
+    {
+        return mapLocation.y;
+    };
+
+    int width()
+    {
+        return size.x;
+    };
+
+    int height()
+    {
+        return size.y;
+    };
 
     bool isMoving()
     {
@@ -40,10 +62,10 @@ struct Body {
 
     void calculateCollisionBox()
     {
-        x1 = location.x;
-        x2 = location.x + size.x;
-        y1 = location.y;
-        y2 = location.y + size.y;
+        upperLeft = mapLocation.x;
+        upperRight = mapLocation.x + size.x;
+        lowerLeft = mapLocation.y;
+        lowerRight = mapLocation.y + size.y;
     };
 };
 
@@ -51,6 +73,6 @@ typedef map<int, Body> BodyMap;
 
 inline std::ostream& operator<<(std::ostream& os, const Body& body)
 {
-    os << "loc [" << body.location.x << ", " << body.location.y << "]  ";
+    os << "loc [" << body.mapLocation.x << ", " << body.mapLocation.y << "]  ";
     return os;
 }

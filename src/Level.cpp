@@ -36,6 +36,10 @@ AssetList Level::assetData()
 
 bool Level::isOnScreen(int x, int y, int w, int h)
 {
+    //
+    // don't worry about why this isn't working and switch to collision detection
+    //
+    //
     return (offsetX < (x + w))
            && (x < (offsetX + SCREEN_WIDTH))
            && (offsetY < (y + h))

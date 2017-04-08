@@ -98,10 +98,6 @@ forward_list<Entity> LevelLoader::loadObjectLayer(Level& level,
     try {
         for (size_t i = 0; i < data.Size(); i++) {
 
-            // level object is drawable
-            // as is entity
-
-
             Entity entity;
             entity.setSize(data[i]["width"].GetInt(), data[i]["height"].GetInt());
 
@@ -111,37 +107,12 @@ forward_list<Entity> LevelLoader::loadObjectLayer(Level& level,
             int positionX = data[i]["x"].GetInt();
             int positionY = data[i]["y"].GetInt() - entity.h();
             entity.levelSetPosition(positionX, positionY);
-            //
-            //
-            // set screen pos here
-            // figure it out
-            // maybe  screen pos is negative if the thing isn't on screen
-            // then we update it when it gets on screen
-            // we can figure this out with entity.levelPos - level.offset
-            //
-            //
-            //entity.screenSetPosition(entity.levelX(), entity.levelY());
-            // happens when rendering
-            // we go through all entities
-            // compare their x,y to our level offset
-            //
             entity.gid = data[i]["gid"].GetInt();
             entity.name = data[i]["name"].GetString();
             //entity.assetName = entity.name;
             entity.visible = data[i]["visible"].GetBool();
 
-
-            //level.levelObjects[object.name] = object;
             entities.push_front(entity);
-
-            // if they are visible, add them to the background tile layer?
-            // TODO: no, don't have to do this. they will be resitered as level entities
-            //if (object.visible) {
-            //    // subtracting one from y because Tiled positions this thing at the very edge of its cell
-            //    int index = level.indexFor(object.levelX(), object.levelY() - 1);
-            //    Layer& background = level.layers["background"];
-            //    background.tiles[index] = object.gid;
-            // }
         }
     }
     catch (...) {

@@ -14,7 +14,7 @@ class World {
 
     //BodyMap
     std::map<int, Body> bodies;
-    int nextKey = 1;
+    int nextWorldId = 1;
 
     std::shared_ptr<Level> map;
 

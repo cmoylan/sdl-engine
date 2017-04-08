@@ -224,6 +224,7 @@ void Game::update()
     // do character updates here
     // actually do all updatables updates here
     // enemies, random moving stuff
+    messageCentre().notify();
 }
 
 

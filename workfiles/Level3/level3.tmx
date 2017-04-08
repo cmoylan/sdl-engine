@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" nextobjectid="10">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" nextobjectid="17">
  <properties>
   <property name="PlayerStartX" value="192"/>
   <property name="PlayerStartY" value="64"/>
@@ -81,5 +81,8 @@
  <objectgroup name="meta">
   <object id="5" name="exit" gid="4" x="3104" y="160" width="32" height="32"/>
   <object id="8" name="thing" gid="65" x="320" y="160" width="32" height="32"/>
+  <object id="14" name="circly" gid="4" x="448" y="160" width="32" height="32"/>
+  <object id="15" gid="4" x="1344" y="160" width="32" height="32"/>
+  <object id="16" gid="4" x="1984" y="160" width="32" height="32"/>
  </objectgroup>
 </map>

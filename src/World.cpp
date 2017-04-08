@@ -3,10 +3,11 @@
 // external
 size_t World::addBody(Body body)
 {
-    int key = nextKey;
-    bodies.insert(pair<int, Body>(key, body));
-    nextKey += 1;
-    return key;
+    int worldId = nextWorldId;
+    body.worldId = worldId;
+    bodies.insert(pair<int, Body>(worldId, body));
+    nextWorldId += 1;
+    return worldId;
 }
 
 
@@ -16,7 +17,7 @@ size_t World::addBody(int originX, int originY, int sizeW, int sizeH)
     Body body = {};
 
     Point location = {originX, originY};
-    body.location = location;
+    body.mapLocation = location;
 
     Vector2D size = {sizeW, sizeH};
     body.size = size;
@@ -39,14 +40,14 @@ bool World::canFall(size_t id)
 
 bool World::canFall(const Body& body)
 {
-    return map->isOpen(body.location.x, body.location.y + 1,
+    return map->isOpen(body.mapLocation.x, body.mapLocation.y + 1,
                        body.size.x, body.size.y);
 }
 
 
 void World::checkCollisions()
 {
-
+//cout << " ---- collision run --- " <<endl;
 //     for (auto it = mymap.cbegin(); it != mymap.cend(); ++it)
 //     std::cout << " [" << (*it).first << ':' << (*it).second << ']';
 //
@@ -55,13 +56,21 @@ void World::checkCollisions()
         // bodyPair.first; // is the body id
         Body& body = bodyPair.second;
 
+        // for it's seemingly convaluded logic, this works
+        // a->b, a->c, a->d
+        // b->c, b->d
+        // c->d
         BodyMap::iterator comparator = bodies.find(bodyPair.first);
         comparator++;
         if (comparator == bodies.end()) { return; }
 
         for (; comparator != bodies.end(); ++comparator) {
+            //cout << "comparing x to x: " << body.worldId << " | " << comparator->second.worldId << endl;
+
             if (isCollision(body, comparator->second)) {
-                cout << "collision!" << endl;
+                Message message = {99};
+                messageCentre().publish("collision", message);
+                //cout << "collision!" << endl;
                 // collision!
                 // do something!
             }
@@ -89,7 +98,7 @@ Body& World::get(size_t id)
 Point World::getPosition(size_t id)
 {
     Body body = get(id);
-    return body.location;
+    return body.mapLocation;
 }
 
 
@@ -119,7 +128,7 @@ void World::tick()
         }
     }
 
-    //checkCollisions();
+    checkCollisions();
 }
 
 
@@ -130,11 +139,12 @@ void World::handleFall(Body& body)
         if (body.fallVelocity < fallTerminalVelocity) {
             body.fallVelocity += fallAcceleration;
         }
-        Vector2D newVelocity = map->isOpenOrClosest(body.location.x, body.location.y,
+        Vector2D newVelocity = map->isOpenOrClosest(body.mapLocation.x,
+                               body.mapLocation.y,
                                body.size.x, body.size.y,
                                0, body.fallVelocity);
-        body.location.x += newVelocity.x;
-        body.location.y += newVelocity.y;
+        body.mapLocation.x += newVelocity.x;
+        body.mapLocation.y += newVelocity.y;
     }
 }
 
@@ -145,13 +155,13 @@ void World::handleJump(Body& body)
     if (body.jumpVelocity > 0) {
         body.jumpVelocity -= jumpDecay;
         //cout << "jump velocity " << body.jumpVelocity << endl;
-        Vector2D newVelocity = map->isOpenOrClosest(body.location.x,
-                               body.location.y - 4,
+        Vector2D newVelocity = map->isOpenOrClosest(body.mapLocation.x,
+                               body.mapLocation.y - 4,
                                body.size.x, body.size.y,
                                0, -body.jumpVelocity);
 
         body.jumpVelocity = -newVelocity.y;
-        body.location.y -= body.jumpVelocity;
+        body.mapLocation.y -= body.jumpVelocity;
 
     }
     if (body.jumpVelocity == 0) {
@@ -176,21 +186,21 @@ void World::handleMove(Body& body)
 
 
 
-    Vector2D velocity = map->isOpenOrClosest(body.location.x, body.location.y,
+    Vector2D velocity = map->isOpenOrClosest(body.mapLocation.x, body.mapLocation.y,
                         body.size.x, body.size.y,
                         newVelocityX, 0);
 
     body.velocity.x = velocity.x;
-    body.location.x += body.velocity.x;
+    body.mapLocation.x += body.velocity.x;
 
     body.velocity.x = Utilities::differenceToOrigin(body.velocity.x, friction);
 }
 
 
-bool World::isCollision(Body& a, Body& b)
+bool World::isCollision(Body& rect1, Body& rect2)
 {
-    a.calculateCollisionBox();
-    b.calculateCollisionBox();
+    //a.calculateCollisionBox();
+    //b.calculateCollisionBox();
 
 //     left1 = object1->x + object1->col_x_offset;
 //     left2 = object2->x + object2->col_x_offset;
@@ -207,11 +217,19 @@ bool World::isCollision(Body& a, Body& b)
 //     if (right1 < left2) return(0);
 //     if (left1 > right2) return(0);
 
-    if (
-        ((a.x1 < b.x2) || (a.x2 > b.x1))
-        &&
-        ((a.y1 < b.y2) || (a.y2 > b.y1))
-    ) {
+//     if (
+//         ((a.upperLeft < b.upperRight) || (a.upperRight > b.upperLeft))
+//         &&
+//         ((a.lowerLeft < b.lowerRight) || (a.lowerRight > b.lowerLeft))
+//     ) {
+//         return true;
+//     }
+
+    if (rect1.x() < rect2.x() + rect2.width() &&
+            rect1.x() + rect1.width() > rect2.x() &&
+            rect1.y() < rect2.y() + rect2.height() &&
+            rect1.height() + rect1.y() > rect2.y()) {
+        // collision detected!
         return true;
     }
 
@@ -250,11 +268,11 @@ void World::tryMove(size_t id, int velocityX, int velocityY)
 //     }
 
 
-    Vector2D velocity = map->isOpenOrClosest(body.location.x, body.location.y,
+    Vector2D velocity = map->isOpenOrClosest(body.mapLocation.x, body.mapLocation.y,
                         body.size.x, body.size.y,
                         velocityX, velocityY);
-    body.location.x += velocity.x;
-    body.location.y += velocity.y;
+    body.mapLocation.x += velocity.x;
+    body.mapLocation.y += velocity.y;
 
     //return velocity;
 }
