@@ -103,6 +103,12 @@ public:
         _screenY = y;
     }
 
+    void setScreenPositionFromOffset(int offsetX, int offsetY)
+    {
+        _screenX = _levelX - offsetX;
+        _screenY = _levelY - offsetY;
+    };
+
     void setSize(int w, int h)
     {
         _w = w;

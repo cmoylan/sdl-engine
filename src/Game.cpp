@@ -164,48 +164,26 @@ void Game::init()
     level = levelBundle.level;
     world.setMap(std::make_shared<Level>(level));
 
+    // player is going to have to manage its animations
     // set player position from level
     player.screenSetPosition(level.playerStartX, level.playerStartY);
     player.levelSetPosition(level.playerStartX, level.playerStartY);
     player.setSize(PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y);
+    player.centerOn = true;
+    player.assetName = "player.png";
 
     // add player to world
     playerWorldId = world.addBody(player.levelX(), player.levelY(),
                                   player.w(), player.h());
-    this->entities.push_back(&player);
+    //this->entities.push_back(&player);
 
     // add entities to world
-    //levelBundle.entities
-    //forward_list<Entity> levelEntities = levelBundle.entities;
     for (Entity& entity : levelBundle.entities) {
         int entityId = world.addBody(entity.levelX(), entity.levelY(),
                                      entity.w(), entity.h());
-        //
-        // THIS IS NOT WORKING FOR SOME REASON
-        //
-        //
         entities.push_back(&entity);
-        //
-        //
     }
 
-    //
-    //
-    // something, something...this->gameObjects
-    //
-    //
-    //
-    //for (auto& entity : level.entities()) {
-    //}
-
-
-    //level.renderData();
-    //try {
-    //    level->init();
-    //}
-    //catch (int e) {
-    //    throw 1;
-    //}
     cout << "got here" << endl;
 }
 

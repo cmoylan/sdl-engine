@@ -43,7 +43,7 @@ public:
 
     void drawLevel();
     void drawEntities();
-    //void drawPlayer(); // TODO see if you can do without this - just make player an entity
+    void drawPlayer();
     void displayDebugInfo();
 
 private:

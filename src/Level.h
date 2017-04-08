@@ -120,6 +120,7 @@ public:
      */
     int screenOffsetX();
     int screenOffsetY();
+    bool isOnScreen(int x, int y, int w, int h);
 
     // these are kind of just "rendering indices x and y...
     /**

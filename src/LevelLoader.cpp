@@ -103,7 +103,14 @@ forward_list<Entity> LevelLoader::loadObjectLayer(Level& level,
 
 
             Entity entity;
-            entity.levelSetPosition(data[i]["x"].GetInt(), data[i]["y"].GetInt());
+            entity.setSize(data[i]["width"].GetInt(), data[i]["height"].GetInt());
+
+            // TMX position is from lower left corner
+            // SDL positin is from upper left corner
+            // convert TMX position to SDL
+            int positionX = data[i]["x"].GetInt();
+            int positionY = data[i]["y"].GetInt() - entity.h();
+            entity.levelSetPosition(positionX, positionY);
             //
             //
             // set screen pos here
@@ -113,7 +120,11 @@ forward_list<Entity> LevelLoader::loadObjectLayer(Level& level,
             // we can figure this out with entity.levelPos - level.offset
             //
             //
-            entity.setSize(data[i]["width"].GetInt(), data[i]["height"].GetInt());
+            //entity.screenSetPosition(entity.levelX(), entity.levelY());
+            // happens when rendering
+            // we go through all entities
+            // compare their x,y to our level offset
+            //
             entity.gid = data[i]["gid"].GetInt();
             entity.name = data[i]["name"].GetString();
             //entity.assetName = entity.name;

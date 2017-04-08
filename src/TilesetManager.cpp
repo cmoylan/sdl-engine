@@ -59,7 +59,7 @@ Tileset& TilesetManager::findByGid(int gid)
             return tileset;
         }
     }
-    cout << "fuck: " << gid << endl;
+    cout << "got a gid that wasn't in any tileset!: " << gid << endl;
     throw - 1;
 }
 

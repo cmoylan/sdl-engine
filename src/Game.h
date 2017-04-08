@@ -48,6 +48,7 @@ public:
     // Getters
     std::string resPath() const { return level.resPath; }
     bool running() const { return _running; }
+    Player& getPlayer() { return player; };
 
     Game();
     ~Game();

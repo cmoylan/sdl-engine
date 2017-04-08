@@ -24,3 +24,8 @@ AssetList Player::assetData()
     return assets;
 }
 
+
+void Player::setScreenPositionFromOffset(int x, int y)
+{
+}
+

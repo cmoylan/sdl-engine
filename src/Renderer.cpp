@@ -38,27 +38,34 @@ void Renderer::drawEntities()
     for (Drawable* entity : game.entities) {
         //cout << "rendering " << entity->assetName << endl;
 
-        if (entity->assetName.size() == 0) {
-            entity->assetName = game.level.tilesets.assetNameFor(entity->gid);
+        // if on screen
+        if (game.level.isOnScreen(entity->levelX(), entity->levelY(), entity->w(),
+                                  entity->h())) {
+            // lookup asset name if not already set
+            if (entity->assetName.size() == 0) {
+                entity->assetName = game.level.tilesets.assetNameFor(entity->gid);
+            }
+
+            entity->setScreenPositionFromOffset(game.level.offsetX, game.level.offsetY);
+            auto sprite = this->sprites[entity->assetName];
+
+
+            //
+            // llok up sprite offset
+            //
+
+            Point spriteClipCoords = game.level.tilesets.coordinatesFor(entity->gid);
+
+            renderTexture(sprite.texture,
+                          renderer,
+                          entity->screenX(), // position on screen
+                          entity->screenY(),
+                          spriteClipCoords.x, // sprite clip
+                          spriteClipCoords.y,
+                          entity->spriteOffsetX, // this will be 32x32 for most things
+                          entity->spriteOffsetY);
         }
 
-
-
-
-        // IF the object is to be centered on
-        // OR the screen position aligns with the level offset
-        //if (object->centerOn ||
-        //    (object->x())
-        auto sprite = this->sprites[entity->assetName];
-
-        renderTexture(sprite.texture,
-                      renderer,
-                      entity->screenX(), // position on screen
-                      entity->screenY(),
-                      0, // clipping data
-                      0,
-                      entity->spriteOffsetX,
-                      entity->spriteOffsetY);
     }
 }
 
@@ -128,6 +135,26 @@ void Renderer::drawLevel()
 }
 
 
+void Renderer::drawPlayer()
+{
+
+    auto& player = game.getPlayer();
+    auto sprite = this->sprites[player.assetName];
+
+    // player will have to provide the sprite clips
+    renderTexture(sprite.texture,
+                  renderer,
+                  player.screenX(), // position on screen
+                  player.screenY(),
+                  //spriteClipCoords.x, // sprite clip
+                  //spriteClipCoords.y,
+                  0,
+                  0,
+                  player.spriteOffsetX, // this will be 32x32 for most things
+                  player.spriteOffsetY);
+}
+
+
 // this might be a load, not an init
 void Renderer::init(Game game)
 {
@@ -147,6 +174,12 @@ void Renderer::init(Game game)
             this->registerAsset(asset);
         }
     }
+
+    // load player
+    for (Asset& asset : game.getPlayer().assetData()) {
+        this->registerAsset(asset);
+    }
+
 
     // load fonts
     fonts.setFontPath(getResourcePath("fonts"));
@@ -234,6 +267,7 @@ void Renderer::run()
         // draw level first
         this->drawLevel();
         this->drawEntities();
+        this->drawPlayer();
         this->displayDebugInfo();
 
         //displayDebugInfo();

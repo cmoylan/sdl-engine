@@ -34,6 +34,15 @@ AssetList Level::assetData()
 }
 
 
+bool Level::isOnScreen(int x, int y, int w, int h)
+{
+    return (offsetX < (x + w))
+           && (x < (offsetX + SCREEN_WIDTH))
+           && (offsetY < (y + h))
+           && (x < (offsetY + SCREEN_HEIGHT));
+}
+
+
 bool Level::isOpen(int x, int y, int w, int h)
 {
     // have to subtract one because of 0-indexing
@@ -308,6 +317,7 @@ overMaxIndex:
 }
 
 
+// this is tiles, the name should be more clear
 int Level::screenOffsetX()
 {
     return offsetX % PIXELS_PER_TILE_X;
