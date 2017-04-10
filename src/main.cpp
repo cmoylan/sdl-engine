@@ -1,12 +1,13 @@
 #include <iostream>
 
+#include "guile.h"
+
 #include "Game.h"
 #include "Renderer.h"
 
 /* TODO:
  * - exit the level
  * - scroll to anywhere on level, for player setup
- * - message center singleton?
  * - automate or fix anything that annoys you
  * - better exceptions
  * - use Tiled for player sprites - set them with metadata... or somehow represent a player
@@ -14,8 +15,14 @@
  * - enemies
  * - death by falling off the screen
  * - acceleration and friction when walking
- * - GUILE
+ *
+ * - GUILE - left off here
+ *
  * - move camera stuff to a Scene class
+ * - event system that keeps track of what happened
+ *   - keeps track of which events have not been handled
+ *   - like a semaphore
+ * -
  */
 
 /* FIXME:
@@ -24,6 +31,9 @@
 
 int main(int, char**)
 {
+    Guile::init();
+    // END guile
+
     Renderer renderer;
 
     Game game;
