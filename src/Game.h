@@ -21,6 +21,10 @@ struct Options {
 };
 
 
+// Game needs to listen to event bus for "end" message
+// probably need to define all the events somewhere
+
+
 class Game {
 
     Options options;

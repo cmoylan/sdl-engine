@@ -3,6 +3,8 @@
 #include <iostream>
 
 #include "constants.h"
+#include "uuid.h"
+
 #include "Drawable.h"
 #include "MessageCentre.h"
 #include "Vector2D.h"
@@ -11,6 +13,8 @@
 class Player : public Drawable {
 
 public:
+
+    int _world_id = generateUuid();
 
     Player();
     ~Player();

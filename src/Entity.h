@@ -2,7 +2,11 @@
 
 #include <map>
 
+#include "guile.h"
+#include "uuid.h"
+
 #include "Drawable.h"
+#include "MessageCentre.h"
 #include "Vector2D.h"
 
 using namespace std;
@@ -17,12 +21,14 @@ public:
     string name;
     // enum type
     bool visible;
-    int _world_id;
+    int _world_id = generateUuid();
 
     virtual AssetList assetData();
+
+    void handleCollisionEvent(Message message);
 };
 
-typedef map<string, Entity> LevelObjectMap;
+typedef map<string, Entity> EntityMap;
 
 // TODO: override operator<<
 

@@ -13,7 +13,8 @@
  * @param os The output stream to write the message too
  * @param msg The error message to write, format will be msg error: SDL_GetError()
  */
-inline void logSDLError(std::ostream &os, const std::string &msg){
+inline void logSDLError(std::ostream& os, const std::string& msg)
+{
     os << msg << " error: " << SDL_GetError() << std::endl;
 }
 
@@ -24,9 +25,10 @@ inline void logSDLError(std::ostream &os, const std::string &msg){
  * @param ren The renderer to load the texture onto
  * @return the loaded texture, or nullptr if something went wrong.
  */
-inline SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren){
+inline SDL_Texture* loadTexture(const std::string& file, SDL_Renderer *ren)
+{
     SDL_Texture *texture = IMG_LoadTexture(ren, file.c_str());
-    if (texture == nullptr){
+    if (texture == nullptr) {
         logSDLError(std::cout, "LoadTexture");
     }
     return texture;
@@ -42,24 +44,24 @@ inline SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren){
 * @param renderer The renderer to load the texture in
 * @return An SDL_Texture containing the rendered message, or nullptr if something went wrong
 */
-inline SDL_Texture* renderText(const std::string &message, TTF_Font* font,
-	SDL_Color color, SDL_Renderer *renderer)
+inline SDL_Texture* renderText(const std::string& message, TTF_Font* font,
+                               SDL_Color color, SDL_Renderer *renderer)
 {
-	//We need to first render to a surface as that's what TTF_RenderText
-	//returns, then load that surface into a texture
-	SDL_Surface *surf = TTF_RenderText_Blended(font, message.c_str(), color);
-	if (surf == nullptr){
-		TTF_CloseFont(font);
-		logSDLError(std::cout, "TTF_RenderText");
-		return nullptr;
-	}
-	SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
-	if (texture == nullptr){
-		logSDLError(std::cout, "CreateTexture");
-	}
-	//Clean up the surface and font
-	SDL_FreeSurface(surf);
-	return texture;
+    //We need to first render to a surface as that's what TTF_RenderText
+    //returns, then load that surface into a texture
+    SDL_Surface *surf = TTF_RenderText_Blended(font, message.c_str(), color);
+    if (surf == nullptr) {
+        TTF_CloseFont(font);
+        logSDLError(std::cout, "TTF_RenderText");
+        return nullptr;
+    }
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
+    if (texture == nullptr) {
+        logSDLError(std::cout, "CreateTexture");
+    }
+    //Clean up the surface and font
+    SDL_FreeSurface(surf);
+    return texture;
 }
 
 
@@ -73,7 +75,9 @@ inline SDL_Texture* renderText(const std::string &message, TTF_Font* font,
  *    default of nullptr draws the entire texture
  */
 inline void
-renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst, SDL_Rect *clip = nullptr){
+renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst,
+              SDL_Rect *clip = nullptr)
+{
     SDL_RenderCopy(ren, tex, clip, &dst);
     //SDL_RendererFlip flip;
     //SDL_RenderCopyEx(ren, tex, clip, &dst, 0, NULL, flip);
@@ -91,11 +95,13 @@ renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst, SDL_Rect *clip 
  * @param clip The sub-section of the texture to draw (clipping rect)
  *    default of nullptr draws the entire texture
  */
-inline void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, SDL_Rect *clip = nullptr){
+inline void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y,
+                          SDL_Rect *clip = nullptr)
+{
     SDL_Rect dst;
     dst.x = x;
     dst.y = y;
-    if (clip != nullptr){
+    if (clip != nullptr) {
         dst.w = clip->w;
         dst.h = clip->h;
     }
@@ -106,23 +112,27 @@ inline void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, SDL
 }
 
 
-inline void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int clipX, int clipY, int clipW, int clipH) {
+inline void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y,
+                          int clipX, int clipY, int clipW, int clipH)
+{
     SDL_Rect clip = {clipX, clipY, clipW, clipH};
     renderTexture(tex, ren, x, y, &clip);
 }
 
 
-inline void renderColoredRect(SDL_Renderer *ren, SDL_Rect *rectangle, int r, int g, int b, int a)
+inline void renderColoredRect(SDL_Renderer *ren, SDL_Rect *rectangle, int r,
+                              int g, int b, int a)
 {
     SDL_SetRenderDrawColor(ren, r, g, b, a);
     SDL_RenderFillRect(ren, rectangle);
-    SDL_SetRenderDrawColor(ren, 0,0,0,0); // TODO: better way to clear color?
+    SDL_SetRenderDrawColor(ren, 0, 0, 0, 0); // TODO: better way to clear color?
 
 }
 
 
-inline void renderColoredRect(SDL_Renderer *ren, int x, int y, int w, int h, Color color)
+inline void renderColoredRect(SDL_Renderer *ren, int x, int y, int w, int h,
+                              Color color)
 {
-    SDL_Rect coords = {x,y,w,h};
+    SDL_Rect coords = {x, y, w, h};
     renderColoredRect(ren, &coords, color.r, color.g, color.b, color.a);
 }

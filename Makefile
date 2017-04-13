@@ -45,13 +45,13 @@ clean:
 #find . -name'*orig' | xargs rm
 
 tidy:
-	@find ./src ./test -name '*orig' | xargs rm
+	@find ./include ./game ./src ./test -name '*orig' | xargs rm
 	
 
 # http://astyle.sourceforge.net/astyle.html
 style:
 	@astyle --options=.astylerc \
-	`ls src/*.h src/*.cpp test/*.cpp`
+	`ls src/*.h src/*.cpp test/*.cpp include/*.h`
 
 
 
