@@ -46,7 +46,7 @@ public:
     // other data - mostly for rendering
     LayerMap layers;
     TilesetManager tilesets;
-    LevelObjectMap levelObjects;
+    EntityMap levelObjects;
 
 
     std::string resPath;  // FIXME: what sets this?

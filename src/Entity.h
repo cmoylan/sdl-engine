@@ -2,7 +2,10 @@
 
 #include <map>
 
+#include "guile.h"
+
 #include "Drawable.h"
+#include "MessageCentre.h"
 #include "Vector2D.h"
 
 using namespace std;
@@ -20,9 +23,11 @@ public:
     int _world_id;
 
     virtual AssetList assetData();
+
+    void handleCollisionEvent(Message message);
 };
 
-typedef map<string, Entity> LevelObjectMap;
+typedef map<string, Entity> EntityMap;
 
 // TODO: override operator<<
 
