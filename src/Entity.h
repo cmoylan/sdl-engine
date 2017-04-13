@@ -3,6 +3,7 @@
 #include <map>
 
 #include "guile.h"
+#include "uuid.h"
 
 #include "Drawable.h"
 #include "MessageCentre.h"
@@ -20,7 +21,7 @@ public:
     string name;
     // enum type
     bool visible;
-    int _world_id;
+    int _world_id = generateUuid();
 
     virtual AssetList assetData();
 

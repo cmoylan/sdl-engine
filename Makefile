@@ -41,7 +41,7 @@ clean:
 #find . -name'*orig' | xargs rm
 
 tidy:
-	@find ./src ./test -name '*orig' | xargs rm
+	@find ./include ./game ./src ./test -name '*orig' | xargs rm
 	
 
 # http://astyle.sourceforge.net/astyle.html

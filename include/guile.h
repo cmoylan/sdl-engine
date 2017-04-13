@@ -25,23 +25,23 @@ namespace Guile
     };
 
 
-    inline bool symbolExists(string name)
-    {
-        SCM sym;
-        SCM var;
-
-        sym = scm_str2symbol(name.c_str());
-
-        /* Check to see if the symbol exists */
-        var = scm_sym2var(sym,
-                          scm_current_module_lookup_closure(),
-                          SCM_BOOL_F
-                         );
-
-        if (var != SCM_BOOL_F) {
-            return true;
-        }
-
-        return false;
-    };
+//     inline bool symbolExists(string name)
+//     {
+//         SCM sym;
+//         SCM var;
+//
+//         sym = scm_str2symbol(name.c_str());
+//
+//         /* Check to see if the symbol exists */
+//         var = scm_sym2var(sym,
+//                           scm_current_module_lookup_closure(),
+//                           SCM_BOOL_F
+//                          );
+//
+//         if (var != SCM_BOOL_F) {
+//             return true;
+//         }
+//
+//         return false;
+//     };
 };
