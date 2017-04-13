@@ -6,9 +6,13 @@ CXX = g++
 # NOTE: remember to run `ldconfig` as root after installing new libs
 # FIXME: should use sdl2-config --cflags and sdl2-config --libs
 SDL_LIB = -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf
-SDL_INCLUDE = -I/usr/local/include -I./include
+#SDL_LIB = `sdl2-config --libs`
+#SDL_INCLUDE = -I/usr/local/include -I./include
+SDL_INCLUDE = `sdl2-config --cflags`
+INCLUDE = $(SDL_INCLUDE) -I./include
+
 # You may need to change -std=c++11 to -std=c++0x if your compiler is a bit older
-CXXFLAGS = -W -Wall -Wextra -c -std=c++17 -g $(SDL_INCLUDE)
+CXXFLAGS = -W -Wall -Wextra -c -std=c++14 -g $(INCLUDE)
 LDFLAGS = $(SDL_LIB)
 EXE = engine
 
