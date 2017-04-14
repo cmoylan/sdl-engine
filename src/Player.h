@@ -14,7 +14,7 @@ class Player : public Drawable {
 
 public:
 
-    int _world_id = generateUuid();
+    int _uuid = generateUuid();
 
     Player();
     ~Player();

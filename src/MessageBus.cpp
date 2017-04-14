@@ -49,11 +49,14 @@ void MessageBus::purge()
 }
 
 
-void MessageBus::subscribe(string eventName, ListenerCallback callback)
+void MessageBus::subscribe(string eventName,
+                           int uuid,
+                           ListenerCallback callback)
 {
     vector<ListenerCallback>& callbacks = listeners[eventName];
     callbacks.push_back(callback);
+
+    //auto& listenersByUuid
+    //callbacks.back()
+    // get the listenersByUuid, insert a reference to the stored callback
 }
-
-
-

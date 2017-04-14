@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <set>
 
 #include "constants.h"
 #include "Body.h"
@@ -8,14 +9,15 @@
 #include "Vector2D.h"
 
 
-// TODO: need to clearly separate public and private methods so the interface
-//       confusing as hell
+typedef std::pair<int, int> CollisionPair;
+
 class World {
 
     //BodyMap
     std::map<int, Body> bodies;
     int nextWorldId = 1;
 
+    // might want to rename this because it conflicts with std::map
     std::shared_ptr<Level> map;
 
     Vector2D gravity;
@@ -27,6 +29,8 @@ class World {
 
     int fallAcceleration;
     int fallTerminalVelocity;
+
+    std::set<std::pair<int, int>> currentCollisions;
 
 public:
 

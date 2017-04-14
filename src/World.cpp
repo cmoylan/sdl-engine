@@ -54,7 +54,7 @@ void World::checkCollisions()
     // runs once per clock cycle
     for (auto bodyPair : bodies) {
         // bodyPair.first; // is the body id
-        Body& body = bodyPair.second;
+        Body& firstBody = bodyPair.second;
 
         // for it's seemingly convaluded logic, this works
         // a->b, a->c, a->d
@@ -66,13 +66,28 @@ void World::checkCollisions()
 
         for (; comparator != bodies.end(); ++comparator) {
             //cout << "comparing x to x: " << body.worldId << " | " << comparator->second.worldId << endl;
+            Body& secondBody = comparator->second;
+            CollisionPair cacheLookup(firstBody.worldId, secondBody.worldId);
 
-            if (isCollision(body, comparator->second)) {
-                Message message = {99};
-                messageCentre().publish("collision", message);
-                //cout << "collision!" << endl;
-                // collision!
-                // do something!
+            if (isCollision(firstBody, secondBody)) {
+                // if not in collisions
+                if (currentCollisions.find(cacheLookup) == currentCollisions.end()) {
+                    currentCollisions.insert(cacheLookup);
+                    // notify listeners
+                    Message message = {firstBody.worldId};
+                    messageCentre().publish("collision", message);
+                    cout << "first body: " << firstBody.worldId;
+                    cout << " | second: " << secondBody.worldId << endl;
+                }
+
+            } else {
+                // remove it from collisions if it's there
+                auto cache = currentCollisions.find(cacheLookup);
+                if (cache != currentCollisions.end()) {
+                    //cout << "found a collision which we are removing" << endl;
+                    currentCollisions.erase(cache);
+                    // TODO: broadcast a message here
+                }
             }
         }
 

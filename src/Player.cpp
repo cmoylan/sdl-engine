@@ -2,15 +2,16 @@
 
 Player::Player()
 {
-    messageCentre().subscribe("collision", bind(
-                                  &Player::handleCollisionEvent, this, placeholders::_1)
+    messageCentre().subscribe("collision", _uuid, bind(
+                                   &Player::handleCollisionEvent, this, placeholders::_1)
                              );
 }
 
 
 Player::~Player()
 {
-
+    // FIXME: need to unsubscribe events here
+    //messageCentre().
 }
 
 
@@ -30,7 +31,7 @@ AssetList Player::assetData()
 
 void Player::handleCollisionEvent(Message message)
 {
-    cout << "collision from player!" << endl;
+    cout << "collision from player!: " << message.test << endl;
 }
 
 

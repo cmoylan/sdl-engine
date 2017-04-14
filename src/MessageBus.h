@@ -24,6 +24,7 @@ class MessageBus {
     // vector? messages
     // list messages
     ListenerMap listeners;
+    map<int, vector<reference_wrapper<ListenerCallback>>> listenersByUuid;
     MessageMap messageQueue;
 
 public:
@@ -48,8 +49,9 @@ public:
      *
      * @todo create a helper so consuming code isn't littered with bind/placeholder
      */
-    void subscribe(string eventName, ListenerCallback callback);
-    // unsubscribe [?]
+    void subscribe(string eventName, int uuid, ListenerCallback callback);
+    //void unsubscribeOne(string eventName, int uuid);
+    void unsubscribeAll(int uuid);
 
     /**
      * Publish an event
