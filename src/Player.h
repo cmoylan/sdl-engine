@@ -24,9 +24,9 @@ public:
     {
         scm_c_primitive_load_path("player.scm");
 
-        lc_init = Guile::lookup("init");
-        lc_update = Guile::lookup("update");
-        lc_collision = Guile::lookup("collision");
+        lc_init = Guile::lookup_with_module("player", "init");
+        lc_update = Guile::lookup_with_module("player", "update");
+        lc_collision = Guile::lookup_with_module("player", "collision");
     }
     // END prototyping
 

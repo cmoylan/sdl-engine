@@ -1,12 +1,11 @@
-(define init
-  (lambda ()
-    (display "hello from player init")))
+(define-module (player)
+  #:export (init update collision))
 
-(define update
-  (lambda ()
-    (display "hello from player update")
-    ))
+  (define (init)
+    (display "hello from player init"))
 
-(define collision
-  (lambda ()
-    (display "collision from guile!")))
+  (define (update)
+    (display "hello from player update"))
+
+  (define (collision)
+    (display "collision from guile!"))

@@ -1,3 +1,5 @@
+# NOTE: setenv.sh needs to be called first, or the appropriate env vars set
+
 CXX = g++
 # Update these paths to match your installation
 # You may also need to update the linker option rpath, which sets where to look for
