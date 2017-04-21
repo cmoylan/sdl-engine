@@ -15,7 +15,7 @@ SDL_LIB = -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf
 #
 SDL_INCLUDE = `sdl2-config --libs` -I/usr/local/include -I./include
 # You may need to change -std=c++11 to -std=c++0x if your compiler is a bit older
-CXXFLAGS = -W -Wall -Wextra -c -std=c++14 -g $(SDL_INCLUDE) `guile-config compile`
+CXXFLAGS = -W -Wall -Wextra -c -std=c++17 -g $(SDL_INCLUDE) `guile-config compile`
 LDFLAGS = $(SDL_LIB) `guile-config link`
 EXE = engine
 

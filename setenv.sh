@@ -1,0 +1,1 @@
+export GUILE_LOAD_PATH="./game:..."

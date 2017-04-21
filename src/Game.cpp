@@ -166,6 +166,7 @@ void Game::init()
 
     // player is going to have to manage its animations
     // set player position from level
+    player.init();
     player.screenSetPosition(level.playerStartX, level.playerStartY);
     player.levelSetPosition(level.playerStartX, level.playerStartY);
     player.setSize(PIXELS_PER_TILE_X, PIXELS_PER_TILE_Y);

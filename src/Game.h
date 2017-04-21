@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "guile.h"
+
 #include "Drawable.h"
 #include "Level.h"
 #include "LevelLoader.h"

@@ -11,6 +11,7 @@ namespace Guile
     {
         scm_init_guile();
 
+
         /* Define some Guile variables from C */
         //scm_c_define("my-age", scm_int2num(32));
         //scm_c_define("my-height", scm_long2num(184));
@@ -24,6 +25,11 @@ namespace Guile
         //scm_call_0(func);
     };
 
+    inline SCM lookup(string name)
+    {
+        SCM symbol = scm_c_lookup(name.c_str());
+        return scm_variable_ref(symbol);
+    }
 
 //     inline bool symbolExists(string name)
 //     {
@@ -43,5 +49,6 @@ namespace Guile
 //         }
 //
 //         return false;
+//         sym = scm_c_lookup(name.c_str());
 //     };
 };

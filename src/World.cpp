@@ -80,7 +80,8 @@ void World::checkCollisions()
                     cout << " | second: " << secondBody.worldId << endl;
                 }
 
-            } else {
+            }
+            else {
                 // remove it from collisions if it's there
                 auto cache = currentCollisions.find(cacheLookup);
                 if (cache != currentCollisions.end()) {
