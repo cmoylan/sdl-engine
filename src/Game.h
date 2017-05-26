@@ -26,6 +26,7 @@ struct Options {
 // Game needs to listen to event bus for "end" message
 // probably need to define all the events somewhere
 
+enum Scene { level, terminal, cutscene };
 
 class Game {
 
@@ -37,10 +38,18 @@ class Game {
     void updatePlayerPositionBy(Vector2D direction);
     void updatePlayerPositionTo(Point newPosition);
 
+    void handleInputForLevel(SDL_Event event);
+    void handleInputForTerminal(SDL_Event event);
+
     int playerInputX = 0;
     int playerInputY = 0;
 
     size_t playerWorldId;
+
+    // which scene to show?
+    // terminal of level
+    // enum?
+
 
 
 
@@ -48,6 +57,7 @@ class Game {
 public:
     bool _running = true;
 
+    Scene currentScene;
     Level level; // acces to this should be readonly
     DrawableList entities;
 
@@ -70,6 +80,7 @@ public:
     // player input handlers
     void tryMovePlayer(int directionX, int directionY);
     void scrollLevelOrMovePlayer(int directionX, int directionY);
+    void toggleTerminal();
 
     DrawableList& getEntities();
 

@@ -46,8 +46,7 @@ void Game::handleInput()
     // FIXME: this doesn't belong here, should more into it's own thing
     // FIXME: need to allow keys to be remapped
     SDL_Event e;
-    //int moveSize = 16;
-    int moveSize = 10;
+
 
     //Event Polling
     while (SDL_PollEvent(&e)) {
@@ -56,58 +55,97 @@ void Game::handleInput()
             _running = false;
         }
 
-        if (e.type == SDL_KEYDOWN) {
-            switch (e.key.keysym.sym) {
-            case SDLK_ESCAPE:
-                _running = false;
-                break;
-
-            // -- player movement
-            case SDLK_w:
-                playerInputY = -moveSize;
-                //tryMovePlayer(0, -moveSize);
-                break;
-            case SDLK_a:
-                playerInputX = -moveSize;
-                //tryMovePlayer(-moveSize, 0);
-                break;
-            case SDLK_s:
-                playerInputY = moveSize;
-                //tryMovePlayer(0, moveSize);
-                break;
-            case SDLK_d:
-                playerInputX = moveSize;
-                //tryMovePlayer(moveSize, 0);
-                break;
-            case SDLK_SPACE:
-                world.tryJump(playerWorldId);
-                break;
-
-            case SDLK_i:
-                cout << "playerWorldId: " << playerWorldId << endl;
-                break;
-
-            default:
-                break;
-            }
+        if (currentScene == Scene::level) {
+            handleInputForLevel(e);
+        }
+        else if (currentScene == Scene::terminal) {
+            handleInputForTerminal(e);
         }
 
-        if (e.type == SDL_KEYUP) {
-            switch (e.key.keysym.sym) {
-            case SDLK_w:
-            case SDLK_s:
-                playerInputY = 0;
-                break;
-            case SDLK_a:
-            case SDLK_d:
-                playerInputX = 0;
-                break;
-            }
-        }
+
     }
 
 }
 
+
+void Game::handleInputForLevel(SDL_Event e)
+{
+    //int moveSize = 16;
+    int moveSize = 10;
+
+    if (e.type == SDL_KEYDOWN) {
+        switch (e.key.keysym.sym) {
+        case SDLK_ESCAPE:
+            _running = false;
+            break;
+
+        // -- player movement
+        case SDLK_w:
+            playerInputY = -moveSize;
+            //tryMovePlayer(0, -moveSize);
+            break;
+        case SDLK_a:
+            playerInputX = -moveSize;
+            //tryMovePlayer(-moveSize, 0);
+            break;
+        case SDLK_s:
+            playerInputY = moveSize;
+            //tryMovePlayer(0, moveSize);
+            break;
+        case SDLK_d:
+            playerInputX = moveSize;
+            //tryMovePlayer(moveSize, 0);
+            break;
+        case SDLK_SPACE:
+            world.tryJump(playerWorldId);
+            break;
+
+        case SDLK_i:
+            cout << "playerWorldId: " << playerWorldId << endl;
+            break;
+
+        case SDLK_t:
+            this->toggleTerminal();
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    if (e.type == SDL_KEYUP) {
+        switch (e.key.keysym.sym) {
+        case SDLK_w:
+        case SDLK_s:
+            playerInputY = 0;
+            break;
+        case SDLK_a:
+        case SDLK_d:
+            playerInputX = 0;
+            break;
+        }
+    }
+}
+
+
+void Game::handleInputForTerminal(SDL_Event e)
+{
+    if (e.type == SDL_KEYDOWN) {
+        //
+        switch (e.key.keysym.sym) {
+        case SDLK_ESCAPE:
+            toggleTerminal();
+            break;
+        }
+    }
+}
+
+
+void Game::toggleTerminal()
+{
+    this->currentScene = (this->currentScene == Scene::terminal) ? Scene::level :
+                         Scene::terminal;
+}
 
 void Game::tryMovePlayer(int directionX, int directionY)
 {

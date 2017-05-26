@@ -22,11 +22,11 @@ public:
 
     inline void initLifecycleFunctions()
     {
-        scm_c_primitive_load_path("player.scm");
+        //scm_c_primitive_load_path("player.scm");
 
-        lc_init = Guile::lookup_with_module("player", "init");
-        lc_update = Guile::lookup_with_module("player", "update");
-        lc_collision = Guile::lookup_with_module("player", "collision");
+        //lc_init = Guile::lookup_with_module("player", "init");
+        //lc_update = Guile::lookup_with_module("player", "update");
+        //lc_collision = Guile::lookup_with_module("player", "collision");
     }
     // END prototyping
 

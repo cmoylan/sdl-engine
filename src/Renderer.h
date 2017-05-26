@@ -41,11 +41,12 @@ public:
      */
     bool registerAsset(Asset& asset);
 
+
+private:
+    void initSDL();
+    void drawTerminal();
     void drawLevel();
     void drawEntities();
     void drawPlayer();
     void displayDebugInfo();
-
-private:
-    void initSDL();
 };

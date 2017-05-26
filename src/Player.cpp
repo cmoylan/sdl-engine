@@ -19,8 +19,8 @@ void Player::init()
                                   &Player::handleCollisionEvent, this, placeholders::_1)
                              );
 
-    initLifecycleFunctions();
-    scm_call_0(lc_init);
+    //initLifecycleFunctions();
+    //dddddscm_call_0(lc_init);
 }
 
 
@@ -41,7 +41,7 @@ AssetList Player::assetData()
 void Player::handleCollisionEvent(Message message)
 {
     cout << "collision from player!: " << message.test << endl;
-    scm_call_0(lc_collision);
+    //scm_call_0(lc_collision);
 }
 
 

@@ -151,6 +151,12 @@ void Renderer::drawPlayer()
 }
 
 
+void Renderer::drawTerminal()
+{
+
+}
+
+
 // this might be a load, not an init
 void Renderer::init(Game game)
 {
@@ -260,11 +266,23 @@ void Renderer::run()
 
         // draw
         SDL_RenderClear(renderer);
-        // draw level first
-        this->drawLevel();
-        this->drawEntities();
-        this->drawPlayer();
-        this->displayDebugInfo();
+
+        // if terminal, render terminal
+        // else render level
+        if (game.currentScene == Scene::level) {
+            // draw level first
+            this->drawLevel();
+            this->drawEntities();
+            this->drawPlayer();
+            this->displayDebugInfo();
+        }
+        else if (game.currentScene == Scene::terminal) {
+            this->drawTerminal();
+        }
+        else {
+            // menu
+        }
+
 
         //displayDebugInfo();
         //Update the screen

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <libguile.h>
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -30,8 +31,8 @@ namespace Guile
         SCM symbol = scm_c_lookup(name.c_str());
         return scm_variable_ref(symbol);
     }
-    
-    inline SCM lookup_with_module(string module_name, string name) 
+
+    inline SCM lookup_with_module(string module_name, string name)
     {
         SCM module = scm_c_lookup(module_name.c_str());
         return scm_c_module_lookup(module, name.c_str());
