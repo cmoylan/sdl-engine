@@ -151,9 +151,40 @@ void Renderer::drawPlayer()
 }
 
 
+// TODO: renderTExt?
+// renderTExt(String text,
+//int x,
+//int y,
+//<optional stuff like size/font with reasonable defaults>)
 void Renderer::drawTerminal()
 {
+    //Color is in RGBA format
+    SDL_Color color = { 255, 255, 255, 255 };
+    int fontSize = 24;
+    TTF_Font* font = fonts.get("sample.ttf", fontSize);
 
+    int x = 10;
+    int y = 10;
+
+    // for each line of the debug info,
+    // make a new text texture
+    stringstream message(game.terminal.text());
+    string line;
+
+    while (getline(message, line)) {
+        SDL_Texture *image = renderText(line, font, color, renderer);
+
+        if (image == nullptr) {
+            cleanup(renderer, window);
+            TTF_Quit();
+            SDL_Quit();
+            // FIXME: do something bad here
+            //return 1;
+        }
+
+        renderTexture(image, renderer, x, y);
+        y += fontSize;
+    }
 }
 
 

@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <keyboard_helpers.h>
 
 Game::Game()
 {
@@ -133,9 +134,22 @@ void Game::handleInputForTerminal(SDL_Event e)
     if (e.type == SDL_KEYDOWN) {
         //
         switch (e.key.keysym.sym) {
+
+
         case SDLK_ESCAPE:
             toggleTerminal();
             break;
+        case SDLK_BACKSPACE:
+            terminal.backspace();
+            break;
+        case SDLK_RETURN:
+            terminal.runCommand();
+            break;
+        default:
+            if (Keyboard::isAlphaNum(e.key.keysym)) {
+                const char* key = SDL_GetKeyName(e.key.keysym.sym);
+                terminal.addChar(string(key));
+            }
         }
     }
 }

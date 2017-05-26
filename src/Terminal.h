@@ -1,17 +1,20 @@
 #pragma once
 
+#include <iostream>
 #include <string>
+
+using namespace std;
 
 class Terminal {
 public:
-    String command;
+    string header = "Ready.\n> ";
+    string command;
 
-    void pressChar(String character);
+    //void pressChar(string character);
 
-    String draw();
+    string text();
 
-private:
-    void addChar(String character);
+    void addChar(string character);
     void backspace();
     void clear();
     void runCommand();

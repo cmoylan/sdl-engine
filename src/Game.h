@@ -8,6 +8,7 @@
 #include "Level.h"
 #include "LevelLoader.h"
 #include "Player.h"
+#include "Terminal.h"
 #include "World.h"
 
 
@@ -60,6 +61,8 @@ public:
     Scene currentScene;
     Level level; // acces to this should be readonly
     DrawableList entities;
+
+    Terminal terminal;
 
     // Getters
     std::string resPath() const { return level.resPath; }
